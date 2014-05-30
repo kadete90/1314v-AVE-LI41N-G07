@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SqlMapperFw.Entities
 {
@@ -22,6 +23,7 @@ namespace SqlMapperFw.Entities
         public string PhotoPath { set; get; } 
         public string Notes { set; get; }
         public Employee ReportsTo { set; get; }
-        
+        public IEnumerable<Order> Orders;
+
     }
 }

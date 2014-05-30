@@ -1,4 +1,6 @@
-﻿namespace SqlMapperFw.Entities
+﻿using System.Collections.Generic;
+
+namespace SqlMapperFw.Entities
 {
     public class Customer
     {
@@ -12,6 +14,7 @@
         public string PostalCode { set; get; } 
         public string Country { set; get; } 
         public string Phone { set; get; } 
-        public string Fax { set; get; } 
+        public string Fax { set; get; }
+        public IEnumerable<Order> Orders;
     }
 }
