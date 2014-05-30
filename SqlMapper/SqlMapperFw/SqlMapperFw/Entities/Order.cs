@@ -1,7 +1,10 @@
 ﻿using System;
+using SqlMapperFw.BuildMapper;
 
 namespace SqlMapperFw.Entities
 {
+
+    [TableName("Orders")]
     public class Order
     {        
         public int OrderId { set; get; } //PK

@@ -11,6 +11,11 @@ namespace SqlMapperFw.DataMappers
         void Update(T val); // Actualiza a linha que tem PK igual à propriedade PK de val (ler cap. Requisitos)
         void Delete(T val); // Apaga a linha com PK igual à propriedade PK de val
         void Insert(T val); // Insere uma nova linha com os valores de val e actualiza val com a PK devolvida
+
+        //Para testar linfu
+        int Add(int x, int y);
+        int Mul(int x, int y);
+        int Div(int x, int y);
     }
     //2ªparte
     //public interface IDataMapper<T> : IDataMapper

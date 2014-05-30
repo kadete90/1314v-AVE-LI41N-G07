@@ -1,5 +1,8 @@
-﻿namespace SqlMapperFw.Entities
+﻿using SqlMapperFw.BuildMapper;
+
+namespace SqlMapperFw.Entities
 {
+    [TableName("Products")]
     public class Product
     {
         public int ProductID { set; get; } //PK

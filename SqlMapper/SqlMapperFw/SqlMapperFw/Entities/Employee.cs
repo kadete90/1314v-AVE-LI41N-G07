@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using SqlMapperFw.BuildMapper;
 
 namespace SqlMapperFw.Entities
 {
+    [TableName("Employees")]
     public class Employee
     {
         public int EmployeeId { set; get; } //PK
