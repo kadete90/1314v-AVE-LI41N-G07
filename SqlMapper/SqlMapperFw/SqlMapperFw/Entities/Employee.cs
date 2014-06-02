@@ -7,6 +7,7 @@ namespace SqlMapperFw.Entities
     [TableName("Employees")]
     public class Employee
     {
+        [PropPK]
         public int EmployeeId { set; get; } //PK
         public string FirstName { set; get; }
         public string LastName { set; get; }

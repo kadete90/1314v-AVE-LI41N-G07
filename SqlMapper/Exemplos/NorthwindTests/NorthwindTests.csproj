@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B07C13EA-A640-4449-95CD-1A356104FAFA}</ProjectGuid>
+    <ProjectGuid>{3F025F8E-FEBF-470B-BF81-C8BAAF10B964}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SqlMapperTests</RootNamespace>
-    <AssemblyName>SqlMapperTests</AssemblyName>
+    <RootNamespace>NorthwindTests</RootNamespace>
+    <AssemblyName>NorthwindTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,18 +51,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MultipleConnectionTests.cs" />
+    <Compile Include="ProductsCmdBuilder.cs" />
     <Compile Include="ProductTests.cs" />
-    <Compile Include="SingleConnectionTests.cs" />
-    <Compile Include="withAssociations.cs" />
-    <Compile Include="withoutAssociations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SqlMapperFw\SqlMapperFw.csproj">
-      <Project>{bf16bccf-4fe8-4a23-93f3-28a4c907ba04}</Project>
-      <Name>SqlMapperFw</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

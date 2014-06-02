@@ -5,6 +5,7 @@ namespace SqlMapperFw.Entities
     [TableName("Products")]
     public class Product
     {
+        [PropPK]
         public int ProductID { set; get; } //PK
         public string ProductName { set; get; } 
         public string QuantityPerUnit { set; get; } 

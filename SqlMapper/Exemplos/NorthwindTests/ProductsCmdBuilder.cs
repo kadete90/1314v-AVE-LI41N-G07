@@ -1,9 +1,14 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data;
 using System.Data.SqlClient;
 
-namespace SqlMapperFw.BuildMapper
+namespace NorthwindTests
 {
-    public class ProductsCmdBuilder
+    class ProductsCmdBuilder
     {
         public static SqlCommand MakeReadCmd(SqlConnection conSql)
         {
@@ -19,7 +24,7 @@ namespace SqlMapperFw.BuildMapper
 
         public static SqlCommand MakeInsert(SqlConnection conSql)
         {
-            const string strUpdate = "INSERT INTO Products (ProductName, UnitPrice, UnitsInStock) OUTPUT INSERTED.ProductID VALUES (@name, @price, @stock)";
+            string strUpdate = "INSERT INTO Products (ProductName, UnitPrice, UnitsInStock) OUTPUT INSERTED.ProductID VALUES (@name, @price, @stock)";
 
             SqlCommand cmd = conSql.CreateCommand();
 
@@ -34,7 +39,7 @@ namespace SqlMapperFw.BuildMapper
 
         public static SqlCommand MakeUpdateCmd(SqlConnection conSql)
         {
-            const string strUpdate = "UPDATE Products SET ProductName = @name WHERE ProductID = @id";
+            string strUpdate = "UPDATE Products SET ProductName = @name WHERE ProductID = @id";
 
             SqlParameter name = new SqlParameter("@name", SqlDbType.NVarChar);
             SqlParameter id = new SqlParameter("@id", SqlDbType.Int);

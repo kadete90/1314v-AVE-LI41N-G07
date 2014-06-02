@@ -6,7 +6,8 @@ namespace SqlMapperFw.Entities
 
     [TableName("Orders")]
     public class Order
-    {        
+    {
+        [PropPK]
         public int OrderId { set; get; } //PK
         public Customer Customer { set; get; } //FK
         //private int CustomerId;

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SqlMapperFw.BuildMapper;
+using System.Data.SqlClient;
+using System.Data;
 
-namespace SqlMapperTests
+namespace NorthwindTests
 {
     [TestClass]
     public class ProductTests
@@ -15,21 +14,21 @@ namespace SqlMapperTests
         [TestInitialize]
         public void Setup()
         {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
-            {
-                DataSource = "(local)",
-                IntegratedSecurity = true,
-                InitialCatalog = "Northwind"
-            };
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = @"DRAGAO\SQLEXPRESS";
+            builder.IntegratedSecurity = true;
+            builder.InitialCatalog = "Northwind";
             conSql = new SqlConnection(builder.ConnectionString);
         }
 
         [TestCleanup]
         public void TearDown()
         {
-            if (conSql.State == ConnectionState.Closed) return;
-            conSql.Close();
-            conSql = null;
+            if (conSql.State != ConnectionState.Closed)
+            {
+                conSql.Close();
+                conSql = null;
+            }
         }
 
         [TestMethod]
@@ -57,8 +56,8 @@ namespace SqlMapperTests
             using (SqlTransaction tran = conSql.BeginTransaction())
             {
                 using (
-                    SqlCommand cmdRead = CmdBuilder.MakeReadCmd(conSql),
-                    cmdInsert = CmdBuilder.MakeInsert(conSql))
+                    SqlCommand cmdRead = ProductsCmdBuilder.MakeReadCmd(conSql),
+                    cmdInsert = ProductsCmdBuilder.MakeInsert(conSql))
                 {
                     cmdRead.Transaction = tran;
                     cmdInsert.Transaction = tran;
@@ -90,8 +89,8 @@ namespace SqlMapperTests
             using (SqlTransaction tran = conSql.BeginTransaction())
             {
                 using (
-                    SqlCommand cmdRead = CmdBuilder.MakeReadCmd(conSql),
-                    cmdUpdate = CmdBuilder.MakeUpdateCmd(conSql))
+                    SqlCommand cmdRead = ProductsCmdBuilder.MakeReadCmd(conSql),
+                    cmdUpdate = ProductsCmdBuilder.MakeUpdateCmd(conSql))
                 {
                     cmdRead.Transaction = tran;
                     cmdUpdate.Transaction = tran;
