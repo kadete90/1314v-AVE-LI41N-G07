@@ -23,7 +23,7 @@ namespace SqlMapperFw.BuildMapper
                 } 
                 catch
                 {
-                    Console.WriteLine("New Connection With Problems!!");
+                    Console.WriteLine("Cannot Create a new Connection With Problems!!");
                     _mySql = null;
                     return;
                 }
@@ -94,6 +94,7 @@ namespace SqlMapperFw.BuildMapper
 
         public IDataMapper<T> Build<T>()
         {
+            CmdBuilder<T> cb = new CmdBuilder<T>(_mySql);
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
         }
     }

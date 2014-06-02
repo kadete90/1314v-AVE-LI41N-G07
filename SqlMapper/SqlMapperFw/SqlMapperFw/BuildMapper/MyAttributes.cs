@@ -4,28 +4,27 @@ namespace SqlMapperFw.BuildMapper
 {
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    class TableNameAttribute : Attribute
+    public class TableNameAttribute : Attribute
     {
-        public string name;
+        public string Name;
 
         public TableNameAttribute(string name)
         {
-            this.name = name;
+            Name = name;
         }
     }
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    class PropNameAttribute : Attribute
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+    public class DBFieldNameAttribute : Attribute
     {
-        public string name;
+        public string Name;
 
-        public PropNameAttribute(string name)
+        public DBFieldNameAttribute(string name)
         {
-            this.name = name;
+            Name = name;
         }
     }
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    class PropPKAttribute : Attribute
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
+    public class PropPKAttribute : Attribute
     {
-        public bool pk = true;
     }
 }

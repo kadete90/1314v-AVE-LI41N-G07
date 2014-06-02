@@ -1,6 +1,6 @@
 ﻿using SqlMapperFw.BuildMapper;
 
-namespace SqlMapperFw.Entities
+namespace SqlMapperClient.Entities
 {
     [TableName("Products")]
     public class Product

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SqlMapperFw.BuildMapper;
 
-namespace SqlMapperFw.Entities
+namespace SqlMapperClient.Entities
 {
     [TableName("Employees")]
     public class Employee
