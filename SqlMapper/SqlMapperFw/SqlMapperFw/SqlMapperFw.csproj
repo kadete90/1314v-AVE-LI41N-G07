@@ -46,15 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildMapper\Builder.cs" />
-    <Compile Include="BuildMapper\CmdBuilder.cs" />
+    <Compile Include="DataMappers\CmdBuildMapper.cs" />
     <Compile Include="BuildMapper\MyAttributes.cs" />
     <Compile Include="DataMappers\IDataMapper.cs" />
     <Compile Include="DataMappers\ISqlEnumerable.cs" />
     <Compile Include="DataMappers\SqlEnumerable.cs" />
-    <Compile Include="Entities\Customer.cs" />
-    <Compile Include="Entities\Employee.cs" />
-    <Compile Include="Entities\Order.cs" />
-    <Compile Include="Entities\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
