@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SqlMapperTests
+namespace SqlMapperClient.MultiConnectionTests
 {
     [TestClass]
     public class withAssociations

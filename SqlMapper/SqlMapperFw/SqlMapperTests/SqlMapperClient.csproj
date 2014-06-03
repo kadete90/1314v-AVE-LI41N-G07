@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B07C13EA-A640-4449-95CD-1A356104FAFA}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SqlMapperTests</RootNamespace>
     <AssemblyName>SqlMapperTests</AssemblyName>
@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -51,18 +54,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MultipleConnectionTests.cs" />
-    <Compile Include="ProductTests.cs" />
-    <Compile Include="SingleConnectionTests.cs" />
-    <Compile Include="withAssociations.cs" />
-    <Compile Include="withoutAssociations.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\Employee.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SqlMapperClient\SqlMapperClient.csproj">
-      <Project>{c4a36851-173e-44d3-ade8-47ba3d879a5e}</Project>
-      <Name>SqlMapperClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SqlMapperFw\SqlMapperFw.csproj">
       <Project>{bf16bccf-4fe8-4a23-93f3-28a4c907ba04}</Project>
       <Name>SqlMapperFw</Name>

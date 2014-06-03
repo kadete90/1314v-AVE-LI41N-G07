@@ -1,10 +1,10 @@
 ﻿using System;
-using SqlMapperFw.BuildMapper;
+using SqlMapperFw;
 
-namespace SqlMapperClient.Entities
+namespace SqlMapperTests.Entities
 {
 
-    [TableName("Orders")]
+    [DBTableName("Orders")]
     public class Order
     {
         [PropPK]

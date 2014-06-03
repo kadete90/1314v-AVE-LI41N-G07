@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,16 +51,23 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Entities\Customer.cs" />
-    <Compile Include="Entities\Employee.cs" />
-    <Compile Include="Entities\Order.cs" />
-    <Compile Include="Entities\Product.cs" />
+    <Compile Include="MultiConnectionTests\MultipleConnectionTests.cs" />
+    <Compile Include="MultiConnectionTests\withAssociations.cs" />
+    <Compile Include="ProductTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingleConnectionTests\SingleConnectionTests.cs" />
+    <Compile Include="SingleConnectionTests\withAssociations.cs" />
+    <Compile Include="SingleConnectionTests\withoutAssociations.cs" />
+    <Compile Include="MultiConnectionTests\withoutAssociations.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SqlMapperFw\SqlMapperFw.csproj">
       <Project>{bf16bccf-4fe8-4a23-93f3-28a4c907ba04}</Project>
       <Name>SqlMapperFw</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlMapperTests\SqlMapperClient.csproj">
+      <Project>{B07C13EA-A640-4449-95CD-1A356104FAFA}</Project>
+      <Name>SqlMapperClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

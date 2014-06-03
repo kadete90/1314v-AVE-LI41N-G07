@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using SqlMapperFw.BuildMapper;
+using SqlMapperFw;
 
-namespace SqlMapperClient.Entities
+namespace SqlMapperTests.Entities
 {
-    [TableName("Employees")]
+    [DBTableName("Employees")]
     public class Employee
     {
         [PropPK]

@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace SqlMapperFw.BuildMapper
+namespace SqlMapperFw
 {
-
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class TableNameAttribute : Attribute
+    public class DBTableNameAttribute : Attribute
     {
         public string Name;
 
-        public TableNameAttribute(string name)
+        public DBTableNameAttribute(string name)
         {
             Name = name;
         }

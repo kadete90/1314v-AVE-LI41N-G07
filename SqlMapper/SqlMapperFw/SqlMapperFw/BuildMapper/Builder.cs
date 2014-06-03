@@ -1,100 +1,63 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using LinFu.DynamicProxy;
 using SqlMapperFw.DataMappers;
+using SqlMapperFw.MySqlConnection;
+using SqlMapperFw.Reflection;
 
 namespace SqlMapperFw.BuildMapper
 {
-    class Builder
+    public class Builder
     {
-        private static SqlConnection _mySql;
-        public static bool IsSingleConnection { get; private set; }
-        public static bool IsOpenConnection { get; private set; }
-
-        public void TryGetConnectionString(SqlConnectionStringBuilder connectionStringBuilder)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionStringBuilder.ConnectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    connection.Close();
-                } 
-                catch
-                {
-                    Console.WriteLine("Cannot Create a new Connection With Problems!!");
-                    _mySql = null;
-                    return;
-                }
-            }
-            _mySql = new SqlConnection(connectionStringBuilder.ConnectionString);
-        }
-
-        private static void OpenConnection()
-        {
-            _mySql.Open();
-            if (_mySql.State != ConnectionState.Open)
-            {
-                Console.WriteLine("Active Connection with Problems!\n");
-                IsOpenConnection = false;
-            }
-            else
-            {
-                IsOpenConnection = true;
-            }
-
-        }
-
-        public void CloseConnection()
-        {
-            _mySql.Close();
-        }
+        public static Type TypeConnection;
+        public static IMapperSqlConnection<> Connection;
+        //public static IDataMapper<> IDataMapper;
+ 
+        public SqlConnectionStringBuilder ConnectionString { get; set; }
 
         internal class MyInterceptor : IInvokeWrapper
         {
             public void BeforeInvoke(InvocationInfo info)
             {
-                if (!IsSingleConnection)
-                    OpenConnection();
+
             }
 
             public object DoInvoke(InvocationInfo info)
             {
-                if (!IsOpenConnection)
-                    return null;
-
-                Console.Write(info.TargetMethod.Name + " invoked with args: ");
-                foreach (var a in info.Arguments)
+                try
                 {
-                    Console.Write(a + " ");
+                     return Connection.Execute(info.CallingMethod.Name, info.Arguments[0]);
                 }
-                Console.WriteLine();
-                return 0;
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                return null;
             }
 
             public void AfterInvoke(InvocationInfo info, object returnValue)
             {
-                if (!IsSingleConnection)
-                    _mySql.Close();
+
             }
         }
 
-        public Builder(SqlConnectionStringBuilder strBuilder, bool isSingleConnection)
+        public void CloseConnection()
         {
-            TryGetConnectionString(strBuilder);
-            if (_mySql == null)
-            {
-                return;
-            }
-            IsSingleConnection = isSingleConnection;
-            if(IsSingleConnection)
-                OpenConnection();
+            Connection.CloseConnection();
+        }
+
+        public Builder(SqlConnectionStringBuilder connectionStringBuilder, Type typeConnection)
+        {
+            TypeConnection = typeConnection;
+            ConnectionString = connectionStringBuilder;
         }
 
         public IDataMapper<T> Build<T>()
         {
-            CmdBuilder<T> cb = new CmdBuilder<T>(_mySql);
+            if (!ReflectionMethods.ImplementsInterface(TypeConnection, typeof(IMapperSqlConnection<T>)))
+                throw new Exception("This type of connection doesn't implements IMapperSqlConnection");
+
+            Connection = (IMapperSqlConnection<T>) Activator.CreateInstance(TypeConnection, ConnectionString);
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
         }
     }
