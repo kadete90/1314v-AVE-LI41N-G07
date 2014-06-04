@@ -10,9 +10,7 @@ namespace SqlMapperFw.BuildMapper
     public class Builder
     {
         public static Type TypeConnection;
-        public static IMapperSqlConnection<> Connection;
-        //public static IDataMapper<> IDataMapper;
- 
+        public static IMapperSqlConnection Connection;
         public SqlConnectionStringBuilder ConnectionString { get; set; }
 
         internal class MyInterceptor : IInvokeWrapper
@@ -26,7 +24,7 @@ namespace SqlMapperFw.BuildMapper
             {
                 try
                 {
-                     return Connection.Execute(info.CallingMethod.Name, info.Arguments[0]);
+                    return Connection.Execute(info.CallingMethod.Name, info.Arguments[0]);
                 }
                 catch(Exception ex)
                 {
@@ -54,10 +52,10 @@ namespace SqlMapperFw.BuildMapper
 
         public IDataMapper<T> Build<T>()
         {
-            if (!ReflectionMethods.ImplementsInterface(TypeConnection, typeof(IMapperSqlConnection<T>)))
+            if (!ReflectionMethods.ImplementsInterface(TypeConnection, typeof(IMapperSqlConnection)))
                 throw new Exception("This type of connection doesn't implements IMapperSqlConnection");
 
-            Connection = (IMapperSqlConnection<T>) Activator.CreateInstance(TypeConnection, ConnectionString);
+            Connection = (IMapperSqlConnection)Activator.CreateInstance(TypeConnection.MakeGenericType(typeof(T)), ConnectionString);
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
         }
     }

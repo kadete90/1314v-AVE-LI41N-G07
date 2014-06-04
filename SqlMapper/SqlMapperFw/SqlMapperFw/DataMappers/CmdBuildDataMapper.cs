@@ -22,11 +22,11 @@ namespace SqlMapperFw.DataMappers
             DBTableNameAttribute tableNameAttribute = (DBTableNameAttribute)type.GetCustomAttribute(typeof(DBTableNameAttribute));
             TableName = tableNameAttribute != null ? tableNameAttribute.Name : type.Name;
 
-            foreach (MemberInfo pi in type.GetMembers(BindingFlags.Public))
+            //foreach (MemberInfo pi in type.GetMembers())  // /!\ Não funciona com GetMembers ??
+            foreach (MemberInfo pi in type.GetProperties())
             {
                 if (pi == null) continue;
-
-                // /!\ Não funciona
+               
                 DBFieldNameAttribute fieldNameAttribute = (DBFieldNameAttribute)pi.GetCustomAttribute(typeof(DBFieldNameAttribute));
                 var propName = fieldNameAttribute != null
                     ? fieldNameAttribute.Name : pi.Name.Replace("set_", "").Replace("get_", ""); //melhorar

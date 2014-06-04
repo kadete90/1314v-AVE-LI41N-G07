@@ -5,7 +5,7 @@ using SqlMapperFw.DataMappers;
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public class SingleConnection<T> : IMapperSqlConnection<T>
+    public class SingleConnection<T> : IMapperSqlConnection
     {
         private readonly SqlConnection _mySql;
         public IDataMapper<T> MyDataMapper;
@@ -34,7 +34,7 @@ namespace SqlMapperFw.MySqlConnection
             }
         }
 
-        public Object Execute(String typeCommand, T elem)
+        public Object Execute(String typeCommand, Object elem)
         {
             switch (typeCommand)
             {
@@ -42,13 +42,13 @@ namespace SqlMapperFw.MySqlConnection
                     MyDataMapper.GetAll();
                     break;
                 case "Delete":
-                    MyDataMapper.Delete(elem);
+                    MyDataMapper.Delete((T)elem);
                     break;
                 case "Insert":
-                    MyDataMapper.Insert(elem);
+                    MyDataMapper.Insert((T)elem);
                     break;
                 case "Update":
-                    MyDataMapper.Update(elem);
+                    MyDataMapper.Update((T)elem);
                     break;
                 default:
                     throw new Exception("This command doesn't exist");

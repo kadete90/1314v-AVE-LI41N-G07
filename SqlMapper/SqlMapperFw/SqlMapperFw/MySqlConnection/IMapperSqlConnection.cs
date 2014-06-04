@@ -2,10 +2,10 @@
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public interface IMapperSqlConnection<in T>
+    public interface IMapperSqlConnection
     {
         void OpenConnection();
         void CloseConnection();
-        Object Execute(String typeCommand, T elem);
+        Object Execute(String typeCommand, Object elem);
     }
 }
