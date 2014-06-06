@@ -24,7 +24,7 @@ namespace SqlMapperFw.BuildMapper
             {
                 try
                 {
-                    return Connection.Execute(info.CallingMethod.Name, info.Arguments[0]);
+                    return Connection.Execute(info.TargetMethod.Name, info.Arguments);
                 }
                 catch(Exception ex)
                 {

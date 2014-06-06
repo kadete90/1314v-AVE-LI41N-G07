@@ -8,40 +8,51 @@ namespace SqlMapperFw.DataMappers
 {
     public class CmdBuilder<T> : IDataMapper<T>
     {
+        public String TableName;
+        public String PKPropName;
+        private readonly BindFields<T> BindFields;
         private readonly SqlConnection _conSql;
-        public string TableName;
-        public List<String> DBFieldNamesList = new List<string>();
-        public string PKPropName;
-        private readonly T TInstance;
+        readonly Dictionary<String, MemberInfo> FieldsNamesDictionary = new Dictionary<String, MemberInfo>();
 
         public CmdBuilder(SqlConnection strBuilder)
         {
             _conSql = strBuilder;
-            TInstance = Activator.CreateInstance<T>();
+ 
+      
             Type type = typeof(T);
+
             DBTableNameAttribute tableNameAttribute = (DBTableNameAttribute)type.GetCustomAttribute(typeof(DBTableNameAttribute));
             TableName = tableNameAttribute != null ? tableNameAttribute.Name : type.Name;
 
-            //foreach (MemberInfo pi in type.GetMembers())  // /!\ Não funciona com GetMembers ??
-            foreach (MemberInfo pi in type.GetProperties())
+            foreach (MemberInfo mi in type.GetMembers())
             {
-                if (pi == null) continue;
-               
-                DBFieldNameAttribute fieldNameAttribute = (DBFieldNameAttribute)pi.GetCustomAttribute(typeof(DBFieldNameAttribute));
-                var propName = fieldNameAttribute != null
-                    ? fieldNameAttribute.Name : pi.Name.Replace("set_", "").Replace("get_", ""); //melhorar
-                DBFieldNamesList.Add(propName);
-
-                if (PKPropName != null) //alterar isto quando tiver chave composta
+                MemberInfo realTypeInfo = mi.GetValidType();
+                if (realTypeInfo == null)
                     continue;
 
-                PropPKAttribute pkAttribute = (PropPKAttribute)pi.GetCustomAttribute(typeof(PropPKAttribute));
+                DBFieldNameAttribute fieldNameAttribute = (DBFieldNameAttribute)realTypeInfo.GetCustomAttribute(typeof(DBFieldNameAttribute));
+                var EDFieldName = (fieldNameAttribute != null)
+                    ? fieldNameAttribute.Name : realTypeInfo.Name;
+
+                if (realTypeInfo.MemberType == MemberTypes.Property)
+                    EDFieldName = EDFieldName.Replace("set_", "").Replace("get_", ""); //melhorar
+
+                if (!FieldsNamesDictionary.ContainsKey(EDFieldName))
+                    FieldsNamesDictionary.Add(EDFieldName, mi); //key: bd_fieldname, value: ed_fieldname
+
+                //não é aceite mais que uma PK
+                if (PKPropName != null) //TODO: alterar quando tiver chave composta
+                    continue;
+
+                PropPKAttribute pkAttribute = (PropPKAttribute)realTypeInfo.GetCustomAttribute(typeof(PropPKAttribute));
                 if (pkAttribute != null)
-                    PKPropName = propName;
+                    PKPropName = EDFieldName;
             }
 
+            BindFields = new BindFields<T>(FieldsNamesDictionary);
         }
 
+        //minimizar reflexão neste método
         public IEnumerable<T> GetAll()
         {
             SqlDataReader rd = null;
@@ -51,17 +62,19 @@ namespace SqlMapperFw.DataMappers
                 try
                 {
                     SqlCommand cmd = _conSql.CreateCommand();
-                    if (DBFieldNamesList.Count == 0)
+                    if (FieldsNamesDictionary.Count == 0)
                         throw new Exception("List of fields empty!!");
-                    foreach (String fieldName in DBFieldNamesList)
+                    foreach (String fieldName in FieldsNamesDictionary.Keys)
                     {
                         DBfields += fieldName + ", ";
                     }
                     if(DBfields != "")
                         DBfields = DBfields.Substring(0, DBfields.Length - 2); //remove última vírgula
-                    cmd.CommandText = "SELECT " + DBfields  + " FROM @tableName";
-                    cmd.Parameters.Add(TableName);
+                    cmd.CommandText = "SELECT " + DBfields  + " FROM " + TableName;
+                    cmd.Transaction = sqlTransaction;
+
                     rd = cmd.ExecuteReader();
+                    
                 }
                 catch (Exception exception)
                 {
@@ -69,21 +82,23 @@ namespace SqlMapperFw.DataMappers
                     Console.WriteLine("Rollback from this transaction...");
                     sqlTransaction.Rollback();
                 }
-                sqlTransaction.Commit();
-            }
-            if (rd == null)
-            {
-                throw new Exception("This Table doesn't have row's!");
-            }
+                if (rd == null)
+                {
+                    throw new Exception("This Table doesn't have row's!");
+                }
 
-            BindFields<T> b = new BindFields<T>();
-            foreach (var DBRowValues in rd.AsEnumerable())
-            {
-                yield return b.bind(TInstance, DBRowValues, DBFieldNamesList);
-            }   
-            rd.Close();
+                
+                foreach (var DBRowValues in rd.AsEnumerable())
+                {
+                    //TODO: bind (tentar minimizar o uso da reflexão)
+                    yield return BindFields.bind(DBRowValues);
+                }
+                rd.Close();
+                //sqlTransaction.Commit();
+            }
         }
 
+        //minimizar reflexão neste método
         public void Update(T val)
         {
             throw new NotImplementedException();
@@ -101,11 +116,13 @@ namespace SqlMapperFw.DataMappers
 
         }
 
+        //minimizar reflexão neste método
         public void Delete(T val)
         {
             throw new NotImplementedException();
         }
 
+        //minimizar reflexão neste método
         public void Insert(T val)
         {
             throw new NotImplementedException();

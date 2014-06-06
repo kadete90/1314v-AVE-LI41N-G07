@@ -39,21 +39,19 @@ namespace SqlMapperFw.MySqlConnection
             switch (typeCommand)
             {
                 case "GetAll":
-                    MyDataMapper.GetAll();
-                    break;
+                    return MyDataMapper.GetAll();
                 case "Delete":
                     MyDataMapper.Delete((T)elem);
-                    break;
+                    return true;
                 case "Insert":
                     MyDataMapper.Insert((T)elem);
-                    break;
+                    return true;
                 case "Update":
                     MyDataMapper.Update((T)elem);
-                    break;
+                    return true;
                 default:
                     throw new Exception("This command doesn't exist");
             }
-            return null; // alterar!!!!!!
         }
     }
 }
