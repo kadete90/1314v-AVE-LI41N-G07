@@ -56,6 +56,7 @@
     <Compile Include="DataMappers\IDataMapper.cs" />
     <Compile Include="DataMappers\ISqlEnumerable.cs" />
     <Compile Include="DataMappers\SqlEnumerable.cs" />
+    <Compile Include="MySqlConnection\AbstractMapperSqlConnection.cs" />
     <Compile Include="MySqlConnection\MultiConnection.cs" />
     <Compile Include="MySqlConnection\SingleConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,35 +5,15 @@ using SqlMapperFw.DataMappers;
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public class MultiConnection<T> : IMapperSqlConnection
+    public class MultiConnection<T> : AbstractMapperSqlConnection<T>
     {
-        private readonly SqlConnection _mySql;
-        public IDataMapper<T> MyDataMapper;
-
         public MultiConnection(SqlConnectionStringBuilder connString)
         {
-            _mySql = new SqlConnection(connString.ConnectionString);
-            MyDataMapper = new CmdBuilder<T>(_mySql);
+            MySql = new SqlConnection(connString.ConnectionString);
+            MyDataMapper = new CmdBuilder<T>(MySql);
         }
 
-        public void CloseConnection()
-        {
-            if (_mySql.State != ConnectionState.Closed)
-                _mySql.Close();
-        }
-
-        public void OpenConnection()
-        {
-            if (_mySql.State == ConnectionState.Open)
-                return;
-            _mySql.Open();
-            if (_mySql.State != ConnectionState.Open)
-            {
-                throw new Exception("Could not open a new connection!");
-            }
-        }
-
-        public Object Execute(string typeCommand, Object elem)
+        public override Object Execute(string typeCommand, Object elem)
         {
             OpenConnection();
 
