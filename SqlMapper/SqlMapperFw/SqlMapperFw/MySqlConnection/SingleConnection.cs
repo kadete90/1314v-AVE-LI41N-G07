@@ -22,16 +22,17 @@ namespace SqlMapperFw.MySqlConnection
                     return MyDataMapper.GetAll();
                 case "Delete":
                     MyDataMapper.Delete((T)elem);
-                    return true;
+                    break;
                 case "Insert":
                     MyDataMapper.Insert((T)elem);
-                    return true;
+                    break;
                 case "Update":
                     MyDataMapper.Update((T)elem);
-                    return true;
+                    break;
                 default:
                     throw new Exception("This command doesn't exist");
             }
+            return null;
         }
     }
 }

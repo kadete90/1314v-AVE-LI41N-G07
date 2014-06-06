@@ -25,14 +25,6 @@ namespace SqlMapperTests
             };
 
             Builder b = new Builder(connectionStringBuilder, typeof(SingleConnection<>));
-
-            //IDataMapper<Employee> emplyeeMapper = b.Build<Employee>(); //1ªparte 1.
-            //IEnumerable<Employee> employees = emplyeeMapper.GetAll();
-            //foreach (Employee employee in employees)
-            //{
-            //    Console.WriteLine(employee.EmployeeId);
-            //}
-            //IDataMapper<Customer> customerMapper = b.Build<Customer>(); //1ªparte 1.
             IDataMapper<Product> productMapper = b.Build<Product>(); //1ªparte 1.
 
             //customerMapper.Insert(new Customer());
@@ -43,8 +35,26 @@ namespace SqlMapperTests
                 Console.WriteLine(p.id +", "+ p.ProductName +", "+ p.UnitPrice 
                                        +", "+ p.QuantityPerUnit +", "+ p.UnitsInStock +", "+ p.UnitsOnOrder);
             }
+            foreach (Product p in productMapper.GetAll())
+            {
+                Console.WriteLine(p.id + ", " + p.ProductName + ", " + p.UnitPrice
+                                       + ", " + p.QuantityPerUnit + ", " + p.UnitsInStock + ", " + p.UnitsOnOrder);
+            }
+            b.CloseConnection();
+            //IDataMapper<Employee> emplyeeMapper = b.Build<Employee>(); //1ªparte 1.
+            //IEnumerable<Employee> employees = emplyeeMapper.GetAll();
+            //foreach (Employee employee in employees)
+            //{
+            //    Console.WriteLine(employee.EmployeeId);
+            //}
+            //IDataMapper<Customer> customerMapper = b.Build<Customer>(); //1ªparte 1.
             ////--------------------------------------------------------------------------
             //Builder b2 = new Builder(connectionStringBuilder, typeof(MultiConnection<>));
+            //IDataMapper<Order> orderMapper = b2.Build<Order>(); //1ªparte 1.
+            //foreach (Order o in orderMapper.GetAll())
+            //{
+            //    Console.WriteLine(o.OrderId + ", " + o.OrderDate + ", " + o.ShipAddress);
+            //}
             //IDataMapper<Customer> customerMapper2 = b2.Build<Customer>(); //1ªparte 1.
             //customerMapper2.Update(new Customer());
             //customerMapper2.Delete(new Customer());

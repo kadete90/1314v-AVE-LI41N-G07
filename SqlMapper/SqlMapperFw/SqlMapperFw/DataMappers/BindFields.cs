@@ -16,6 +16,13 @@ namespace SqlMapperFw.DataMappers
             //TInstance = Activator.CreateInstance<T>();
         }
 
+        //
+        //public T matchFields(T instance)
+        //{
+            
+        //}
+
+        //retorna uma nova instância de T com valores obtidos da base de dados
         public T bind(object[] dbRowValues)
         {
             T TInstance = (T)Activator.CreateInstance(typeof(T), dbRowValues);

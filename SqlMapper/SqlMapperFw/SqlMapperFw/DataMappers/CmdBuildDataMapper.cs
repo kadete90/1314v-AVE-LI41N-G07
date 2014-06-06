@@ -17,8 +17,6 @@ namespace SqlMapperFw.DataMappers
         public CmdBuilder(SqlConnection strBuilder)
         {
             _conSql = strBuilder;
- 
-      
             Type type = typeof(T);
 
             DBTableNameAttribute tableNameAttribute = (DBTableNameAttribute)type.GetCustomAttribute(typeof(DBTableNameAttribute));
@@ -55,10 +53,10 @@ namespace SqlMapperFw.DataMappers
         //minimizar reflexão neste método
         public IEnumerable<T> GetAll()
         {
-            SqlDataReader rd = null;
             using (SqlTransaction sqlTransaction = _conSql.BeginTransaction())
             {
                 String DBfields = "";
+                SqlDataReader rd;
                 try
                 {
                     SqlCommand cmd = _conSql.CreateCommand();
@@ -78,23 +76,19 @@ namespace SqlMapperFw.DataMappers
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine("An error occur on GetAll(): " + exception);
+                    Console.WriteLine("An error occur on GetAll(): \n" + exception);
                     Console.WriteLine("Rollback from this transaction...");
                     sqlTransaction.Rollback();
-                }
-                if (rd == null)
-                {
-                    throw new Exception("This Table doesn't have row's!");
+                    yield break;
                 }
 
-                
                 foreach (var DBRowValues in rd.AsEnumerable())
                 {
                     //TODO: bind (tentar minimizar o uso da reflexão)
                     yield return BindFields.bind(DBRowValues);
                 }
                 rd.Close();
-                //sqlTransaction.Commit();
+                sqlTransaction.Commit();
             }
         }
 
@@ -123,9 +117,46 @@ namespace SqlMapperFw.DataMappers
         }
 
         //minimizar reflexão neste método
-        public void Insert(T val)
+        public void Insert(T instance)
         {
             throw new NotImplementedException();
+
+            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction())
+            {
+                String DBfields = "";
+                SqlDataReader rd;
+                try
+                {
+                    SqlCommand cmd = _conSql.CreateCommand();
+                    if (FieldsNamesDictionary.Count == 0)
+                        throw new Exception("List of fields empty!!");
+                    foreach (String fieldName in FieldsNamesDictionary.Keys)
+                    {
+                        if (PKPropName != fieldName) //identity
+                            DBfields += fieldName + ", ";
+                    }
+
+                    //const string strUpdate = "INSERT INTO Products (ProductName, UnitPrice, UnitsInStock) VALUES (@name, @price, @stock)";
+
+
+                    if (DBfields != "")
+                        DBfields = DBfields.Substring(0, DBfields.Length - 2); //remove última vírgula
+                    cmd.CommandText = "INSERT INTO " + TableName + " ("+ DBfields + ") VALUES (" + getTypeValues(instance) + ")";
+                    cmd.Transaction = sqlTransaction;
+
+                    rd = cmd.ExecuteReader();
+
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("An error occur on Insert(): \n" + exception);
+                    Console.WriteLine("Rollback from this transaction...");
+                    sqlTransaction.Rollback();
+                    return;
+                }
+                rd.Close();
+                sqlTransaction.Commit();
+            }
             //const string strUpdate = "INSERT INTO Products (ProductName, UnitPrice, UnitsInStock) OUTPUT INSERTED.ProductID VALUES (@name, @price, @stock)";
 
             //SqlCommand cmd = _conSql.CreateCommand();
