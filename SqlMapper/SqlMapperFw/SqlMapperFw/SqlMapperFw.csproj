@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataMappers\BindFields.cs" />
+    <Compile Include="Reflection\BindFields.cs" />
     <Compile Include="DataMappers\DataReaderExtension.cs" />
     <Compile Include="BuildMapper\Builder.cs" />
     <Compile Include="DataMappers\CmdBuildDataMapper.cs" />

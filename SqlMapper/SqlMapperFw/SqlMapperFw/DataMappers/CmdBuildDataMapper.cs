@@ -141,7 +141,7 @@ namespace SqlMapperFw.DataMappers
 
                     if (DBfields != "")
                         DBfields = DBfields.Substring(0, DBfields.Length - 2); //remove última vírgula
-                    cmd.CommandText = "INSERT INTO " + TableName + " ("+ DBfields + ") VALUES (" + getTypeValues(instance) + ")";
+                    //cmd.CommandText = "INSERT INTO " + TableName + " ("+ DBfields + ") VALUES (" + getTypeValues(instance) + ")";
                     cmd.Transaction = sqlTransaction;
 
                     rd = cmd.ExecuteReader();

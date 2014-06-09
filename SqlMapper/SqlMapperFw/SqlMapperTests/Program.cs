@@ -25,29 +25,22 @@ namespace SqlMapperTests
             };
 
             Builder b = new Builder(connectionStringBuilder, typeof(SingleConnection<>));
-            IDataMapper<Product> productMapper = b.Build<Product>(); //1ªparte 1.
-
-            //customerMapper.Insert(new Customer());
-            //productMapper.Update(new Product());
-            //productMapper.Delete(new Product());
-            foreach (Product p in productMapper.GetAll())
-            {
-                Console.WriteLine(p.id +", "+ p.ProductName +", "+ p.UnitPrice 
-                                       +", "+ p.QuantityPerUnit +", "+ p.UnitsInStock +", "+ p.UnitsOnOrder);
-            }
-            foreach (Product p in productMapper.GetAll())
-            {
-                Console.WriteLine(p.id + ", " + p.ProductName + ", " + p.UnitPrice
-                                       + ", " + p.QuantityPerUnit + ", " + p.UnitsInStock + ", " + p.UnitsOnOrder);
-            }
-            b.CloseConnection();
-            //IDataMapper<Employee> emplyeeMapper = b.Build<Employee>(); //1ªparte 1.
-            //IEnumerable<Employee> employees = emplyeeMapper.GetAll();
-            //foreach (Employee employee in employees)
+            
+            //IDataMapper<Product> productMapper = b.Build<Product>(); //1ªparte 1.
+            //foreach (Product p in productMapper.GetAll())
             //{
-            //    Console.WriteLine(employee.EmployeeId);
+            //    Console.WriteLine(p.id +", "+ p.ProductName +", "+ p.UnitPrice 
+            //                           +", "+ p.QuantityPerUnit +", "+ p.UnitsInStock +", "+ p.UnitsOnOrder);
             //}
-            //IDataMapper<Customer> customerMapper = b.Build<Customer>(); //1ªparte 1.
+
+            IDataMapper<Employee> emplyeeMapper = b.Build<Employee>(); //1ªparte 1.
+            foreach (Employee e in emplyeeMapper.GetAll())
+            {
+                Console.WriteLine(e.EmployeeId + ", " + e.BirthDate + ", " + e.City);
+            }
+
+            b.CloseConnection();
+
             ////--------------------------------------------------------------------------
             //Builder b2 = new Builder(connectionStringBuilder, typeof(MultiConnection<>));
             //IDataMapper<Order> orderMapper = b2.Build<Order>(); //1ªparte 1.

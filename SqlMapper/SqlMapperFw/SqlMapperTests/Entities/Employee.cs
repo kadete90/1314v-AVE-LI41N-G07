@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using SqlMapperFw;
 
 namespace SqlMapperTests.Entities
@@ -22,11 +21,11 @@ namespace SqlMapperTests.Entities
         public string Country { set; get; }
         public string HomePhone { set; get; }
         public string Extension { set; get; }
-        //public string Photo { set; get; } //bd -> image
+        public byte[] Photo { set; get; } //bd -> image
         public string PhotoPath { set; get; } 
         public string Notes { set; get; }
-        public Employee ReportsTo { set; get; }
-        public IEnumerable<Order> Orders;
+        public int ReportsTo { set; get; }
+        //public IEnumerable<Order> Orders;
 
     }
 }

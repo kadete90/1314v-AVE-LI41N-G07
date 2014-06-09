@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using SqlMapperFw.DataMappers;
 
@@ -13,28 +12,12 @@ namespace SqlMapperFw.MySqlConnection
             MyDataMapper = new CmdBuilder<T>(MySql);
         }
 
-        public override Object Execute(string typeCommand, Object elem)
+        public override Object Execute(String typeCommand, Object elem)
         {
             OpenConnection();
-
-            switch (typeCommand)
-            {
-                case "GetAll":
-                    return MyDataMapper.GetAll();
-                case "Delete":
-                    MyDataMapper.Delete((T)elem);
-                    break;
-                case "Insert":
-                    MyDataMapper.Insert((T)elem);
-                    break;
-                case "Update":
-                    MyDataMapper.Update((T)elem);
-                    break;
-                default:
-                    throw new Exception("This command doesn't exist");
-            }
+            object ret = ExecuteSwitch(typeCommand, elem);
             CloseConnection();
-            return null;
+            return ret;
         }
     }
 }

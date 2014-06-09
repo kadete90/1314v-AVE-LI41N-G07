@@ -30,12 +30,12 @@ namespace SqlMapperFw.Reflection
             }
         }
 
-        public static void SetValue(this MemberInfo member, object property, object value)
+        public static void SetValue(this MemberInfo member, object instance, object value)
         {
             if (member.MemberType == MemberTypes.Property)
-                ((PropertyInfo)member).SetValue(property, value, null);
+                ((PropertyInfo)member).SetValue(instance, value);
             else if (member.MemberType == MemberTypes.Field)
-                ((FieldInfo)member).SetValue(property, value);
+                ((FieldInfo)member).SetValue(instance, value);
             else
                 throw new Exception("Property must be of type FieldInfo or PropertyInfo");
         }

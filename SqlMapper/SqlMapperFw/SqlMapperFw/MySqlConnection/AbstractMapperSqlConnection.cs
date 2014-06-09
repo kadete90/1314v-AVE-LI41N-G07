@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SqlMapperFw.DataMappers;
 
 namespace SqlMapperFw.MySqlConnection
@@ -32,6 +28,28 @@ namespace SqlMapperFw.MySqlConnection
             
         }
 
-        public abstract object Execute(string typeCommand, object elem);
+        public Object ExecuteSwitch(string typeCommand, Object elem)
+        {
+            switch (typeCommand)
+            {
+                case "GetAll":
+                    return MyDataMapper.GetAll();
+                case "Delete":
+                    MyDataMapper.Delete((T)elem);
+                    break;
+                case "Insert":
+                    MyDataMapper.Insert((T)elem);
+                    break;
+                case "Update":
+                    MyDataMapper.Update((T)elem);
+                    break;
+                default:
+                    throw new Exception("This command doesn't exist");
+            }
+            return null;
+        }
+
+        public abstract Object Execute(string typeCommand, Object elem);
+    
     }
 }
