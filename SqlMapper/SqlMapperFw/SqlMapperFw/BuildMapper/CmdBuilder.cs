@@ -32,7 +32,7 @@ namespace SqlMapperFw.BuildMapper
 
                 var DEFieldName = validMemberInfo.getDBFieldName();
 
-                if (!_fieldsMatchDictionary.ContainsKey(DEFieldName))
+                if (!_fieldsMatchDictionary.ContainsKey(DEFieldName) && !validMemberInfo.isPrimaryKey())
                     _fieldsMatchDictionary.Add(DEFieldName, mi);
 
                 //não é aceite mais que uma PK
@@ -60,21 +60,20 @@ namespace SqlMapperFw.BuildMapper
             cmd.CommandText = "SELECT " + DBfields + " FROM " + TableName;
             _commandsDictionary.Add("SELECT", cmd);
 
-            //TODO INSERT
+            ////TODO UPDATE
             cmd = _conSql.CreateCommand();
-            cmd.CommandText = "INSERT INTO" + TableName + " (" + DBfields + ") VALUES (_InsertFieldsValues_) SET @ID = SCOPE_IDENTITY();";
-            cmd.Parameters.Add("@ID", SqlDbType.Int).Direction = ParameterDirection.Output;
-            _commandsDictionary.Add("INSERT", cmd);
-
-            //TODO UPDATE
-            cmd = _conSql.CreateCommand();            //SET column1=value1, column2=value2
-            cmd.CommandText = "UPDATE " + TableName + " SET _InsertMatchFields_ WHERE" + _pkKeyValuePair.Key + "= @ID";
+            cmd.CommandText = "UPDATE " + TableName + " SET ProductName = @name WHERE ProductID = @id";
             _commandsDictionary.Add("UPDATE", cmd);
 
-            //TODO DELETE
+            ////TODO DELETE
             cmd = _conSql.CreateCommand();
             cmd.CommandText = "DELETE FROM " + TableName + " WHERE " + _pkKeyValuePair.Key + " = @ID";
             _commandsDictionary.Add("DELETE", cmd);
+
+            ////TODO INSERT
+            cmd = _conSql.CreateCommand();
+            cmd.CommandText = "INSERT INTO " + TableName + " (" + DBfields + ")" + " VALUES (" + ReflectionMethods.StringBuilder(_fieldsMatchDictionary.Keys) + ") SET @ID = SCOPE_IDENTITY();";
+            _commandsDictionary.Add("INSERT", cmd);
 
             _bindFields = new BindFields<T>(_fieldsMatchDictionary);
         }
@@ -88,7 +87,7 @@ namespace SqlMapperFw.BuildMapper
                 try
                 {
                     SqlCommand cmd;
-                    if (!_commandsDictionary.TryGetValue("SELECT", out cmd))
+                    if(!_commandsDictionary.TryGetValue("SELECT", out cmd))
                         throw new Exception("This Command doesn't exist!");
                     cmd.Transaction = sqlTransaction;
                     rd = cmd.ExecuteReader();
@@ -110,10 +109,40 @@ namespace SqlMapperFw.BuildMapper
         }
 
         //minimizar reflexão neste método
-        public void Insert(T instance)
+        public void Insert(T val)
         {
-            //cmd.CommandText = "SET IDENTITY_INSERT " + TableName + " ON"; //faz reset dos id's a partir do último corrente
-            throw new NotImplementedException();
+            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction())
+            {
+                try
+                {
+                    SqlCommand cmd;
+                    if (!_commandsDictionary.TryGetValue("INSERT", out cmd))
+                        throw new Exception("This Command doesn't exist!");
+                    cmd.Parameters.Add("@ID", _pkKeyValuePair.Value.GetSqlDbType<T>(val)).Direction = ParameterDirection.Output;
+                    foreach (var field in _fieldsMatchDictionary)
+                    {
+                        if (_pkKeyValuePair.Key != field.Key) //identity
+                        {
+                            SqlParameter p = new SqlParameter(field.Key, field.Value.GetSqlDbType<T>(val));
+                            p.Value = field.Value.GetValue(val);
+                            cmd.Parameters.Add(p);
+                        }
+                        
+                    }
+                    
+                    cmd.Transaction = sqlTransaction;
+                    cmd.ExecuteNonQuery();
+                    _pkKeyValuePair.Value.SetValue(val, cmd.Parameters[0].Value);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("An error occur on Delete(): \n" + exception + "\nRolling back this transaction...");
+                    sqlTransaction.Rollback();
+                    return;
+                }
+                sqlTransaction.Commit();
+            }
+            
         }
 
         //minimizar reflexão neste método

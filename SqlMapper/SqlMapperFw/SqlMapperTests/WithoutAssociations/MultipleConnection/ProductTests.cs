@@ -64,6 +64,26 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         }
 
         [TestMethod]
+        public void TestInsertProduct()
+        {
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("\t\tSINGLE CONNECTION TEST");
+            Console.WriteLine("-----------------------------------------------------");
+            Product p = new Product
+            {
+                ProductName = "OLA",
+                QuantityPerUnit = "100",
+                UnitPrice = 100,
+                UnitsInStock = 50,
+                UnitsOnOrder = 30
+            };
+            productDataMapper.Insert(p);
+            Assert.IsNotNull(p.id);
+            Console.WriteLine("Inserted new product with id = {0}",p.id);
+            Console.WriteLine("-----------------------------------------------------");
+        }
+
+        [TestMethod]
         public void TestDeleteProduct()
         {
             Console.WriteLine("-----------------------------------------------------");
