@@ -56,9 +56,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
 
         [TestMethod]
         public void TestReadAllOrders()
-        { 
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("\t\tSINGLE CONNECTION TEST");
+        {
             Console.WriteLine("-----------------------------------------------------");
             int count = orderDataMapper.GetAll().Count();
             Console.WriteLine(" TestReadAllOrders Count: " + count);

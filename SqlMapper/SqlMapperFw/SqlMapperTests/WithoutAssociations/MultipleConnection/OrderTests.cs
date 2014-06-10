@@ -28,6 +28,9 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             builder = new Builder(connectionStringBuilder, typeof(MultiConnection<>));
             orderDataMapper = builder.Build<Order>();
             CleanToDefault();
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("\tBEGINING MULTIPLE CONNECTION TEST");
+            Console.WriteLine("-----------------------------------------------------");
         }
 
         public void CleanToDefault()
@@ -38,10 +41,6 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
                 conSql.Open();
                 cmd.ExecuteNonQuery();
                 conSql.Close();
-
-                Console.WriteLine("-----------------------------------------------------");
-                Console.WriteLine("\tBEGINING MULTIPLE CONNECTION TEST");
-                Console.WriteLine("-----------------------------------------------------");
             }
         }
 

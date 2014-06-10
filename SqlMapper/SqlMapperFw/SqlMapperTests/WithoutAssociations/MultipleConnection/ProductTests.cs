@@ -56,9 +56,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         [TestMethod]
         public void TestReadAllProducts()
         {
+            Console.WriteLine("-----------------------------------------------------");
             int count = productDataMapper.GetAll().Count();
             Console.WriteLine(" TestReadAllProducts Count: " + count);
-            Assert.AreEqual(78, count);
+            Assert.AreEqual(77, count);
             Console.WriteLine("-----------------------------------------------------");
         }
 

@@ -56,7 +56,8 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
 
         [TestMethod]
         public void TestReadAllCustomers()
-        { 
+        {
+            Console.WriteLine("-----------------------------------------------------");
             int count = customerDataMapper.GetAll().Count();
             Console.WriteLine(" TestReadAllCustomers Count: " + count);
             Assert.AreEqual(91, count);
