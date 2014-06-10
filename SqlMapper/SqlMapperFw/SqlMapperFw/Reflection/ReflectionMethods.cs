@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlTypes;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace SqlMapperFw.Reflection
 {
@@ -70,6 +75,42 @@ namespace SqlMapperFw.Reflection
                 return ((FieldInfo)member).GetValue(property);
             else
                 throw new Exception("Property must be of type FieldInfo or PropertyInfo");
+        }
+
+        public static string getTypeValues<T>(this Object instance)
+        {
+            Type t = instance.GetType();
+            String values = "";
+            foreach (MemberInfo m in t.GetMembers())
+            {
+                if (m.GetValidType() != null && m.GetCustomAttribute(typeof(PropPKAttribute)) == null)
+                {
+                    var value = m.GetValue(instance);
+                    if (value is string)
+                        values += "'" + value + "', ";
+                    else
+                        values += value + ", ";
+                }
+            }
+            if (values != "")
+                values = values.Substring(0, values.Length - 2);
+            return values;
+        }
+        
+        public static SqlDbType GetSqlDbType<T>(this MemberInfo m, Object instance)
+        {
+            Type t = m.GetValue(instance).GetType();
+            /*switch(t)
+            {
+                case:
+                    return;
+                case:
+                    return;
+                default:
+                    return null;
+            }*/
+            return 0;
+            //throw new ArgumentException("MemberInfo must be if type FieldInfo, PropertyInfo or EventInfo", "member");
         }
     }
 }

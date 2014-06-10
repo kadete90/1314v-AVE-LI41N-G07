@@ -24,7 +24,10 @@ namespace SqlMapperFw.BuildMapper
             {
                 try
                 {
-                    return _mapperSqlConnection.Execute(info.TargetMethod.Name, info.Arguments);
+                    if(info.Arguments.Length == 0)
+                        return _mapperSqlConnection.Execute(info.TargetMethod.Name, info.Arguments);
+                    return _mapperSqlConnection.Execute(info.TargetMethod.Name, info.Arguments.GetValue(0));
+
                 }
                 catch(Exception ex)
                 {
