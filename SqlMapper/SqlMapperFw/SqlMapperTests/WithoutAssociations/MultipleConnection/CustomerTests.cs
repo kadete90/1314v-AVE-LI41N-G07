@@ -14,11 +14,12 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
     {
         Builder builder;
         IDataMapper<Customer> customerDataMapper;
+        private SqlConnectionStringBuilder connectionStringBuilder;
 
         [TestInitialize]
         public void Setup()
         {
-            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder
+            connectionStringBuilder = new SqlConnectionStringBuilder
             {
                 DataSource = "(local)",
                 IntegratedSecurity = true,
@@ -26,20 +27,36 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
             builder = new Builder(connectionStringBuilder, typeof(MultiConnection<>));
             customerDataMapper = builder.Build<Customer>();
+            //CleanToDefault();
+
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("\tBEGINING MULTIPLE CONNECTION TEST");
+            Console.WriteLine("-----------------------------------------------------");
+        }
+
+        public void CleanToDefault()
+        {
+            using (SqlConnection conSql = new SqlConnection(connectionStringBuilder.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM Customers WHERE CustomerId > ??", conSql);
+                conSql.Open();
+                cmd.ExecuteNonQuery();
+                conSql.Close();
+            }
         }
 
         [TestCleanup]
         public void TearDown()
         {
             builder.CloseConnection();
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("\tENDING MULTIPLE CONNECTION TEST");
+            Console.WriteLine("-----------------------------------------------------");
         }
 
         [TestMethod]
         public void TestReadAllCustomers()
         {
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("\t\tSINGLE CONNECTION TEST");
-            Console.WriteLine("-----------------------------------------------------");
             int count = customerDataMapper.GetAll().Count();
             Console.WriteLine(" TestReadAllCustomers Count: " + count);
             Assert.AreEqual(91, count);

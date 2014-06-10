@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
 using SqlMapperFw.DataMappers;
@@ -10,9 +11,9 @@ namespace SqlMapperFw.BuildMapper
     public class CmdBuilder<T> : IDataMapper<T>
     {
         public String TableName;
-        public String PKPropName;
         readonly BindFields<T> _bindFields;
         readonly SqlConnection _conSql;
+        readonly KeyValuePair<String, MemberInfo> _pkKeyValuePair; //DB_Field_Name
         readonly Dictionary<String, MemberInfo> _fieldsMatchDictionary = new Dictionary<String, MemberInfo>(); //DB_Field_Name, DE_Field_Info
         readonly Dictionary<String, SqlCommand> _commandsDictionary = new Dictionary<String, SqlCommand>(); //TypeCommand, Command
 
@@ -35,15 +36,17 @@ namespace SqlMapperFw.BuildMapper
                     _fieldsMatchDictionary.Add(DEFieldName, mi);
 
                 //não é aceite mais que uma PK
-                if (PKPropName != null) //TODO: alterar quando tiver chave composta
+                if (_pkKeyValuePair.Key != null) //TODO: alterar quando tiver chave composta
                     continue;
                 if (validMemberInfo.isPrimaryKey())
-                    PKPropName = DEFieldName;
+                    _pkKeyValuePair = new KeyValuePair<string, MemberInfo>(DEFieldName, validMemberInfo);
 
             }
-           
-            if (_fieldsMatchDictionary.Count == 0)
-                throw new Exception("No domain entity fields recognized!!");
+
+            if (_fieldsMatchDictionary.Count == 0 || _pkKeyValuePair.Key == null)
+                throw new Exception("No domain entity fields recognized or no PK defined!!");
+
+            //SqlParameter[] sqlParameters = new SqlParameter[_fieldsMatchDictionary.Count];
 
             //Criação dos comandos
             String DBfields = "";
@@ -57,20 +60,21 @@ namespace SqlMapperFw.BuildMapper
             cmd.CommandText = "SELECT " + DBfields + " FROM " + TableName;
             _commandsDictionary.Add("SELECT", cmd);
 
-            ////TODO UPDATE
+            //TODO INSERT
             cmd = _conSql.CreateCommand();
-            cmd.CommandText = "UPDATE " + TableName + " SET ProductName = @name WHERE ProductID = @id";
+            cmd.CommandText = "INSERT INTO" + TableName + " (" + DBfields + ") VALUES (_InsertFieldsValues_) SET @ID = SCOPE_IDENTITY();";
+            cmd.Parameters.Add("@ID", SqlDbType.Int).Direction = ParameterDirection.Output;
+            _commandsDictionary.Add("INSERT", cmd);
+
+            //TODO UPDATE
+            cmd = _conSql.CreateCommand();            //SET column1=value1, column2=value2
+            cmd.CommandText = "UPDATE " + TableName + " SET _InsertMatchFields_ WHERE" + _pkKeyValuePair.Key + "= @ID";
             _commandsDictionary.Add("UPDATE", cmd);
 
-            ////TODO DELETE
+            //TODO DELETE
             cmd = _conSql.CreateCommand();
-            cmd.CommandText = "DELETE FROM " + TableName + " WHERE "+ PKPropName +" = ";
+            cmd.CommandText = "DELETE FROM " + TableName + " WHERE " + _pkKeyValuePair.Key + " = @ID";
             _commandsDictionary.Add("DELETE", cmd);
-
-            ////TODO INSERT
-            cmd = _conSql.CreateCommand();
-            cmd.CommandText = "INSERT INTO" + TableName + " VALUES (" + DBfields + ")";
-            _commandsDictionary.Add("INSERT", cmd);
 
             _bindFields = new BindFields<T>(_fieldsMatchDictionary);
         }
@@ -78,30 +82,28 @@ namespace SqlMapperFw.BuildMapper
         //minimizar reflexão neste método
         public IEnumerable<T> GetAll()
         {
-            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction())
+            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 SqlDataReader rd;
                 try
                 {
                     SqlCommand cmd;
-                    if(!_commandsDictionary.TryGetValue("SELECT", out cmd))
+                    if (!_commandsDictionary.TryGetValue("SELECT", out cmd))
                         throw new Exception("This Command doesn't exist!");
                     cmd.Transaction = sqlTransaction;
                     rd = cmd.ExecuteReader();
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine("An error occur on GetAll(): \n" + exception+ "\nRolling back this transaction...");
+                    Console.WriteLine("An error occur on GetAll(): \n" + exception + "\nRolling back this transaction...");
                     sqlTransaction.Rollback();
                     yield break;
                 }
 
                 foreach (var DBRowValues in rd.AsEnumerable())
                 {
-                    //TODO: bind (tentar minimizar o uso da reflexão)
                     yield return _bindFields.bind(DBRowValues);
                 }
-
                 rd.Close();
                 sqlTransaction.Commit();
             }
@@ -110,6 +112,7 @@ namespace SqlMapperFw.BuildMapper
         //minimizar reflexão neste método
         public void Insert(T instance)
         {
+            //cmd.CommandText = "SET IDENTITY_INSERT " + TableName + " ON"; //faz reset dos id's a partir do último corrente
             throw new NotImplementedException();
         }
 
@@ -122,18 +125,39 @@ namespace SqlMapperFw.BuildMapper
         //minimizar reflexão neste método
         public void Delete(T val)
         {
-            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction())
+            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction(IsolationLevel.Serializable))
             {
-                SqlDataReader rd;
                 try
                 {
                     SqlCommand cmd;
                     if (!_commandsDictionary.TryGetValue("DELETE", out cmd))
                         throw new Exception("This Command doesn't exist!");
 
-                    cmd.CommandText += val.GetType();
+                    SqlParameter pkSqlParameter = new SqlParameter("@ID", SqlDbType.Int)
+                    {
+                        Value = _pkKeyValuePair.Value.GetValue(val)
+                    };
+                    cmd.Parameters.Add(pkSqlParameter);
                     cmd.Transaction = sqlTransaction;
-                    rd = cmd.ExecuteReader();
+
+
+                    //if (pi.ParameterType == typeof(int))
+                    //{
+                    //    pm[i] = new SqlParameter("@" + pi.Name, SqlDbType.Int);
+                    //}
+                    //else if (pi.ParameterType == typeof(double))
+                    //{
+                    //    pm[i] = new SqlParameter("@" + pi.Name, SqlDbType.Float);
+                    //}
+                    //else if (pi.ParameterType == typeof(string))
+                    //{
+                    //    pm[i] = new SqlParameter("@" + pi.Name, SqlDbType.VarChar, 50);
+                    //}
+                    //cmd.Parameters.Add();
+
+                    if (cmd.ExecuteNonQuery() == 0)
+                        Console.WriteLine("No row(s) affected!");
+
                 }
                 catch (Exception exception)
                 {
@@ -141,8 +165,6 @@ namespace SqlMapperFw.BuildMapper
                     sqlTransaction.Rollback();
                     return;
                 }
-
-                rd.Close();
                 sqlTransaction.Commit();
             }
         }

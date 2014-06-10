@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlTypes;
+using System.Data.SqlClient;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace SqlMapperFw.Reflection
 {
@@ -67,12 +64,12 @@ namespace SqlMapperFw.Reflection
                 throw new Exception("Property must be of type FieldInfo or PropertyInfo");
         }
 
-        public static object GetValue(this MemberInfo member, object property)
+        public static object GetValue(this MemberInfo member, object instance)
         {
             if (member.MemberType == MemberTypes.Property)
-                return ((PropertyInfo)member).GetValue(property, null);
+                return ((PropertyInfo)member).GetValue(instance, null);
             else if (member.MemberType == MemberTypes.Field)
-                return ((FieldInfo)member).GetValue(property);
+                return ((FieldInfo)member).GetValue(instance);
             else
                 throw new Exception("Property must be of type FieldInfo or PropertyInfo");
         }

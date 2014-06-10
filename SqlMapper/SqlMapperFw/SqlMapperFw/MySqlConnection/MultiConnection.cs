@@ -16,7 +16,6 @@ namespace SqlMapperFw.MySqlConnection
         {
             OpenConnection();
             Object aux;
-            //TODO: confirmar se existe uma solução melhor
             while ((aux = ExecuteSwitch(typeCommand, elem)) != null)
                 return aux;
             CloseConnection();

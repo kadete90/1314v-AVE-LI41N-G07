@@ -14,11 +14,12 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
     {
         Builder builder;
         IDataMapper<Order> orderDataMapper;
+        SqlConnectionStringBuilder connectionStringBuilder;
 
         [TestInitialize]
         public void Setup()
         {
-            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder
+            connectionStringBuilder = new SqlConnectionStringBuilder
             {
                 DataSource = "(local)",
                 IntegratedSecurity = true,
@@ -26,20 +27,36 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
             builder = new Builder(connectionStringBuilder, typeof(MultiConnection<>));
             orderDataMapper = builder.Build<Order>();
+            CleanToDefault();
+        }
+
+        public void CleanToDefault()
+        {
+            using (SqlConnection conSql = new SqlConnection(connectionStringBuilder.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM Orders WHERE OrderId > 11077", conSql);
+                conSql.Open();
+                cmd.ExecuteNonQuery();
+                conSql.Close();
+
+                Console.WriteLine("-----------------------------------------------------");
+                Console.WriteLine("\tBEGINING MULTIPLE CONNECTION TEST");
+                Console.WriteLine("-----------------------------------------------------");
+            }
         }
 
         [TestCleanup]
         public void TearDown()
         {
             builder.CloseConnection();
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("\tENDING MULTIPLE CONNECTION TEST");
+            Console.WriteLine("-----------------------------------------------------");
         }
 
         [TestMethod]
         public void TestReadAllOrders()
         {
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("\t\tSINGLE CONNECTION TEST");
-            Console.WriteLine("-----------------------------------------------------");
             int count = orderDataMapper.GetAll().Count();
             Console.WriteLine(" TestReadAllOrders Count: " + count);
             Assert.AreEqual(830, count);

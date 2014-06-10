@@ -14,11 +14,12 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
     {
         Builder builder;
         IDataMapper<Employee> employeeDataMapper;
+        SqlConnectionStringBuilder connectionStringBuilder;
        
         [TestInitialize]
         public void Setup()
         {
-            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder
+            connectionStringBuilder = new SqlConnectionStringBuilder
             {
                 DataSource = "(local)",
                 IntegratedSecurity = true,
@@ -26,19 +27,36 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             };
             builder = new Builder(connectionStringBuilder, typeof(SingleConnection<>));
             employeeDataMapper = builder.Build<Employee>();
+            CleanToDefault();
+
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("\tBEGINING SINGLE CONNECTION TEST");
+            Console.WriteLine("-----------------------------------------------------");
+        }
+
+        public void CleanToDefault()
+        {
+            using (SqlConnection conSql = new SqlConnection(connectionStringBuilder.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM Employees WHERE EmployeeId > 9", conSql);
+                conSql.Open();
+                cmd.ExecuteNonQuery();
+                conSql.Close();
+            }
         }
 
         [TestCleanup]
         public void TearDown()
         {
            builder.CloseConnection();
+           Console.WriteLine("-----------------------------------------------------");
+           Console.WriteLine("\tENDING SINGLE CONNECTION TEST");
+           Console.WriteLine("-----------------------------------------------------");
         }
 
         [TestMethod]
         public void TestReadAllEmployees()
         { 
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("\t\tSINGLE CONNECTION TEST");
             Console.WriteLine("-----------------------------------------------------");
             int count = employeeDataMapper.GetAll().Count();
             Console.WriteLine(" TestReadAllEmployees Count: " + count);
