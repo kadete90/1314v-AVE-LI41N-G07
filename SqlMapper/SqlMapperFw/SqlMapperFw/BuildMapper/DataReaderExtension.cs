@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SqlMapperFw.DataMappers
+namespace SqlMapperFw.BuildMapper
 {
     public static class DataReaderExtension
     {

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace SqlMapperFw.Reflection
 {
     public class BindFields<T>
     {
-        private readonly Dictionary<String, MemberInfo> FieldNamesDictionary;
+        readonly Dictionary<String, MemberInfo> FieldNamesDictionary;
 
         public BindFields(Dictionary<String, MemberInfo> fieldNamesDictionary)
         {

@@ -3,12 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlMapperFw", "SqlMapperFw\SqlMapperFw.csproj", "{BF16BCCF-4FE8-4A23-93F3-28A4C907BA04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlMapperClient", "SqlMapperTests\SqlMapperClient.csproj", "{B07C13EA-A640-4449-95CD-1A356104FAFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlMapperTests", "SqlMapperTests\SqlMapperTests.csproj", "{B07C13EA-A640-4449-95CD-1A356104FAFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlMapperTests", "SqlMapperClient\SqlMapperTests.csproj", "{C4A36851-173E-44D3-ADE8-47BA3D879A5E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B07C13EA-A640-4449-95CD-1A356104FAFA} = {B07C13EA-A640-4449-95CD-1A356104FAFA}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlMapperClient", "SqlMapperClient\SqlMapperClient.csproj", "{C4A36851-173E-44D3-ADE8-47BA3D879A5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

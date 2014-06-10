@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using SqlMapperFw;
+﻿using SqlMapperFw;
 
-namespace SqlMapperTests.Entities
+namespace SqlMapperClient.Entities
 {
 
     [DBTableName("Customers")]
@@ -9,7 +8,7 @@ namespace SqlMapperTests.Entities
     {
         [PropPK]
         [DBFieldName("CustomerId")]
-        public int id { set; get; }  //PK
+        public string id { set; get; }  //PK
         public string CompanyName { set; get; } 
         public string ContactName { set; get; } 
         public string ContactTitle { set; get; } 
@@ -21,6 +20,6 @@ namespace SqlMapperTests.Entities
         public string Country { set; get; } 
         public string Phone { set; get; } 
         public string Fax { set; get; }
-        public IEnumerable<Order> Orders;
+        //public IEnumerable<Order> Orders;
     }
 }

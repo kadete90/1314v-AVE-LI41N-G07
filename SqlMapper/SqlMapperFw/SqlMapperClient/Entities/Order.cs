@@ -1,7 +1,7 @@
 ﻿using System;
 using SqlMapperFw;
 
-namespace SqlMapperTests.Entities
+namespace SqlMapperClient.Entities
 {
 
     [DBTableName("Orders")]
@@ -9,10 +9,10 @@ namespace SqlMapperTests.Entities
     {
         [PropPK]
         public int OrderId { set; get; } //PK
-        public Customer Customer { set; get; } //FK
-        //private int CustomerId;
-        public Employee Employee { set; get; } //FK
-        //private int EmployeeId;
+        //public Customer Customer { set; get; } //FK
+        public String CustomerId;
+        //public Employee Employee { set; get; } //FK
+        public int EmployeeId;
         public DateTime OrderDate { set; get; }
         public DateTime RequiredDate { set; get; }
         public DateTime ShippedDate { set; get; }

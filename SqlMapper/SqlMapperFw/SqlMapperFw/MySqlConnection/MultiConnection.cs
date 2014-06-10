@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.BuildMapper;
 
 namespace SqlMapperFw.MySqlConnection
 {
@@ -15,9 +15,12 @@ namespace SqlMapperFw.MySqlConnection
         public override Object Execute(String typeCommand, Object elem)
         {
             OpenConnection();
-            object ret = ExecuteSwitch(typeCommand, elem);
+            Object aux;
+            //TODO: confirmar se existe uma solução melhor
+            while ((aux = ExecuteSwitch(typeCommand, elem)) != null)
+                return (T)aux;
             CloseConnection();
-            return ret;
+            return null;
         }
     }
 }

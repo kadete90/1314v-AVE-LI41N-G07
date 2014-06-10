@@ -9,9 +9,9 @@ namespace SqlMapperFw.BuildMapper
 {
     public class Builder
     {
-        public static Type TypeConnection;
-        public static IMapperSqlConnection Connection;
-        public SqlConnectionStringBuilder ConnectionString { get; set; }
+        readonly Type _typeConnection;
+        readonly SqlConnectionStringBuilder _connectionStringBuilder;
+        static IMapperSqlConnection _mapperSqlConnection;  
 
         internal class MyInterceptor : IInvokeWrapper
         {
@@ -24,7 +24,7 @@ namespace SqlMapperFw.BuildMapper
             {
                 try
                 {
-                    return Connection.Execute(info.TargetMethod.Name, info.Arguments);
+                    return _mapperSqlConnection.Execute(info.TargetMethod.Name, info.Arguments);
                 }
                 catch(Exception ex)
                 {
@@ -41,21 +41,23 @@ namespace SqlMapperFw.BuildMapper
 
         public void CloseConnection()
         {
-            Connection.CloseConnection();
+            _mapperSqlConnection.CloseConnection();
         }
 
-        public Builder(SqlConnectionStringBuilder connectionStringBuilder, Type typeConnection)
+        public Builder(SqlConnectionStringBuilder connectionStringBuilderBuilder, Type typeConnection)
         {
-            TypeConnection = typeConnection;
-            ConnectionString = connectionStringBuilder;
+            _typeConnection = typeConnection;
+            _connectionStringBuilder = connectionStringBuilderBuilder;
         }
 
         public IDataMapper<T> Build<T>()
         {
-            if (!TypeConnection.ImplementsInterface(typeof(IMapperSqlConnection)))
+            if (!_typeConnection.ImplementsInterface(typeof(IMapperSqlConnection)))
                 throw new Exception("This type of connection doesn't implements IMapperSqlConnection");
 
-            Connection = (IMapperSqlConnection)Activator.CreateInstance(TypeConnection.MakeGenericType(typeof(T)), ConnectionString);
+            _mapperSqlConnection = (IMapperSqlConnection)
+                Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder);
+
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
         }
     }

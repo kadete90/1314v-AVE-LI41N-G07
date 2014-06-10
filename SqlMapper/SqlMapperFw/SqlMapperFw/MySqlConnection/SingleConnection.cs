@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.BuildMapper;
 
 namespace SqlMapperFw.MySqlConnection
 {

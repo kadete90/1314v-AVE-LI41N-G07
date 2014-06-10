@@ -1,6 +1,6 @@
 ﻿using SqlMapperFw;
 
-namespace SqlMapperTests.Entities
+namespace SqlMapperClient.Entities
 {
     [DBTableName("Products")]
     public class Product

@@ -1,7 +1,7 @@
 ﻿using System;
 using SqlMapperFw;
 
-namespace SqlMapperTests.Entities
+namespace SqlMapperClient.Entities
 {
     [DBTableName("Employees")]
     public class Employee
