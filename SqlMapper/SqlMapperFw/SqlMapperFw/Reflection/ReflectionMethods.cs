@@ -42,21 +42,29 @@ namespace SqlMapperFw.Reflection
 
         public static void SetValue(this MemberInfo member, object instance, object value)
         {
-            if (member.MemberType == MemberTypes.Property)
-                ((PropertyInfo)member).SetValue(instance, value, null);
-            else if (member.MemberType == MemberTypes.Field)
-                ((FieldInfo)member).SetValue(instance, value);
-            else
-                throw new Exception("Property must be of type FieldInfo or PropertyInfo");
+            switch (member.MemberType){
+                case MemberTypes.Property:
+                    ((PropertyInfo) member).SetValue(instance, value, null);
+                    break;
+                case (MemberTypes.Field):
+                    ((FieldInfo) member).SetValue(instance, value);
+                    break;
+                default:
+                    throw new Exception("member must be of type FieldInfo or PropertyInfo");
+            }
         }
 
         public static object GetValue(this MemberInfo member, object instance)
         {
-            if (member.MemberType == MemberTypes.Property)
-                return ((PropertyInfo)member).GetValue(instance, null);
-            if (member.MemberType == MemberTypes.Field)
-                return ((FieldInfo)member).GetValue(instance);
-            throw new Exception("Property must be of type FieldInfo or PropertyInfo");
+            switch (member.MemberType)
+            {
+                case MemberTypes.Property:
+                    return ((PropertyInfo)member).GetValue(instance, null);
+                case (MemberTypes.Field):
+                    return ((FieldInfo)member).GetValue(instance);
+                default:
+                    throw new Exception("member must be of type FieldInfo or PropertyInfo");
+            }
         }
 
         // Converte System.type em SqlDbType

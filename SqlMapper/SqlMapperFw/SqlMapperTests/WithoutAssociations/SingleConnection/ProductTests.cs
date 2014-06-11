@@ -18,6 +18,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
         IDataMapper<Product> _productDataMapper;
         SqlConnectionStringBuilder _connectionStringBuilder;
 
+        //TODO: apenas fazer no inicio da classe e não em cada teste
         [TestInitialize]
         public void Setup()
         {
@@ -29,7 +30,6 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             };
 
             List<Type> bindMemberList = new List<Type> {typeof (BindFields), typeof (BindProperties)};
-
             _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
 
             _productDataMapper = _builder.Build<Product>();
@@ -49,6 +49,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             }
         }
 
+        //TODO: apenas fazer no fim de todos os testes terem sido executados
         [TestCleanup]
         public void TearDown()
         {
