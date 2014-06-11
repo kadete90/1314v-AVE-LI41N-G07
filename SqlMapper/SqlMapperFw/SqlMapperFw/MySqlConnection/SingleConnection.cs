@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using SqlMapperFw.BuildMapper;
 
@@ -6,10 +7,10 @@ namespace SqlMapperFw.MySqlConnection
 {
     public class SingleConnection<T> : AbstractMapperSqlConnection<T>
     {
-        public SingleConnection(SqlConnectionStringBuilder connString)
+        public SingleConnection(SqlConnectionStringBuilder connString, IEnumerable<Type> bindMembers)
         {
             MySql = new SqlConnection(connString.ConnectionString);
-            MyDataMapper = new CmdBuilder<T>(MySql);
+            MyCmdBuilder = new CmdBuilderDataMapper<T>(MySql, bindMembers);
             OpenConnection();
         }
 

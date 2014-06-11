@@ -8,7 +8,7 @@ namespace SqlMapperFw.MySqlConnection
     public abstract class AbstractMapperSqlConnection<T> : IMapperSqlConnection
     {
         protected SqlConnection MySql;
-        public IDataMapper<T> MyDataMapper;
+        public IDataMapper<T> MyCmdBuilder;
 
         public void OpenConnection()
         {
@@ -33,15 +33,15 @@ namespace SqlMapperFw.MySqlConnection
             switch (typeCommand)
             {
                 case "GetAll":
-                    return MyDataMapper.GetAll();
+                    return MyCmdBuilder.GetAll();
                 case "Delete":
-                    MyDataMapper.Delete((T)elem);
+                    MyCmdBuilder.Delete((T)elem);
                     break;
                 case "Insert":
-                    MyDataMapper.Insert((T)elem);
+                    MyCmdBuilder.Insert((T)elem);
                     break;
                 case "Update":
-                    MyDataMapper.Update((T)elem);
+                    MyCmdBuilder.Update((T)elem);
                     break;
                 default:
                     throw new Exception("This command doesn't exist");

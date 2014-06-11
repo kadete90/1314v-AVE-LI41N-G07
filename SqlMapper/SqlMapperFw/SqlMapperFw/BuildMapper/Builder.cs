@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using LinFu.DynamicProxy;
 using SqlMapperFw.DataMappers;
@@ -11,6 +12,7 @@ namespace SqlMapperFw.BuildMapper
     {
         readonly Type _typeConnection;
         readonly SqlConnectionStringBuilder _connectionStringBuilder;
+        readonly IEnumerable<Type> _bindMembers;
         static IMapperSqlConnection _mapperSqlConnection;  
 
         internal class MyInterceptor : IInvokeWrapper
@@ -45,10 +47,18 @@ namespace SqlMapperFw.BuildMapper
             _mapperSqlConnection.CloseConnection();
         }
 
-        public Builder(SqlConnectionStringBuilder connectionStringBuilderBuilder, Type typeConnection)
+        public Builder(SqlConnectionStringBuilder connectionStringBuilderBuilder, Type typeConnection, IEnumerable<Type> bindMembers)
         {
+            if (connectionStringBuilderBuilder == null)
+                throw new ArgumentNullException("connectionStringBuilderBuilder");
+            if (typeConnection == null)
+                throw new ArgumentNullException("typeConnection");
+            if (bindMembers == null)
+                throw new ArgumentNullException("bindMembers");
+
             _typeConnection = typeConnection;
             _connectionStringBuilder = connectionStringBuilderBuilder;
+            _bindMembers = bindMembers;
         }
 
         public IDataMapper<T> Build<T>()
@@ -57,7 +67,7 @@ namespace SqlMapperFw.BuildMapper
                 throw new Exception("This type of connection doesn't implements IMapperSqlConnection");
 
             _mapperSqlConnection = (IMapperSqlConnection)
-                Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder);
+            Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder, _bindMembers);
 
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
         }

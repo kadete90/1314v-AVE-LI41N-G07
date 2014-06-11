@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SqlMapperFw
+namespace SqlMapperFw.Reflection
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class DBTableNameAttribute : Attribute

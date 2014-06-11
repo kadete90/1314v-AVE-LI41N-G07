@@ -1,4 +1,4 @@
-﻿using SqlMapperFw;
+﻿using SqlMapperFw.Reflection;
 
 namespace SqlMapperClient.Entities
 {

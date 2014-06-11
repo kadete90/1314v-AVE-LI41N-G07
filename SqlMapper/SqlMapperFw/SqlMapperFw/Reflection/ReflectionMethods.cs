@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace SqlMapperFw.Reflection
 {
@@ -43,21 +40,6 @@ namespace SqlMapperFw.Reflection
                     : type.Name.Replace("set_", "").Replace("get_", "");
         }
 
-        public static MemberInfo GetValidType(this MemberInfo member)
-        {
-            switch (member.MemberType)
-            {
-                case MemberTypes.Field:
-                    return (FieldInfo)member;
-                case MemberTypes.Property:
-                    return (PropertyInfo)member;
-                case MemberTypes.Event:
-                    return (EventInfo)member;
-                default:
-                    return null;
-            }
-        }
-
         public static void SetValue(this MemberInfo member, object instance, object value)
         {
             if (member.MemberType == MemberTypes.Property)
@@ -72,14 +54,13 @@ namespace SqlMapperFw.Reflection
         {
             if (member.MemberType == MemberTypes.Property)
                 return ((PropertyInfo)member).GetValue(instance, null);
-            else if (member.MemberType == MemberTypes.Field)
+            if (member.MemberType == MemberTypes.Field)
                 return ((FieldInfo)member).GetValue(instance);
-            else
-                throw new Exception("Property must be of type FieldInfo or PropertyInfo");
+            throw new Exception("Property must be of type FieldInfo or PropertyInfo");
         }
-        
+
         // Converte System.type em SqlDbType
-        public static SqlDbType GetSqlDbType<T>(this MemberInfo m, Object instance)
+        public static SqlDbType GetSqlDbType(this MemberInfo m, Object instance)
         {
             return new SqlParameter("x", m.GetValue(instance)).SqlDbType;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -6,37 +7,39 @@ using SqlMapperClient.Entities;
 using SqlMapperFw.BuildMapper;
 using SqlMapperFw.DataMappers;
 using SqlMapperFw.MySqlConnection;
+using SqlMapperFw.Reflection.Binder;
 
 namespace SqlMapperTests.WithoutAssociations.MultipleConnection
 {
     [TestClass]
     public class EmployeeTests
     {
-        Builder builder;
-        IDataMapper<Employee> employeeDataMapper;
-        SqlConnectionStringBuilder connectionStringBuilder;
+        Builder _builder;
+        IDataMapper<Employee> _employeeDataMapper;
+        SqlConnectionStringBuilder _connectionStringBuilder;
 
         [TestInitialize]
         public void Setup()
         {
-            connectionStringBuilder = new SqlConnectionStringBuilder
+            _connectionStringBuilder = new SqlConnectionStringBuilder
             {
                 DataSource = "(local)",
                 IntegratedSecurity = true,
                 InitialCatalog = "Northwind"
             };
-            builder = new Builder(connectionStringBuilder, typeof(MultiConnection<>));
-            employeeDataMapper = builder.Build<Employee>();
-            CleanToDefault();
 
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("\tBEGINING MULTIPLE CONNECTION TEST");
-            Console.WriteLine("-----------------------------------------------------");
+            List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
+            _employeeDataMapper = _builder.Build<Employee>();
+            CleanToDefault();
+            Console.WriteLine("=====================================================");
+            Console.WriteLine("\t BEGINING MULTIPLE CONNECTION TEST");
+            Console.WriteLine("=====================================================");
         }
 
         public void CleanToDefault()
         {
-            using (SqlConnection conSql = new SqlConnection(connectionStringBuilder.ConnectionString))
+            using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("DELETE FROM Employees WHERE EmployeeId > 9", conSql);
                 conSql.Open();
@@ -48,17 +51,17 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         [TestCleanup]
         public void TearDown()
         {
-            builder.CloseConnection();
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("\tENDING MULTIPLE CONNECTION TEST");
-            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("=====================================================");
+            Console.WriteLine("\t  ENDING MULTIPLE CONNECTION TEST");
+            Console.WriteLine("=====================================================");
         }
 
         [TestMethod]
         public void TestReadAllEmployees()
         {
-            int count = employeeDataMapper.GetAll().Count();
-            Console.WriteLine(" TestReadAllEmployees Count: " + count);
+            Console.WriteLine("-----------------------------------------------------");
+            int count = _employeeDataMapper.GetAll().Count();
+            Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
             Assert.AreEqual(9, count);
             Console.WriteLine("-----------------------------------------------------");
         }

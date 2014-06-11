@@ -82,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SqlMapperClient\SqlMapperClient.csproj">
-      <Project>{c4a36851-173e-44d3-ade8-47ba3d879a5e}</Project>
+      <Project>{70dd8abb-6e93-4de7-b526-9d19aef73b11}</Project>
       <Name>SqlMapperClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\SqlMapperFw\SqlMapperFw.csproj">

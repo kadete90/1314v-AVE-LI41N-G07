@@ -2,31 +2,48 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Reflection;
 using SqlMapperFw.DataMappers;
 using SqlMapperFw.Reflection;
+using SqlMapperFw.Reflection.Binder;
 
 namespace SqlMapperFw.BuildMapper
 {
-    public class CmdBuilder<T> : IDataMapper<T>
+    public class CmdBuilderDataMapper<T> : IDataMapper<T>
     {
-        public String TableName;
-        readonly BindFields<T> _bindFields;
-        readonly SqlConnection _conSql;
-        readonly KeyValuePair<String, MemberInfo> _pkKeyValuePair; //DB_Field_Name
+        readonly SqlConnection _sqlConnection;
+        readonly List<AbstractBindMember> _bindMembers = new List<AbstractBindMember>();
+
+        readonly String _tableName;
+        readonly KeyValuePair<String, MemberInfo> _pkKeyValuePair; //DB_PK_Name, DE_PK_Info
         readonly Dictionary<String, MemberInfo> _fieldsMatchDictionary = new Dictionary<String, MemberInfo>(); //DB_Field_Name, DE_Field_Info
+        
         readonly Dictionary<String, SqlCommand> _commandsDictionary = new Dictionary<String, SqlCommand>(); //TypeCommand, Command
 
-        public CmdBuilder(SqlConnection strBuilder)
+        public CmdBuilderDataMapper(SqlConnection mySql, IEnumerable<Type> bindMembersTypes)
         {
-            Type type = typeof(T);
-            _conSql = strBuilder;
+            _sqlConnection = mySql;
 
-            TableName = type.getTableName();
+            Type type = typeof(T);
+            _tableName = type.getTableName();
+
+            foreach (Type bmType in bindMembersTypes)
+            {
+                if (bmType == null)
+                    throw new ArgumentNullException("bindMembersTypes");
+                if (!typeof(AbstractBindMember).IsAssignableFrom(bmType))
+                    throw new Exception("This type of binder doesn't extends AbstractBindMember");
+                _bindMembers.Add((AbstractBindMember)Activator.CreateInstance(bmType));
+            }
 
             foreach (MemberInfo mi in type.GetMembers())
             {
-                MemberInfo validMemberInfo = mi.GetValidType();
+                MemberInfo validMemberInfo = null;
+                foreach (AbstractBindMember bm in _bindMembers)
+                    if ((validMemberInfo = bm.GetMemberInfoValid(mi)) != null)
+                        break;
+
                 if (validMemberInfo == null)
                     continue;
 
@@ -35,7 +52,6 @@ namespace SqlMapperFw.BuildMapper
                 if (!_fieldsMatchDictionary.ContainsKey(DEFieldName) && !validMemberInfo.isPrimaryKey())
                     _fieldsMatchDictionary.Add(DEFieldName, mi);
 
-                //não é aceite mais que uma PK
                 if (_pkKeyValuePair.Key != null) //TODO: alterar quando tiver chave composta
                     continue;
                 if (validMemberInfo.isPrimaryKey())
@@ -46,42 +62,46 @@ namespace SqlMapperFw.BuildMapper
             if (_fieldsMatchDictionary.Count == 0 || _pkKeyValuePair.Key == null)
                 throw new Exception("No domain entity fields recognized or no PK defined!!");
 
-            //SqlParameter[] sqlParameters = new SqlParameter[_fieldsMatchDictionary.Count];
+            CreateCommands();
+        }
 
-            //Criação dos comandos
-            String DBfields = "";
-            foreach (String fieldName in _fieldsMatchDictionary.Keys)
-                DBfields += fieldName + ", ";
+        public void CreateCommands()
+        {
+            if (_sqlConnection == null)
+                throw  new Exception("Connection needed to create commands");
+
+            String DBfields = _fieldsMatchDictionary.Keys.Aggregate("", (current, fieldName) => current + (fieldName + ", "));
 
             if (DBfields != "")
                 DBfields = DBfields.Substring(0, DBfields.Length - 2); //remove última vírgula
 
-            SqlCommand cmd = _conSql.CreateCommand();
-            cmd.CommandText = "SELECT " + DBfields + " FROM " + TableName;
+            SqlCommand cmd = _sqlConnection.CreateCommand();
+            cmd.CommandText = "SELECT " + DBfields + " FROM " + _tableName;
             _commandsDictionary.Add("SELECT", cmd);
 
-            ////TODO UPDATE
-            cmd = _conSql.CreateCommand();
-            cmd.CommandText = "UPDATE " + TableName + " SET ProductName = @name WHERE ProductID = @id";
-            _commandsDictionary.Add("UPDATE", cmd);
-
-            ////TODO DELETE
-            cmd = _conSql.CreateCommand();
-            cmd.CommandText = "DELETE FROM " + TableName + " WHERE " + _pkKeyValuePair.Key + " = @ID";
-            _commandsDictionary.Add("DELETE", cmd);
-
-            ////TODO INSERT
-            cmd = _conSql.CreateCommand();
-            cmd.CommandText = "INSERT INTO " + TableName + " (" + DBfields + ")" + " VALUES (" + ReflectionMethods.StringBuilder(_fieldsMatchDictionary.Keys) + ") SET @ID = SCOPE_IDENTITY();";
+            cmd = _sqlConnection.CreateCommand();
+            cmd.CommandText = "INSERT INTO " + _tableName + " (" + DBfields + ")" + " VALUES (" + ReflectionMethods.StringBuilder(_fieldsMatchDictionary.Keys) + ") SET @ID = SCOPE_IDENTITY();";
             _commandsDictionary.Add("INSERT", cmd);
 
-            _bindFields = new BindFields<T>(_fieldsMatchDictionary);
+            //TODO : UPDATE
+            cmd = _sqlConnection.CreateCommand();
+            cmd.CommandText = "UPDATE " + _tableName + " SET ProductName = @name WHERE ProductID = @id";
+            _commandsDictionary.Add("UPDATE", cmd);
+
+            cmd = _sqlConnection.CreateCommand();
+            cmd.CommandText = "DELETE FROM " + _tableName + " WHERE " + _pkKeyValuePair.Key + " = @ID";
+            _commandsDictionary.Add("DELETE", cmd);
+
+
         }
 
-        //minimizar reflexão neste método
+        //TODO : minimizar reflexão neste método
         public IEnumerable<T> GetAll()
         {
-            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction(IsolationLevel.ReadCommitted))
+            if (_sqlConnection == null || _sqlConnection.State == ConnectionState.Closed)
+                throw new Exception("Open Connection needed to execute command!!");
+
+            using (SqlTransaction sqlTransaction = _sqlConnection.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 SqlDataReader rd;
                 try
@@ -98,10 +118,19 @@ namespace SqlMapperFw.BuildMapper
                     sqlTransaction.Rollback();
                     yield break;
                 }
-
                 foreach (var DBRowValues in rd.AsEnumerable())
                 {
-                    yield return _bindFields.bind(DBRowValues);
+                    T newInstance = (T)Activator.CreateInstance(typeof(T));
+                    Dictionary<string, MemberInfo>.ValueCollection.Enumerator MemberInfos = _fieldsMatchDictionary.Values.GetEnumerator();
+                    foreach (object value in DBRowValues)
+                    {
+                        if (!MemberInfos.MoveNext())
+                                break;
+                        foreach (AbstractBindMember bm in _bindMembers)
+                            if (bm.bind(newInstance, MemberInfos.Current, value))
+                                break;
+                    }
+                    yield return newInstance;
                 }
                 rd.Close();
                 sqlTransaction.Commit();
@@ -111,23 +140,24 @@ namespace SqlMapperFw.BuildMapper
         //minimizar reflexão neste método
         public void Insert(T val)
         {
-            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction())
+            if (_sqlConnection == null || _sqlConnection.State == ConnectionState.Closed)
+                throw new Exception("Open Connection needed to execute command!!");
+
+            using (SqlTransaction sqlTransaction = _sqlConnection.BeginTransaction())
             {
                 try
                 {
                     SqlCommand cmd;
                     if (!_commandsDictionary.TryGetValue("INSERT", out cmd))
                         throw new Exception("This Command doesn't exist!");
-                    cmd.Parameters.Add("@ID", _pkKeyValuePair.Value.GetSqlDbType<T>(val)).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@ID", _pkKeyValuePair.Value.GetSqlDbType(val)).Direction = ParameterDirection.Output;
                     foreach (var field in _fieldsMatchDictionary)
                     {
-                        if (_pkKeyValuePair.Key != field.Key) //identity
+                        SqlParameter p = new SqlParameter(field.Key, field.Value.GetSqlDbType(val))
                         {
-                            SqlParameter p = new SqlParameter(field.Key, field.Value.GetSqlDbType<T>(val));
-                            p.Value = field.Value.GetValue(val);
-                            cmd.Parameters.Add(p);
-                        }
-                        
+                            Value = field.Value.GetValue(val)
+                        };
+                        cmd.Parameters.Add(p);
                     }
                     
                     cmd.Transaction = sqlTransaction;
@@ -154,7 +184,10 @@ namespace SqlMapperFw.BuildMapper
         //minimizar reflexão neste método
         public void Delete(T val)
         {
-            using (SqlTransaction sqlTransaction = _conSql.BeginTransaction(IsolationLevel.Serializable))
+            if (_sqlConnection == null || _sqlConnection.State == ConnectionState.Closed)
+                throw new Exception("Open Connection needed to execute command!!");
+
+            using (SqlTransaction sqlTransaction = _sqlConnection.BeginTransaction(IsolationLevel.Serializable))
             {
                 try
                 {

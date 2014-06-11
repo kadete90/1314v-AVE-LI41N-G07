@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -6,93 +7,116 @@ using SqlMapperClient.Entities;
 using SqlMapperFw.BuildMapper;
 using SqlMapperFw.DataMappers;
 using SqlMapperFw.MySqlConnection;
+using SqlMapperFw.Reflection.Binder;
 
 namespace SqlMapperTests.WithoutAssociations.MultipleConnection
 {
     [TestClass]
     public class ProductTests
     {
-        Builder builder;
-        IDataMapper<Product> productDataMapper;
-        SqlConnectionStringBuilder connectionStringBuilder;
+        Builder _builder;
+        IDataMapper<Product> _productDataMapper;
+        SqlConnectionStringBuilder _connectionStringBuilder;
 
         [TestInitialize]
         public void Setup()
         {
-            connectionStringBuilder = new SqlConnectionStringBuilder
+            _connectionStringBuilder = new SqlConnectionStringBuilder
             {
                 DataSource = "(local)",
                 IntegratedSecurity = true,
                 InitialCatalog = "Northwind"
             };
-            builder = new Builder(connectionStringBuilder, typeof(MultiConnection<>));
-            productDataMapper = builder.Build<Product>();
+
+            List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
+
+            _productDataMapper = _builder.Build<Product>();
             CleanToDefault();
+            Console.WriteLine("=====================================================");
+            Console.WriteLine("\t BEGINING MULTIPLE CONNECTION TEST");
+            Console.WriteLine("=====================================================");
         }
-        //SqlCommand cmd_id = new SqlCommand("SET IDENTITY_INSERT PRODUCTS ON");
+
         public void CleanToDefault()
         {
-            using (SqlConnection conSql = new SqlConnection(connectionStringBuilder.ConnectionString))
+            using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
-                SqlCommand cmd_del = new SqlCommand("DELETE FROM Products WHERE ProductId > 78", conSql);
                 conSql.Open();
-                cmd_del.ExecuteNonQuery();
+                    new SqlCommand("DELETE FROM Products WHERE ProductId > 78", conSql).ExecuteNonQuery();
                 conSql.Close();
-                Console.WriteLine("-----------------------------------------------------");
-                Console.WriteLine("\tBEGINING MULTIPLE CONNECTION TEST");
-                Console.WriteLine("-----------------------------------------------------");
             }
         }
 
         [TestCleanup]
         public void TearDown()
         {
-            builder.CloseConnection();
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("\tENDING MULTIPLE CONNECTION TEST");
-            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("=====================================================");
+            Console.WriteLine("\t  ENDING MULTIPLE CONNECTION TEST");
+            Console.WriteLine("=====================================================");
         }
 
         [TestMethod]
         public void TestReadAllProducts()
         {
-            Console.WriteLine("-----------------------------------------------------");
-            int count = productDataMapper.GetAll().Count();
-            Console.WriteLine(" TestReadAllProducts Count: " + count);
+            int count = _productDataMapper.GetAll().Count();
+            Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
             Assert.AreEqual(77, count);
-            Console.WriteLine("-----------------------------------------------------");
         }
 
         [TestMethod]
-        public void TestInsertProduct()
+        public void TestCommandsOnProduct()
         {
+            int productId = InsertProduct();
             Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("\t\tSINGLE CONNECTION TEST");
+            //UpdateProduct(productId);
             Console.WriteLine("-----------------------------------------------------");
-            Product p = new Product
+            DeleteProduct(productId);
+        }
+
+        private int InsertProduct()
+        {
+            Product product = new Product
             {
-                ProductName = "OLA",
+                ProductName = "ProductName",
                 QuantityPerUnit = "100",
                 UnitPrice = 100,
                 UnitsInStock = 50,
                 UnitsOnOrder = 30
             };
-            productDataMapper.Insert(p);
-            Assert.IsNotNull(p.id);
-            Console.WriteLine("Inserted new product with id = {0}",p.id);
-            Console.WriteLine("-----------------------------------------------------");
+            _productDataMapper.Insert(product);
+            Assert.IsNotNull(product.id);
+            Console.WriteLine("    --> Inserted new product with id = {0} <--", product.id);
+            return product.id;
         }
 
-        [TestMethod]
-        public void TestDeleteProduct()
+        private void UpdateProduct(int productId)
         {
-            Console.WriteLine("-----------------------------------------------------");
-            Product product = new Product { id = 78 };
-            productDataMapper.Delete(product);
-            Console.WriteLine(" productDataMapper.Delete(product)");
-            int count = productDataMapper.GetAll().Count();
+
+            Product product = new Product
+            {
+                id = productId,
+                ProductName = "NewProductname",
+                QuantityPerUnit = "100",
+                UnitPrice = 100,
+                UnitsInStock = 50,
+                UnitsOnOrder = 30
+            };
+            _productDataMapper.Update(product);
+            Assert.Equals("NewProductname", product.ProductName);
+            Console.WriteLine("    --> Updated the product with id = {0} <--", productId);
+            
+        }
+
+        private void DeleteProduct(int productId)
+        {
+            if (productId == 0)
+                return;
+            Product product = new Product { id = productId };
+            _productDataMapper.Delete(product);
+            int count = _productDataMapper.GetAll().Count();
             Assert.AreEqual(77, count);
-            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("    --> Removed the product with id = {0} <--", productId);
         }
     }
 }

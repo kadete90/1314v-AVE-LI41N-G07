@@ -48,11 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildMapper\CmdBuilder.cs" />
-    <Compile Include="Reflection\BindFields.cs" />
+    <Compile Include="Reflection\Binder\AbstractBindMember.cs" />
+    <Compile Include="Reflection\Binder\BindProperties.cs" />
+    <Compile Include="BuildMapper\CmdBuilderDataMapper.cs" />
+    <Compile Include="Reflection\Binder\BindFields.cs" />
     <Compile Include="BuildMapper\DataReaderExtension.cs" />
     <Compile Include="BuildMapper\Builder.cs" />
-    <Compile Include="MyAttributes.cs" />
+    <Compile Include="Reflection\MyAttributes.cs" />
     <Compile Include="DataMappers\IDataMapper.cs" />
     <Compile Include="DataMappers\ISqlEnumerable.cs" />
     <Compile Include="DataMappers\SqlEnumerable.cs" />
