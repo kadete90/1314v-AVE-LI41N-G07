@@ -14,12 +14,12 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
     [TestClass]
     public class ProductTests
     {
-        Builder _builder;
-        IDataMapper<Product> _productDataMapper;
-        SqlConnectionStringBuilder _connectionStringBuilder;
+        static Builder _builder;
+        static IDataMapper<Product> _productDataMapper;
+        static SqlConnectionStringBuilder _connectionStringBuilder;
 
-        [TestInitialize]
-        public void Setup()
+        [ClassInitialize]
+        public static void Setup(TestContext testContext)
         {
             _connectionStringBuilder = new SqlConnectionStringBuilder
             {
@@ -33,27 +33,22 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
 
             _productDataMapper = _builder.Build<Product>();
             CleanToDefault();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("\t BEGINING MULTIPLE CONNECTION TEST");
-            Console.WriteLine("=====================================================");
         }
 
-        public void CleanToDefault()
+        public static void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
                 conSql.Open();
-                    new SqlCommand("DELETE FROM Products WHERE ProductId > 78", conSql).ExecuteNonQuery();
+                new SqlCommand("DELETE FROM Products WHERE ProductId > 78", conSql).ExecuteNonQuery();
                 conSql.Close();
             }
         }
 
-        [TestCleanup]
-        public void TearDown()
+        [ClassCleanup]
+        public static void TearDown()
         {
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("\t  ENDING MULTIPLE CONNECTION TEST");
-            Console.WriteLine("=====================================================");
+
         }
 
         [TestMethod]
@@ -105,7 +100,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             _productDataMapper.Update(product);
             Assert.Equals("NewProductname", product.ProductName);
             Console.WriteLine("    --> Updated the product with id = {0} <--", productId);
-            
+
         }
 
         private void DeleteProduct(int productId)

@@ -14,12 +14,12 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
     [TestClass]
     public class CustomerTests
     {
-        Builder _builder;
-        IDataMapper<Customer> _customerDataMapper;
-        SqlConnectionStringBuilder _connectionStringBuilder;
+        static Builder _builder;
+        static IDataMapper<Customer> _customerDataMapper;
+        static SqlConnectionStringBuilder _connectionStringBuilder;
 
-        [TestInitialize]
-        public void Setup()
+        [ClassInitialize]
+        public static void Setup(TestContext testContext)
         {
             _connectionStringBuilder = new SqlConnectionStringBuilder
             {
@@ -33,12 +33,9 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
 
             _customerDataMapper = _builder.Build<Customer>();
             //CleanToDefault();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("\t BEGINING MULTIPLE CONNECTION TEST");
-            Console.WriteLine("=====================================================");
         }
 
-        public void CleanToDefault()
+        public static void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
@@ -49,12 +46,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             }
         }
 
-        [TestCleanup]
-        public void TearDown()
+        [ClassCleanup]
+        public static void TearDown()
         {
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("\t  ENDING MULTIPLE CONNECTION TEST");
-            Console.WriteLine("=====================================================");
+
         }
 
         [TestMethod]
