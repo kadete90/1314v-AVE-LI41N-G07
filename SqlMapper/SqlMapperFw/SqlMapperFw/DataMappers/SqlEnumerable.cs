@@ -12,22 +12,25 @@ namespace SqlMapperFw.DataMappers
 {
     public sealed class SqlEnumerable<T> : ISqlEnumerable<T>
     {
-        internal readonly SqlCommand _sqlCommand;
-        internal readonly List<AbstractBindMember> _bindMembers;
-        internal readonly Dictionary<string, MemberInfo>.ValueCollection _values;
+        internal readonly SqlCommand SqlCommand;
+        internal readonly List<AbstractBindMember> BindMembers;
+        internal readonly List<MemberInfo> MemberInfos;
+        internal readonly MemberInfo PkMemberInfo;
 
-        public SqlEnumerable(SqlCommand cmd, List<AbstractBindMember> bindMembers, Dictionary<string, MemberInfo>.ValueCollection values)
+        public SqlEnumerable(SqlCommand cmd, List<AbstractBindMember> bindMembers, 
+            List<MemberInfo> memberInfos, MemberInfo pkMemberInfo)
         {
-            _sqlCommand = cmd;
-            _bindMembers = bindMembers;
-            _values = values;
+            SqlCommand = cmd;
+            BindMembers = bindMembers;
+            MemberInfos = memberInfos;
+            PkMemberInfo = pkMemberInfo;
         }
 
         public ISqlEnumerable<T> Where(string clause)
         {
             if (clause == null)
                 throw new ArgumentNullException("clause");
-            _sqlCommand.CommandText += ((!_sqlCommand.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
+            SqlCommand.CommandText += ((!SqlCommand.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
             return this;
         }
 
@@ -44,8 +47,8 @@ namespace SqlMapperFw.DataMappers
 
     public sealed class SqlEnumerator<T> : IEnumerator<T>
     {
-        private readonly SqlEnumerable<T> _mySqlEnumerable;
-        private readonly SqlDataReader _sqlDataReader;
+        readonly SqlEnumerable<T> _mySqlEnumerable;
+        readonly SqlDataReader _sqlDataReader;
 
         private bool gotCurrent;
         private T current;
@@ -53,7 +56,7 @@ namespace SqlMapperFw.DataMappers
         public SqlEnumerator(SqlEnumerable<T> mySqlEnumerable)
         {
             _mySqlEnumerable = mySqlEnumerable;
-            _sqlDataReader = _mySqlEnumerable._sqlCommand.ExecuteReader();
+            _sqlDataReader = _mySqlEnumerable.SqlCommand.ExecuteReader();
         }
 
         public void Dispose()
@@ -69,15 +72,19 @@ namespace SqlMapperFw.DataMappers
             foreach (var DBRowValues in _sqlDataReader.AsEnumerable())
             {
                 T newInstance = (T)Activator.CreateInstance(typeof(T));
-                Dictionary<string, MemberInfo>.ValueCollection.Enumerator MemberInfos = _mySqlEnumerable._values.GetEnumerator();
-                foreach (object value in DBRowValues)
-                {
-                    if (!MemberInfos.MoveNext())
+                
+                foreach (AbstractBindMember bm in _mySqlEnumerable.BindMembers)
+                    if (bm.bind(newInstance, _mySqlEnumerable.PkMemberInfo, DBRowValues[0]))
                         break;
-                    foreach (AbstractBindMember bm in _mySqlEnumerable._bindMembers)
-                        if (bm.bind(newInstance, MemberInfos.Current, value))
+
+                int idx = 1;
+                List<MemberInfo> MemberInfos = _mySqlEnumerable.MemberInfos;
+                foreach (MemberInfo mi in MemberInfos)
+                {
+                     foreach (AbstractBindMember bm in _mySqlEnumerable.BindMembers)
+                        if (bm.bind(newInstance, mi, DBRowValues[idx]))
                             break;
-                    
+                    idx++;
                 }
                 gotCurrent = true;
                 current = newInstance;

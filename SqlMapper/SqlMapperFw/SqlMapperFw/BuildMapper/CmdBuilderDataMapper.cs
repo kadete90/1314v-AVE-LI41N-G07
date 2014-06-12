@@ -75,7 +75,7 @@ namespace SqlMapperFw.BuildMapper
                 DBfields = DBfields.Substring(0, DBfields.Length - 2); //remove última vírgula
 
             SqlCommand cmd = _sqlConnection.CreateCommand();
-            cmd.CommandText = "SELECT " + DBfields + " FROM " + _tableName;
+            cmd.CommandText = "SELECT " + _pkKeyValuePair.Key +", " +DBfields + " FROM " + _tableName;
             _commandsDictionary.Add("SELECT", cmd);
 
             cmd = _sqlConnection.CreateCommand();
@@ -92,48 +92,6 @@ namespace SqlMapperFw.BuildMapper
             _commandsDictionary.Add("DELETE", cmd);
         }
 
-        //TODO : minimizar reflexão neste método (IEnumerable<T> GetAll() Parte 1.1)
-        //public IEnumerable<T> GetAll()
-        //{
-        //    if (_sqlConnection == null || _sqlConnection.State == ConnectionState.Closed)
-        //        throw new Exception("Open Connection needed to execute command!!");
-
-        //    using (SqlTransaction sqlTransaction = _sqlConnection.BeginTransaction(IsolationLevel.ReadCommitted))
-        //    {
-        //        SqlDataReader rd;
-        //        try
-        //        {
-        //            SqlCommand cmd;
-        //            if(!_commandsDictionary.TryGetValue("SELECT", out cmd))
-        //                throw new Exception("This Command doesn't exist!");
-        //            cmd.Transaction = sqlTransaction;
-        //            rd = cmd.ExecuteReader();
-        //        }
-        //        catch (Exception exception)
-        //        {
-        //            Console.WriteLine("An error occur on GetAll(): \n" + exception + "\nRolling back this transaction...");
-        //            sqlTransaction.Rollback();
-        //            yield break;
-        //        }
-        //        foreach (var DBRowValues in rd.AsEnumerable())
-        //        {
-        //            T newInstance = (T)Activator.CreateInstance(typeof(T));
-        //            Dictionary<string, MemberInfo>.ValueCollection.Enumerator MemberInfos = _fieldsMatchDictionary.Values.GetEnumerator();
-        //            foreach (object value in DBRowValues)
-        //            {
-        //                if (!MemberInfos.MoveNext())
-        //                        break;
-        //                foreach (AbstractBindMember bm in _bindMembers)
-        //                    if (bm.bind(newInstance, MemberInfos.Current, value))
-        //                        break;
-        //            }
-        //            yield return newInstance;
-        //        }
-        //        rd.Close();
-        //        sqlTransaction.Commit();
-        //    }
-        //}
-
         public ISqlEnumerable<T> GetAll()
         {
             if (_sqlConnection == null || _sqlConnection.State == ConnectionState.Closed)
@@ -148,7 +106,8 @@ namespace SqlMapperFw.BuildMapper
                         throw new Exception("This Command doesn't exist!");
 
                     cmd.Transaction = sqlTransaction;
-                    return new SqlEnumerable<T>(cmd, _bindMembers, _fieldsMatchDictionary.Values);
+                    return new SqlEnumerable<T>(cmd, _bindMembers, 
+                        new List<MemberInfo>(_fieldsMatchDictionary.Values), _pkKeyValuePair.Value);
                 }
                 catch (Exception exception)
                 {

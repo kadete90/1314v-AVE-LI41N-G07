@@ -76,16 +76,24 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         public void TestWhereOnReadAllProduct()
         {
             IEnumerable<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7");
+
+            //foreach (Product p in prods)
+            //{
+            //     Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", product.id, product.ProductName, product.UnitsInStock);
+            //}
+
             IEnumerator<Product> iterator = prods.GetEnumerator();
             Product product = null;
+            int countProds = 0;
             while (iterator.MoveNext())
             {
+                countProds++;
                 product = iterator.Current;
-                Console.WriteLine("ProductName: {0}, UnitsInStock: {1}", product.ProductName, product.UnitsInStock);
+                Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", product.id, product.ProductName, product.UnitsInStock);
             }
             Assert.IsNotNull(product);
-            Assert.AreEqual("Tofu", product.ProductName);
-            Assert.AreEqual(35, product.UnitsInStock);
+            Assert.AreEqual(1, countProds);
+            Assert.AreEqual(14, product.id);
         }
 
         private int InsertProduct()
