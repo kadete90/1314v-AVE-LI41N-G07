@@ -3,7 +3,7 @@
 namespace SqlMapperFw.DataMappers
 {
     //1ªparte 2.
-    public interface ISqlEnumerable<out T> : IEnumerable<T>
+    public interface ISqlEnumerable<T> : IEnumerable<T>
     {
         ISqlEnumerable<T> Where(string clause);
     }

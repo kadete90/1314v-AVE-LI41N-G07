@@ -7,8 +7,8 @@ namespace SqlMapperFw.DataMappers
     public interface IDataMapper<T>
     {
         // Devolve todos os elementos da tabela correspondente
-        IEnumerable<T> GetAll();        //1.
-        //ISqlEnumerable<T> GetAll();   //2.
+        //IEnumerable<T> GetAll();        //1.
+        ISqlEnumerable<T> GetAll();   //2.
         void Insert(T val); // Insere uma nova linha com os valores de val e actualiza val com a PK devolvida
         void Update(T val); // Actualiza a linha que tem PK igual à propriedade PK de val (ler cap. Requisitos)
         void Delete(T val); // Apaga a linha com PK igual à propriedade PK de val

@@ -61,7 +61,9 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             Assert.AreEqual(77, count);
         }
 
-        [TestMethod]
+        // alterar para testes separados quando fôr implementado rollback e commit da transação
+        // fazer rollback depois de cada test para não estragar a BD -> autoclosable(false)
+        [TestMethod] 
         public void TestCommandsOnProduct()
         {
             int productId = InsertProduct();
@@ -71,6 +73,21 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             DeleteProduct(productId);
         }
 
+        [TestMethod]
+        public void TestWhereOnReadAllProduct()
+        {
+            IEnumerable<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7");
+            IEnumerator<Product> iterator = prods.GetEnumerator();
+            Product product = null;
+            while (iterator.MoveNext())
+            {
+                product = iterator.Current;
+                Console.WriteLine("ProductName: {0}, UnitsInStock: {1}", product.ProductName, product.UnitsInStock);
+            }
+            Assert.IsNotNull(product);
+            Assert.AreEqual("Tofu", product.ProductName);
+            Assert.AreEqual(35, product.UnitsInStock);
+        }
 
         private int InsertProduct()
         {

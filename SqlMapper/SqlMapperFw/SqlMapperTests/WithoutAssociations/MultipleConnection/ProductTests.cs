@@ -18,6 +18,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         static IDataMapper<Product> _productDataMapper;
         static SqlConnectionStringBuilder _connectionStringBuilder;
 
+        //TODO: apenas fazer no inicio da classe e não em cada teste
         [ClassInitialize]
         public static void Setup(TestContext testContext)
         {
@@ -45,10 +46,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             }
         }
 
+        //TODO: apenas fazer no fim de todos os testes terem sido executados
         [ClassCleanup]
         public static void TearDown()
         {
-
         }
 
         [TestMethod]
@@ -59,6 +60,8 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             Assert.AreEqual(77, count);
         }
 
+        // alterar para testes separados quando fôr implementado rollback e commit da transação
+        // fazer rollback depois de cada test para não estragar a BD -> autoclosable(false)
         [TestMethod]
         public void TestCommandsOnProduct()
         {
@@ -67,6 +70,22 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             //UpdateProduct(productId);
             Console.WriteLine("-----------------------------------------------------");
             DeleteProduct(productId);
+        }
+
+        [TestMethod]
+        public void TestWhereOnReadAllProduct()
+        {
+            IEnumerable<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7");
+            IEnumerator<Product> iterator = prods.GetEnumerator();
+            Product product = null;
+            while (iterator.MoveNext())
+            {
+                product = iterator.Current;
+                Console.WriteLine("ProductName: {0}, UnitsInStock: {1}", product.ProductName, product.UnitsInStock);
+            }
+            Assert.IsNotNull(product);
+            Assert.AreEqual("Tofu", product.ProductName);
+            Assert.AreEqual(35, product.UnitsInStock);
         }
 
         private int InsertProduct()
