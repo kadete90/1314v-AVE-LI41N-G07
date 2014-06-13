@@ -73,7 +73,18 @@ namespace SqlMapperFw.Reflection
             return new SqlParameter("x", m.GetValue(instance)).SqlDbType;
         }
 
-        public static string StringBuilder(Dictionary<string, MemberInfo>.KeyCollection keyCollection)
+        public static string StringBuilder(this Dictionary<string, MemberInfo> dictionary)
+        { 
+            //"ProductName = @name"
+            String s = "";
+            foreach (KeyValuePair<string, MemberInfo> mi in dictionary)
+                s += mi.Key+"=@" + mi.Value.Name + ", ";
+            if (s != "")
+                s = s.Substring(0, s.Length - 2);
+            return s;
+        }
+
+        public static string StringBuilder(this Dictionary<string, MemberInfo>.KeyCollection keyCollection)
         {
             String s = "";
             foreach (String fieldName in keyCollection)

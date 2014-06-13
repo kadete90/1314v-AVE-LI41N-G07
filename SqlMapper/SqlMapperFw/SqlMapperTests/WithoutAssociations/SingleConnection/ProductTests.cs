@@ -33,7 +33,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, false);
 
             _productDataMapper = _builder.Build<Product>();
-            //CleanToDefault();
+            CleanToDefault();
         }
 
         public static void CleanToDefault()
@@ -88,9 +88,14 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             int id = InsertProduct();
             Assert.AreEqual(78, _productDataMapper.GetAll().Count());
             _builder.Commit();
+            Console.WriteLine("    --> Inserted new product with id = {0} <--\n", id);
+            UpdateProduct(id);
+            Console.WriteLine("    --> Updated the product with id = {0} <--", id);
+            Console.WriteLine("           --> Rollback update <--\n");
             DeleteProduct(id);
             Assert.AreEqual(77, _productDataMapper.GetAll().Count());
             _builder.Commit();
+            Console.WriteLine("    --> Deleted the product with id = {0} <--", id);
         }
 
         private int InsertProduct()
@@ -107,7 +112,6 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
 
             Assert.IsNotNull(product.id);
             Assert.AreNotEqual(0,product.id);
-            Console.WriteLine("    --> Inserted new product with id = {0} <--", product.id);
             _builder.Commit();
             return product.id;
         }
@@ -126,7 +130,6 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             };
             _productDataMapper.Update(product);
             Assert.AreEqual("NewProductname", product.ProductName);
-            Console.WriteLine("    --> Updated the product with id = {0} <--", productId);
             _builder.RollBack();
         }
 

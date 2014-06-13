@@ -83,22 +83,16 @@ namespace SqlMapperFw.BuildMapper
             _commandsDictionary.Add("SELECT", cmd);
 
             cmd = _sqlConnection.CreateCommand();
-            cmd.CommandText = "INSERT INTO " + _tableName + " (" + DBfields + ")" + " VALUES (" + ReflectionMethods.StringBuilder(_fieldsMatchDictionary.Keys) + ") SET @ID = SCOPE_IDENTITY();";
+            cmd.CommandText = "INSERT INTO " + _tableName + " (" + DBfields + ")" + " VALUES (" + _fieldsMatchDictionary.Keys.StringBuilder() + ") SET @ID = SCOPE_IDENTITY();";
             _commandsDictionary.Add("INSERT", cmd);
 
-            //TODO : UPDATE
-            cmd = _sqlConnection.CreateCommand();
-            cmd.CommandText = "UPDATE " + _tableName + " SET ProductName = @name WHERE ProductID = @id";
+            cmd = _sqlConnection.CreateCommand();                        
+            cmd.CommandText = "UPDATE " + _tableName + " SET " + _fieldsMatchDictionary.StringBuilder() +" WHERE "+ _pkKeyValuePair.Key +"= @ID";
             _commandsDictionary.Add("UPDATE", cmd);
 
             cmd = _sqlConnection.CreateCommand();
             cmd.CommandText = "DELETE FROM " + _tableName + " WHERE " + _pkKeyValuePair.Key + " = @ID";
             _commandsDictionary.Add("DELETE", cmd);
-        }
-
-        public void SetTransaction(SqlTransaction sqlTransaction)
-        {
-            _mapperSqlConnection.SqlTransaction = sqlTransaction;
         }
 
         public ISqlEnumerable<T> GetAll()
@@ -133,7 +127,23 @@ namespace SqlMapperFw.BuildMapper
         //minimizar reflexão neste método
         public void Update(T val)
         {
-            throw new NotImplementedException();
+            SqlCommand cmd;
+            if (!_commandsDictionary.TryGetValue("UPDATE", out cmd))
+                throw new Exception("This Command doesn't exist!");
+            SqlParameter pkSqlParameter = new SqlParameter("@ID", SqlDbType.Int)
+            {
+                Value = _pkKeyValuePair.Value.GetValue(val)
+            };
+            cmd.Parameters.Add(pkSqlParameter);
+            foreach (var field in _fieldsMatchDictionary)
+            {
+                SqlParameter p = new SqlParameter(field.Key, field.Value.GetSqlDbType(val))
+                {
+                    Value = field.Value.GetValue(val)
+                };
+                cmd.Parameters.Add(p);
+            }
+            _mapperSqlConnection.ExecuteTransaction(cmd);
         }
 
         //minimizar reflexão neste método

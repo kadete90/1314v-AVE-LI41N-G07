@@ -32,7 +32,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, true);
 
             _employeeDataMapper = _builder.Build<Employee>();
-            //CleanToDefault();
+            CleanToDefault();
         }
 
         public static void CleanToDefault()

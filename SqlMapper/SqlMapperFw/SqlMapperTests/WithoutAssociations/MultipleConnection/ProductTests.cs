@@ -30,10 +30,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, true);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, false);
 
             _productDataMapper = _builder.Build<Product>();
-            //CleanToDefault();
+            CleanToDefault();
         }
 
         public static void CleanToDefault()
@@ -58,6 +58,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             int count = _productDataMapper.GetAll().Count();
             Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
             Assert.AreEqual(77, count);
+            _builder.Commit();
         }
 
         [TestMethod]
@@ -74,6 +75,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
                 product = iterator.Current;
                 Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", product.id, product.ProductName, product.UnitsInStock);
             }
+            _builder.Commit();
             Assert.IsNotNull(product);
             Assert.AreEqual(1, countProds);
             Assert.AreEqual(14, product.id);
@@ -84,8 +86,15 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         {
             int id = InsertProduct();
             Assert.AreEqual(78, _productDataMapper.GetAll().Count());
+            _builder.Commit();
+            Console.WriteLine("    --> Inserted new product with id = {0} <--\n", id);
+            UpdateProduct(id);
+            Console.WriteLine("    --> Updated the product with id = {0} <--", id);
+            Console.WriteLine("           --> Rollback update <--\n");
             DeleteProduct(id);
             Assert.AreEqual(77, _productDataMapper.GetAll().Count());
+            _builder.Commit();
+            Console.WriteLine("    --> Deleted the product with id = {0} <--", id);
         }
 
         private int InsertProduct()
@@ -102,7 +111,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
 
             Assert.IsNotNull(product.id);
             Assert.AreNotEqual(0, product.id);
-            Console.WriteLine("    --> Inserted new product with id = {0} <--", product.id);
+            _builder.Commit();
             return product.id;
         }
 
@@ -120,7 +129,6 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
             _productDataMapper.Update(product);
             Assert.AreEqual("NewProductname", product.ProductName);
-            Console.WriteLine("    --> Updated the product with id = {0} <--", productId);
             _builder.RollBack();
         }
 
@@ -128,6 +136,9 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         {
             Product product = new Product { id = productId };
             _productDataMapper.Delete(product);
+            _builder.Commit();
+
+
         }
     }
 }

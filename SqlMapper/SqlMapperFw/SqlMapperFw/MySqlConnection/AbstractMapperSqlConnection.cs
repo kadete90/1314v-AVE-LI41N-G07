@@ -87,6 +87,7 @@ namespace SqlMapperFw.MySqlConnection
                 Console.WriteLine("An error occur on ExecuteTransaction(...): \n" + ex.Message +
                                     "\nRollback this transaction...");
                 Rollback();
+                return;
             }
             if (autoCommit)
             {

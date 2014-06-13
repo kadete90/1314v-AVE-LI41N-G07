@@ -32,7 +32,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, true);
 
             _employeeDataMapper = _builder.Build<Employee>();
-            //CleanToDefault();
+            CleanToDefault();
         }
 
         public static void CleanToDefault()
