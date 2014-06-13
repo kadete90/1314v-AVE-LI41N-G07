@@ -4,7 +4,9 @@ namespace SqlMapperFw.MySqlConnection
 {
     public interface IMapperSqlConnection
     {
-        void CloseConnection();
         Object Execute(String typeCommand, Object elem);
+        void CloseConnection();
+        void Rollback();
+        void Commit();
     }
 }

@@ -7,20 +7,24 @@ namespace SqlMapperFw.MySqlConnection
 {
     public class MultiConnection<T> : AbstractMapperSqlConnection<T>
     {
-        public MultiConnection(SqlConnectionStringBuilder connString, IEnumerable<Type> bindMembers)
+        public MultiConnection(SqlConnectionStringBuilder connString, IEnumerable<Type> bindMembers, bool autoCommit)
         {
-            MySql = new SqlConnection(connString.ConnectionString);
-            MyCmdBuilder = new CmdBuilderDataMapper<T>(MySql, bindMembers);
+            base.autoCommit = autoCommit;
+            Connection = new SqlConnection(connString.ConnectionString);
+            MyCmdBuilder = new CmdBuilderDataMapper<T>(this, bindMembers);
         }
 
-        public override Object Execute(String typeCommand, Object elem)
+        public override void Rollback()
         {
-            OpenConnection();
-            Object aux;
-            while ((aux = ExecuteSwitch(typeCommand, elem)) != null)
-                return aux;
+            SqlTransaction.Dispose();
+            SqlTransaction.Rollback();
             CloseConnection();
-            return null;
+        }
+
+        public override void Commit()
+        {
+            SqlTransaction.Commit();
+            CloseConnection();
         }
     }
 }

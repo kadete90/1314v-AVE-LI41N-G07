@@ -13,6 +13,7 @@ namespace SqlMapperFw.BuildMapper
         readonly Type _typeConnection;
         readonly SqlConnectionStringBuilder _connectionStringBuilder;
         readonly IEnumerable<Type> _bindMembers;
+        readonly bool _autoCommit;
         static IMapperSqlConnection _mapperSqlConnection;  
 
         internal class MyInterceptor : IInvokeWrapper
@@ -42,12 +43,7 @@ namespace SqlMapperFw.BuildMapper
             }
         }
 
-        public void CloseConnection()
-        {
-            _mapperSqlConnection.CloseConnection();
-        }
-
-        public Builder(SqlConnectionStringBuilder connectionStringBuilderBuilder, Type typeConnection, IEnumerable<Type> bindMembers)
+        public Builder(SqlConnectionStringBuilder connectionStringBuilderBuilder, Type typeConnection, IEnumerable<Type> bindMembers, bool autoCommit)
         {
             if (connectionStringBuilderBuilder == null)
                 throw new ArgumentNullException("connectionStringBuilderBuilder");
@@ -59,6 +55,7 @@ namespace SqlMapperFw.BuildMapper
             _typeConnection = typeConnection;
             _connectionStringBuilder = connectionStringBuilderBuilder;
             _bindMembers = bindMembers;
+            _autoCommit = autoCommit;
         }
 
         public IDataMapper<T> Build<T>()
@@ -67,9 +64,24 @@ namespace SqlMapperFw.BuildMapper
                 throw new Exception("This type of connection doesn't implements IMapperSqlConnection");
 
             _mapperSqlConnection = (IMapperSqlConnection)
-            Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder, _bindMembers);
+            Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder, _bindMembers, _autoCommit);
 
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
+        }
+
+        public void CloseConnection()
+        {
+            _mapperSqlConnection.CloseConnection();
+        }
+
+        public void RollBack()
+        {
+            _mapperSqlConnection.Rollback();
+        }
+
+        public void Commit()
+        {
+            _mapperSqlConnection.Commit();
         }
     }
 }

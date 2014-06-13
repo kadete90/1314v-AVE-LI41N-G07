@@ -29,10 +29,10 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, true);
 
             _orderDataMapper = _builder.Build<Order>();
-            CleanToDefault();
+            //CleanToDefault();
         }
 
         public static void CleanToDefault()

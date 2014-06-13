@@ -29,7 +29,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, true);
 
             _customerDataMapper = _builder.Build<Customer>();
             //CleanToDefault();

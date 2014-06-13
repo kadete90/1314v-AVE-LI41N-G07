@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using SqlMapperFw.DataMappers;
+using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection;
 using SqlMapperFw.Reflection.Binder;
 
@@ -13,17 +14,20 @@ namespace SqlMapperFw.BuildMapper
     public class CmdBuilderDataMapper<T> : IDataMapper<T>
     {
         readonly SqlConnection _sqlConnection;
-        readonly List<AbstractBindMember> _bindMembers = new List<AbstractBindMember>();
+        readonly AbstractMapperSqlConnection<T> _mapperSqlConnection;
 
         readonly String _tableName;
         readonly KeyValuePair<String, MemberInfo> _pkKeyValuePair; //DB_PK_Name, DE_PK_Info
         readonly Dictionary<String, MemberInfo> _fieldsMatchDictionary = new Dictionary<String, MemberInfo>(); //DB_Field_Name, DE_Field_Info
-        
+
+        readonly List<AbstractBindMember> _bindMembers = new List<AbstractBindMember>();
         readonly Dictionary<String, SqlCommand> _commandsDictionary = new Dictionary<String, SqlCommand>(); //TypeCommand, Command
 
-        public CmdBuilderDataMapper(SqlConnection mySql, IEnumerable<Type> bindMembersTypes)
+        public CmdBuilderDataMapper(AbstractMapperSqlConnection<T> abstractMapperSqlConnection, IEnumerable<Type> bindMembersTypes)
         {
-            _sqlConnection = mySql;
+
+            _mapperSqlConnection = abstractMapperSqlConnection;
+            _sqlConnection = _mapperSqlConnection.Connection;
 
             Type type = typeof(T);
             _tableName = type.getTableName();
@@ -92,68 +96,38 @@ namespace SqlMapperFw.BuildMapper
             _commandsDictionary.Add("DELETE", cmd);
         }
 
+        public void SetTransaction(SqlTransaction sqlTransaction)
+        {
+            _mapperSqlConnection.SqlTransaction = sqlTransaction;
+        }
+
         public ISqlEnumerable<T> GetAll()
         {
-            if (_sqlConnection == null || _sqlConnection.State == ConnectionState.Closed)
-                throw new Exception("Open Connection needed to execute command!!");
+            SqlCommand cmd;
+            if (!_commandsDictionary.TryGetValue("SELECT", out cmd))
+                throw new Exception("This Command doesn't exist!");
 
-            using (SqlTransaction sqlTransaction = _sqlConnection.BeginTransaction(IsolationLevel.ReadCommitted))
-            {
-                try
-                {
-                    SqlCommand cmd;
-                    if (!_commandsDictionary.TryGetValue("SELECT", out cmd))
-                        throw new Exception("This Command doesn't exist!");
-
-                    cmd.Transaction = sqlTransaction;
-                    return new SqlEnumerable<T>(cmd, _bindMembers, 
-                        new List<MemberInfo>(_fieldsMatchDictionary.Values), _pkKeyValuePair.Value);
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine("An error occur on GetAll(): \n" + exception + "\nRolling back this transaction...");
-                    sqlTransaction.Rollback();
-                    return null;
-                }
-            }
+            return new SqlEnumerable<T>(cmd, _bindMembers,
+                new List<MemberInfo>(_fieldsMatchDictionary.Values), _pkKeyValuePair.Value, _mapperSqlConnection);
         }
 
         //minimizar reflexão neste método
         public void Insert(T val)
         {
-            if (_sqlConnection == null || _sqlConnection.State == ConnectionState.Closed)
-                throw new Exception("Open Connection needed to execute command!!");
-
-            using (SqlTransaction sqlTransaction = _sqlConnection.BeginTransaction())
+            SqlCommand cmd;
+            if (!_commandsDictionary.TryGetValue("INSERT", out cmd))
+                throw new Exception("This Command doesn't exist!");
+            cmd.Parameters.Add("@ID", _pkKeyValuePair.Value.GetSqlDbType(val)).Direction = ParameterDirection.Output;
+            foreach (var field in _fieldsMatchDictionary)
             {
-                try
+                SqlParameter p = new SqlParameter(field.Key, field.Value.GetSqlDbType(val))
                 {
-                    SqlCommand cmd;
-                    if (!_commandsDictionary.TryGetValue("INSERT", out cmd))
-                        throw new Exception("This Command doesn't exist!");
-                    cmd.Parameters.Add("@ID", _pkKeyValuePair.Value.GetSqlDbType(val)).Direction = ParameterDirection.Output;
-                    foreach (var field in _fieldsMatchDictionary)
-                    {
-                        SqlParameter p = new SqlParameter(field.Key, field.Value.GetSqlDbType(val))
-                        {
-                            Value = field.Value.GetValue(val)
-                        };
-                        cmd.Parameters.Add(p);
-                    }
-                    
-                    cmd.Transaction = sqlTransaction;
-                    cmd.ExecuteNonQuery();
-                    _pkKeyValuePair.Value.SetValue(val, cmd.Parameters[0].Value);
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine("An error occur on Delete(): \n" + exception + "\nRolling back this transaction...");
-                    sqlTransaction.Rollback();
-                    return;
-                }
-                sqlTransaction.Commit();
+                    Value = field.Value.GetValue(val)
+                };
+                cmd.Parameters.Add(p);
             }
-            
+            _mapperSqlConnection.ExecuteTransaction(cmd);
+            _pkKeyValuePair.Value.SetValue(val, cmd.Parameters[0].Value);      
         }
 
         //minimizar reflexão neste método
@@ -165,36 +139,16 @@ namespace SqlMapperFw.BuildMapper
         //minimizar reflexão neste método
         public void Delete(T val)
         {
-            if (_sqlConnection == null || _sqlConnection.State == ConnectionState.Closed)
-                throw new Exception("Open Connection needed to execute command!!");
+            SqlCommand cmd;
+            if (!_commandsDictionary.TryGetValue("DELETE", out cmd))
+                throw new Exception("This Command doesn't exist!");
 
-            using (SqlTransaction sqlTransaction = _sqlConnection.BeginTransaction(IsolationLevel.Serializable))
+            SqlParameter pkSqlParameter = new SqlParameter("@ID", SqlDbType.Int)
             {
-                try
-                {
-                    SqlCommand cmd;
-                    if (!_commandsDictionary.TryGetValue("DELETE", out cmd))
-                        throw new Exception("This Command doesn't exist!");
-
-                    SqlParameter pkSqlParameter = new SqlParameter("@ID", SqlDbType.Int)
-                    {
-                        Value = _pkKeyValuePair.Value.GetValue(val)
-                    };
-                    cmd.Parameters.Add(pkSqlParameter);
-                    cmd.Transaction = sqlTransaction;
-
-                    if (cmd.ExecuteNonQuery() == 0)
-                        Console.WriteLine("No row(s) affected!");
-
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine("An error occur on Delete(): \n" + exception + "\nRolling back this transaction...");
-                    sqlTransaction.Rollback();
-                    return;
-                }
-                sqlTransaction.Commit();
-            }
+                Value = _pkKeyValuePair.Value.GetValue(val)
+            };
+            cmd.Parameters.Add(pkSqlParameter);
+            _mapperSqlConnection.ExecuteTransaction(cmd);
         }
     }
 }

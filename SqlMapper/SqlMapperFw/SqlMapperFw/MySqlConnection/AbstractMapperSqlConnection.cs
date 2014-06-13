@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.BuildMapper;
 
 namespace SqlMapperFw.MySqlConnection
 {
     public abstract class AbstractMapperSqlConnection<T> : IMapperSqlConnection
     {
-        protected SqlConnection MySql;
-        public IDataMapper<T> MyCmdBuilder;
+        internal SqlConnection Connection { get; set; }
+        internal CmdBuilderDataMapper<T> MyCmdBuilder;
+        internal SqlTransaction SqlTransaction;
+        internal bool autoCommit = true;
+       
+
+        public abstract void Commit();
+        public abstract void Rollback();
 
         public void OpenConnection()
         {
-            if (MySql.State == ConnectionState.Open)
+            if (Connection.State == ConnectionState.Open)
                 return;
-            MySql.Open();
-            if (MySql.State != ConnectionState.Open)
+            Connection.Open();
+            if (Connection.State != ConnectionState.Open)
             {
                 throw new Exception("Could not open a new connection!");
             }
@@ -23,12 +29,11 @@ namespace SqlMapperFw.MySqlConnection
 
         public void CloseConnection()
         {
-            if (MySql.State != ConnectionState.Closed)
-                MySql.Close();
-            
+            if (Connection.State != ConnectionState.Closed)
+                Connection.Close();
         }
 
-        public Object ExecuteSwitch(string typeCommand, Object elem)
+        public Object Execute(string typeCommand, Object elem)
         {
             switch (typeCommand)
             {
@@ -49,7 +54,45 @@ namespace SqlMapperFw.MySqlConnection
             return null;
         }
 
-        public abstract Object Execute(string typeCommand, Object elem);
-    
+        public SqlDataReader ReadTransaction(SqlCommand sqlCommand)
+        {
+            OpenConnection();
+            SqlTransaction = Connection.BeginTransaction(IsolationLevel.ReadUncommitted);
+            sqlCommand.Transaction = SqlTransaction;
+            try
+            {
+                return sqlCommand.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occur on ReadTransaction(...): \n" + ex.Message +
+                                    "\nRollback this transaction...");
+                Rollback();
+                return null;
+            }
+        }
+
+        public void ExecuteTransaction(SqlCommand sqlCommand)
+        {
+            OpenConnection();
+            SqlTransaction = Connection.BeginTransaction(IsolationLevel.Serializable);
+            sqlCommand.Transaction = SqlTransaction;
+            try
+            {
+                if (sqlCommand.ExecuteNonQuery() == 0)
+                    Console.WriteLine("No row(s) affected!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occur on ExecuteTransaction(...): \n" + ex.Message +
+                                    "\nRollback this transaction...");
+                Rollback();
+            }
+            if (autoCommit)
+            {
+                Commit();
+            }
+        }
+
     }
 }

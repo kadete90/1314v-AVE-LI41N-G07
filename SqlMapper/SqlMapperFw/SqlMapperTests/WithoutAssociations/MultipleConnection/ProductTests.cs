@@ -30,10 +30,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, true);
 
             _productDataMapper = _builder.Build<Product>();
-            CleanToDefault();
+            //CleanToDefault();
         }
 
         public static void CleanToDefault()
@@ -60,27 +60,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             Assert.AreEqual(77, count);
         }
 
-        // alterar para testes separados quando fôr implementado rollback e commit da transação
-        // fazer rollback depois de cada test para não estragar a BD -> autoclosable(false)
-        [TestMethod]
-        public void TestCommandsOnProduct()
-        {
-            int productId = InsertProduct();
-            Console.WriteLine("-----------------------------------------------------");
-            //UpdateProduct(productId);
-            Console.WriteLine("-----------------------------------------------------");
-            DeleteProduct(productId);
-        }
-
         [TestMethod]
         public void TestWhereOnReadAllProduct()
         {
             IEnumerable<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7");
-
-            //foreach (Product p in prods)
-            //{
-            //     Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", product.id, product.ProductName, product.UnitsInStock);
-            //}
 
             IEnumerator<Product> iterator = prods.GetEnumerator();
             Product product = null;
@@ -96,6 +79,15 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             Assert.AreEqual(14, product.id);
         }
 
+        [TestMethod]
+        public void TestCommandsOnProduct()
+        {
+            int id = InsertProduct();
+            Assert.AreEqual(78, _productDataMapper.GetAll().Count());
+            DeleteProduct(id);
+            Assert.AreEqual(77, _productDataMapper.GetAll().Count());
+        }
+
         private int InsertProduct()
         {
             Product product = new Product
@@ -107,12 +99,14 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
                 UnitsOnOrder = 30
             };
             _productDataMapper.Insert(product);
+
             Assert.IsNotNull(product.id);
+            Assert.AreNotEqual(0, product.id);
             Console.WriteLine("    --> Inserted new product with id = {0} <--", product.id);
             return product.id;
         }
 
-        private void UpdateProduct(int productId)
+        public void UpdateProduct(int productId)
         {
 
             Product product = new Product
@@ -125,20 +119,15 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
                 UnitsOnOrder = 30
             };
             _productDataMapper.Update(product);
-            Assert.Equals("NewProductname", product.ProductName);
+            Assert.AreEqual("NewProductname", product.ProductName);
             Console.WriteLine("    --> Updated the product with id = {0} <--", productId);
-
+            _builder.RollBack();
         }
 
         private void DeleteProduct(int productId)
         {
-            if (productId == 0)
-                return;
             Product product = new Product { id = productId };
             _productDataMapper.Delete(product);
-            int count = _productDataMapper.GetAll().Count();
-            Assert.AreEqual(77, count);
-            Console.WriteLine("    --> Removed the product with id = {0} <--", productId);
         }
     }
 }

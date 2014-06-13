@@ -29,10 +29,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, true);
 
             _employeeDataMapper = _builder.Build<Employee>();
-            CleanToDefault();
+            //CleanToDefault();
         }
 
         public static void CleanToDefault()
