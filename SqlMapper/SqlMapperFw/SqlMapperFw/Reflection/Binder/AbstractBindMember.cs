@@ -18,7 +18,7 @@ namespace SqlMapperFw.Reflection.Binder
 
         public abstract MemberInfo GetMemberInfoValid(MemberInfo mi);
 
-        public abstract void SetValue<T>(T instance, MemberInfo mi, Object value);
+        protected abstract void SetValue<T>(T instance, MemberInfo mi, Object value);
         public abstract Object GetValue<T>(T instance, MemberInfo mi);
     }
 }

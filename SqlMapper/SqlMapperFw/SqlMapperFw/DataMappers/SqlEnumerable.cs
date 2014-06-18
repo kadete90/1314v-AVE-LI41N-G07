@@ -79,7 +79,9 @@ namespace SqlMapperFw.DataMappers
                 int idx = 0;
                 
                 Object[] DBRowValues = new Object[_sqlDataReader.FieldCount];
-                _sqlDataReader.GetValues(DBRowValues);
+
+                if (_sqlDataReader.GetValues(DBRowValues) == 0)
+                    continue;
 
                 //pk
                 PairInfoBind PairPkInfoBind = _mySqlEnumerable.PkMemberInfoBind;

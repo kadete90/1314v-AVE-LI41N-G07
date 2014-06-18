@@ -6,10 +6,10 @@ namespace SqlMapperFw.Reflection.Binder
     {
         public override MemberInfo GetMemberInfoValid(MemberInfo mi)
         {
-            return (mi.MemberType == MemberTypes.Property) ? (PropertyInfo)mi : null;
+            return (mi.MemberType == MemberTypes.Property) ? mi : null;
         }
 
-        public override void SetValue<T>(T instance, MemberInfo mi, object value)
+        protected override void SetValue<T>(T instance, MemberInfo mi, object value)
         {
             if(mi.MemberType == MemberTypes.Property)
                 ((PropertyInfo)mi).SetValue(instance, value);

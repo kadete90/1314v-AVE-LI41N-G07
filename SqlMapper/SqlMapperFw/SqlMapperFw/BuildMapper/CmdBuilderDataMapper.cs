@@ -182,7 +182,7 @@ namespace SqlMapperFw.BuildMapper
                 cmd.Parameters.Add(p);
             }
             _mapperSqlConnection.ExecuteTransaction(cmd);
-            bmpk.SetValue(val, mipk, cmd.Parameters[0].Value);      
+            bmpk.bind(val, mipk, cmd.Parameters[0].Value);      
         }
 
         //private Dictionary<String, MemberInfo> filterMemberInfos(T toUpdate)
