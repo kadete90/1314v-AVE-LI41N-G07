@@ -32,9 +32,9 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, true);
 
             _customerDataMapper = _builder.Build<Customer>();
-            //CleanToDefault();
         }
 
+        //TODO [TestInitialize]
         public static void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))

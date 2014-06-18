@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using SqlMapperFw.Reflection;
 
-namespace SqlMapperClient.Entities
+namespace SqlMapperClient.EntitiesWA
 {
     [DBTableName("Employees")]
     public class Employee
     {
         [PropPK]
-        public int EmployeeId { set; get; } //PK
+        public Int32 EmployeeId { set; get; } //PK
         public String FirstName { set; get; }
         public String LastName { set; get; }
         public String Title { set; get; }
@@ -23,7 +24,7 @@ namespace SqlMapperClient.Entities
         public String Extension { set; get; }
         public Byte[] Photo { set; get; } //bd -> image
         public String Notes { set; get; }
-        public int ReportsTo { set; get; } // FK
+        public Employee ReportsTo { set; get; } // FK
         public String PhotoPath { set; get; } 
     }
 }

@@ -1,22 +1,24 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace SqlMapperFw.Reflection.Binder
 {
     public abstract class AbstractBindMember
     {
-        public bool bind(object instance, MemberInfo memberInfo, object dbvalue)
+        public bool bind<T>(T instance, MemberInfo mi, object dbvalue)
         {
-            if (GetMemberInfoValid(memberInfo) == null) { return false; }
-
-            MemberInfo mymi = instance.GetType().GetMember(memberInfo.Name)[0];
+            MemberInfo mymi = instance.GetType().GetMember(mi.Name)[0];
             if (mymi == null) { return false; }
 
             if (ReferenceEquals(dbvalue.ToString(), "")) { return false; }
 
-            mymi.SetValue(instance, dbvalue);
+            SetValue(instance, mymi, dbvalue);
             return true;
         }
 
         public abstract MemberInfo GetMemberInfoValid(MemberInfo mi);
+
+        public abstract void SetValue<T>(T instance, MemberInfo mi, Object value);
+        public abstract Object GetValue<T>(T instance, MemberInfo mi);
     }
 }

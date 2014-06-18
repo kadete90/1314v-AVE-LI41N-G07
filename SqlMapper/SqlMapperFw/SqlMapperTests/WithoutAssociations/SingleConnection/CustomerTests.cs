@@ -32,10 +32,10 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, true);
 
             _customerDataMapper = _builder.Build<Customer>();
-            //CleanToDefault();
         }
 
-        public static void CleanToDefault()
+        //TODO [TestInitialize]
+        public void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {

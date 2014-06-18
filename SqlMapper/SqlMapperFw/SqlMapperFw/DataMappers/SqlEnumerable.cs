@@ -1,32 +1,25 @@
-﻿//1.2ªparte
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Reflection;
 using SqlMapperFw.BuildMapper;
 using SqlMapperFw.MySqlConnection;
-using SqlMapperFw.Reflection.Binder;
 
 namespace SqlMapperFw.DataMappers
 {
     public sealed class SqlEnumerable<T> : ISqlEnumerable<T>
     {
         internal readonly SqlCommand SqlCommand;
-        internal readonly List<AbstractBindMember> BindMembers;
-        internal readonly List<MemberInfo> MemberInfos;
-        internal readonly MemberInfo PkMemberInfo;
-        internal readonly AbstractMapperSqlConnection<T> _mapperSqlConnection;
+        internal readonly Dictionary<string, PairInfoBind>.ValueCollection MembersInfoBind;
+        internal readonly PairInfoBind PkMemberInfoBind;
+        internal readonly AbstractMapperSqlConnection<T> MapperSqlConnection;
 
-        public SqlEnumerable(SqlCommand cmd, List<AbstractBindMember> bindMembers,
-            List<MemberInfo> memberInfos, MemberInfo pkMemberInfo, AbstractMapperSqlConnection<T> mapperSqlConnection)
+        public SqlEnumerable(SqlCommand cmd, Dictionary<string, PairInfoBind>.ValueCollection membersInfoBind, PairInfoBind pkMemberInfoBind, AbstractMapperSqlConnection<T> mapperSqlConnection)
         {
             SqlCommand = cmd;
-            BindMembers = bindMembers;
-            MemberInfos = memberInfos;
-            PkMemberInfo = pkMemberInfo;
-            _mapperSqlConnection = mapperSqlConnection;
+            MembersInfoBind = membersInfoBind;
+            PkMemberInfoBind = pkMemberInfoBind;
+            MapperSqlConnection = mapperSqlConnection;
         }
 
         public ISqlEnumerable<T> Where(string clause)
@@ -34,12 +27,13 @@ namespace SqlMapperFw.DataMappers
             if (clause == null)
                 throw new ArgumentNullException("clause");
             SqlCommand.CommandText += ((!SqlCommand.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
-            return this;
+            return new SqlEnumerable<T>(SqlCommand, MembersInfoBind, PkMemberInfoBind, MapperSqlConnection);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new SqlEnumerator<T>(this);
+            return new SqlEnumerator<T>(
+                new SqlEnumerable<T>(SqlCommand, MembersInfoBind, PkMemberInfoBind, MapperSqlConnection));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -61,7 +55,7 @@ namespace SqlMapperFw.DataMappers
         public SqlEnumerator(SqlEnumerable<T> mySqlEnumerable)
         {
             _mySqlEnumerable = mySqlEnumerable;
-            _mapperSqlConnection = _mySqlEnumerable._mapperSqlConnection;
+            _mapperSqlConnection = _mySqlEnumerable.MapperSqlConnection;
             _sqlDataReader = _mapperSqlConnection.ReadTransaction(_mySqlEnumerable.SqlCommand);
             gotDisposed = false;
         }
@@ -77,23 +71,23 @@ namespace SqlMapperFw.DataMappers
 
         public bool MoveNext()
         {
-            foreach (var DBRowValues in _sqlDataReader.AsEnumerable())
+            if (_sqlDataReader == null)
+                return false;
+            while (_sqlDataReader.Read())
             {
                 T newInstance = (T)Activator.CreateInstance(typeof(T));
+                int idx = 0;
                 
-                foreach (AbstractBindMember bm in _mySqlEnumerable.BindMembers)
-                    if (bm.bind(newInstance, _mySqlEnumerable.PkMemberInfo, DBRowValues[0]))
-                        break;
+                Object[] DBRowValues = new Object[_sqlDataReader.FieldCount];
+                _sqlDataReader.GetValues(DBRowValues);
 
-                int idx = 1;
-                List<MemberInfo> MemberInfos = _mySqlEnumerable.MemberInfos;
-                foreach (MemberInfo mi in MemberInfos)
-                {
-                     foreach (AbstractBindMember bm in _mySqlEnumerable.BindMembers)
-                        if (bm.bind(newInstance, mi, DBRowValues[idx]))
-                            break;
-                    idx++;
-                }
+                //pk
+                PairInfoBind PairPkInfoBind = _mySqlEnumerable.PkMemberInfoBind;
+                PairPkInfoBind.BindMember.bind(newInstance, PairPkInfoBind.MemberInfo, DBRowValues[idx++]);
+                //fields
+                foreach (PairInfoBind pairInfoBind in _mySqlEnumerable.MembersInfoBind)
+                    pairInfoBind.BindMember.bind(newInstance, pairInfoBind.MemberInfo, DBRowValues[idx++]);
+
                 gotCurrent = true;
                 current = newInstance;
                 return true;

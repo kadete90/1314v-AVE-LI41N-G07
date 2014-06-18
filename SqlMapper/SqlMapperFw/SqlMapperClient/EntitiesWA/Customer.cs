@@ -1,14 +1,13 @@
 ﻿using System;
 using SqlMapperFw.Reflection;
 
-namespace SqlMapperClient.Entities
+namespace SqlMapperClient.EntitiesWA
 {
-
     [DBTableName("Customers")]
     public class Customer
     {
         [PropPK]
-        [DBFieldName("CustomerId")]
+        [DBFieldName("CustomerId")] 
         public String id { set; get; }  //PK
         public String CompanyName { set; get; }
         public String ContactName { set; get; }

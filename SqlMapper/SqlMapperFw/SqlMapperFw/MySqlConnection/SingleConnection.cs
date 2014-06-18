@@ -16,8 +16,11 @@ namespace SqlMapperFw.MySqlConnection
 
         public override void Rollback()
         {
-            SqlTransaction.Dispose();
-            SqlTransaction.Rollback();
+            if (SqlTransaction.Connection != null)
+            {
+                SqlTransaction.Dispose();
+                SqlTransaction.Rollback();
+            }
         }
 
         public override void Commit()

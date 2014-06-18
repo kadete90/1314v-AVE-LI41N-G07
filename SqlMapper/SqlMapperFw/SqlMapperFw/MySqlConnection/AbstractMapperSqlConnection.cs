@@ -65,10 +65,27 @@ namespace SqlMapperFw.MySqlConnection
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occur on ReadTransaction(...): \n" + ex.Message +
-                                    "\nRollback this transaction...");
+                Console.WriteLine("An error occur on ReadTransaction(...): \nnRollback this transaction...");
                 Rollback();
-                return null;
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public SqlDataReader ReadTransactionAutoClosable(SqlCommand sqlCommand)
+        {
+            OpenConnection();
+            using (sqlCommand.Transaction = Connection.BeginTransaction(IsolationLevel.ReadUncommitted))
+            {
+                try
+                {
+                    return sqlCommand.ExecuteReader();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("An error occur on ReadTransaction(...): \nnRollback this transaction...");
+                    Rollback();
+                    throw new Exception(ex.Message);
+                }
             }
         }
 
@@ -84,16 +101,14 @@ namespace SqlMapperFw.MySqlConnection
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occur on ExecuteTransaction(...): \n" + ex.Message +
-                                    "\nRollback this transaction...");
+                Console.WriteLine("An error occur on ReadTransaction(...): \nnRollback this transaction...");
                 Rollback();
-                return;
+                throw new Exception(ex.Message);
             }
             if (autoCommit)
             {
                 Commit();
             }
         }
-
     }
 }

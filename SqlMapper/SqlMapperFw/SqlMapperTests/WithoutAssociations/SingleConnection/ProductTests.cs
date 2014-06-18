@@ -33,10 +33,10 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, false);
 
             _productDataMapper = _builder.Build<Product>();
-            CleanToDefault();
         }
 
-        public static void CleanToDefault()
+        [TestInitialize]
+        public void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
@@ -74,7 +74,8 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             {
                 countProds++;
                 product = iterator.Current;
-                Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", product.id, product.ProductName, product.UnitsInStock);
+                Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}, Discontinued : {3}", 
+                            product.id, product.ProductName, product.UnitsInStock, product.Discontinued);
             }
             _builder.Commit();
             Assert.IsNotNull(product);
@@ -85,7 +86,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
         [TestMethod]
         public void TestCommandsOnProduct()
         {
-            int id = InsertProduct();
+            Int32 id = InsertProduct();
             Assert.AreEqual(78, _productDataMapper.GetAll().Count());
             _builder.Commit();
             Console.WriteLine("    --> Inserted new product with id = {0} <--\n", id);
@@ -98,7 +99,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             Console.WriteLine("    --> Deleted the product with id = {0} <--", id);
         }
 
-        private int InsertProduct()
+        private Int32 InsertProduct()
         {
             Product product = new Product
             {
@@ -116,9 +117,8 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             return product.id;
         }
 
-        public void UpdateProduct(int productId)
+        public void UpdateProduct(Int32 productId)
         {
-
             Product product = new Product
             {
                 id = productId,
@@ -130,10 +130,10 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             };
             _productDataMapper.Update(product);
             Assert.AreEqual("NewProductname", product.ProductName);
-            _builder.RollBack();
+            _builder.Rollback();
         }
 
-        private void DeleteProduct(int productId)
+        private void DeleteProduct(Int32 productId)
         {
             Product product = new Product { id = productId };
             _productDataMapper.Delete(product);

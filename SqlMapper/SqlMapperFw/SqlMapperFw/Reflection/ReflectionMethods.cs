@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using SqlMapperFw.BuildMapper;
+using SqlMapperFw.Reflection.Binder;
 
 namespace SqlMapperFw.Reflection
 {
@@ -40,51 +42,24 @@ namespace SqlMapperFw.Reflection
                     : type.Name.Replace("set_", "").Replace("get_", "");
         }
 
-        public static void SetValue(this MemberInfo member, object instance, object value)
-        {
-            switch (member.MemberType){
-                case MemberTypes.Property:
-                    ((PropertyInfo) member).SetValue(instance, value, null);
-                    break;
-                case (MemberTypes.Field):
-                    ((FieldInfo) member).SetValue(instance, value);
-                    break;
-                default:
-                    throw new Exception("member must be of type FieldInfo or PropertyInfo");
-            }
-        }
-
-        public static object GetValue(this MemberInfo member, object instance)
-        {
-            switch (member.MemberType)
-            {
-                case MemberTypes.Property:
-                    return ((PropertyInfo)member).GetValue(instance, null);
-                case (MemberTypes.Field):
-                    return ((FieldInfo)member).GetValue(instance);
-                default:
-                    throw new Exception("member must be of type FieldInfo or PropertyInfo");
-            }
-        }
-
         // Converte System.type em SqlDbType
-        public static SqlDbType GetSqlDbType(this MemberInfo m, Object instance)
+        public static SqlDbType GetSqlDbType(this MemberInfo mi, Object instance, AbstractBindMember bm)
         {
-            return new SqlParameter("x", m.GetValue(instance)).SqlDbType;
+            return new SqlParameter("x", bm.GetValue(instance,mi)).SqlDbType;
         }
 
-        public static string StringBuilder(this Dictionary<string, MemberInfo> dictionary)
+        public static string StringBuilder(this Dictionary<string, PairInfoBind> dictionary)
         { 
             //"ProductName = @name"
             String s = "";
-            foreach (KeyValuePair<string, MemberInfo> mi in dictionary)
-                s += mi.Key+"=@" + mi.Value.Name + ", ";
+            foreach (KeyValuePair<string, PairInfoBind> mi in dictionary)
+                s += mi.Key+"=@" + mi.Value.MemberInfo.Name + ", ";
             if (s != "")
                 s = s.Substring(0, s.Length - 2);
             return s;
         }
 
-        public static string StringBuilder(this Dictionary<string, MemberInfo>.KeyCollection keyCollection)
+        public static string StringBuilder(this Dictionary<string, PairInfoBind>.KeyCollection keyCollection)
         {
             String s = "";
             foreach (String fieldName in keyCollection)

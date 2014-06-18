@@ -32,9 +32,8 @@ namespace SqlMapperFw.BuildMapper
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw new Exception(ex.Message);
                 }
-                return null;
             }
 
             public void AfterInvoke(InvocationInfo info, object returnValue)
@@ -74,7 +73,7 @@ namespace SqlMapperFw.BuildMapper
             _mapperSqlConnection.CloseConnection();
         }
 
-        public void RollBack()
+        public void Rollback()
         {
             _mapperSqlConnection.Rollback();
         }

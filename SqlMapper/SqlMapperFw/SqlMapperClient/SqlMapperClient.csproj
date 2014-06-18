@@ -44,6 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntitiesWA\Customer.cs" />
+    <Compile Include="EntitiesWA\Employee.cs" />
+    <Compile Include="EntitiesWA\Order.cs" />
+    <Compile Include="EntitiesWA\Product.cs" />
+    <Compile Include="EntitiesWA\Supplier.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Order.cs" />

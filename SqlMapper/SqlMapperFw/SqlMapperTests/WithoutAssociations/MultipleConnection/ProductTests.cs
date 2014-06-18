@@ -33,10 +33,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, false);
 
             _productDataMapper = _builder.Build<Product>();
-            CleanToDefault();
         }
 
-        public static void CleanToDefault()
+        [TestInitialize]
+        public void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
@@ -84,7 +84,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         [TestMethod]
         public void TestCommandsOnProduct()
         {
-            int id = InsertProduct();
+            Int32 id = InsertProduct();
             Assert.AreEqual(78, _productDataMapper.GetAll().Count());
             _builder.Commit();
             Console.WriteLine("    --> Inserted new product with id = {0} <--\n", id);
@@ -97,7 +97,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             Console.WriteLine("    --> Deleted the product with id = {0} <--", id);
         }
 
-        private int InsertProduct()
+        private Int32 InsertProduct()
         {
             Product product = new Product
             {
@@ -115,7 +115,7 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             return product.id;
         }
 
-        public void UpdateProduct(int productId)
+        public void UpdateProduct(Int32 productId)
         {
 
             Product product = new Product
@@ -129,10 +129,10 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
             _productDataMapper.Update(product);
             Assert.AreEqual("NewProductname", product.ProductName);
-            _builder.RollBack();
+            _builder.Rollback();
         }
 
-        private void DeleteProduct(int productId)
+        private void DeleteProduct(Int32 productId)
         {
             Product product = new Product { id = productId };
             _productDataMapper.Delete(product);
