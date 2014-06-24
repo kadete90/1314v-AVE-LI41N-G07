@@ -31,7 +31,7 @@ namespace SqlMapperFw.BuildMapper
         }
     }
 
-    public class CmdBuilderDataMapper<T> : IDataMapper<T>
+    public class CmdBuilderDataMapper<T> : IDataMapper
     {
         readonly SqlConnection _sqlConnection;
         readonly AbstractMapperSqlConnection<T> _mapperSqlConnection;
@@ -49,7 +49,7 @@ namespace SqlMapperFw.BuildMapper
             _sqlConnection = _mapperSqlConnection.Connection;
 
             Type type = typeof(T);
-            _tableName = type.getTableName();
+            _tableName = type.GetTableName();
 
             List<AbstractBindMember> _bindMembersAux = new List<AbstractBindMember>();
             foreach (Type bmType in bindMembersTypes)
@@ -57,27 +57,36 @@ namespace SqlMapperFw.BuildMapper
                 if (bmType == null)
                     throw new ArgumentNullException("bindMembersTypes");
                 if (!typeof(AbstractBindMember).IsAssignableFrom(bmType))
-                    throw new Exception("This type of binder doesn't extends AbstractBindMember");
+                    throw new Exception("This TypeAux of binder doesn't extends AbstractBindMember");
                 _bindMembersAux.Add((AbstractBindMember)Activator.CreateInstance(bmType));
             }
 
             foreach (MemberInfo mi in type.GetMembers())
             {
+
                 MemberInfo validMemberInfo = null;
-                AbstractBindMember binder = 
-                    _bindMembersAux.FirstOrDefault(bm => (validMemberInfo = bm.GetMemberInfoValid(mi)) != null);
+                AbstractBindMember binder = _bindMembersAux.FirstOrDefault(bm =>
+                    (validMemberInfo = bm.GetMemberInfo(mi)) != null);
 
                 if (binder == null)
                     continue;
+                if (validMemberInfo.IsForeignKey())
+                    validMemberInfo = new FkMemberInfo(validMemberInfo, type);
 
-                var DEFieldName = validMemberInfo.getDBFieldName();
-                if (_fieldsMatchDictionary.ContainsKey(DEFieldName) && _pkKeyValuePair.Key != null)  //TODO opcional: chave composta
+                var DEFieldName = validMemberInfo.GetDBFieldName();
+
+                if (_fieldsMatchDictionary.ContainsKey(DEFieldName))  
                     continue;
 
-                if (validMemberInfo.isPrimaryKey())
+                //TODO OPCIONAL: chave composta
+                bool isPK = validMemberInfo.IsPrimaryKey();
+                if (isPK && _pkKeyValuePair.Key != null)
+                    continue;
+
+                if (isPK)
                     _pkKeyValuePair = new KeyValuePair<string, PairInfoBind>(DEFieldName,new PairInfoBind(validMemberInfo, binder));
                 else
-                    _fieldsMatchDictionary.Add(DEFieldName, mi, binder);
+                    _fieldsMatchDictionary.Add(DEFieldName, validMemberInfo, binder);
             }
 
             if (_fieldsMatchDictionary.Count == 0 || _pkKeyValuePair.Key == null)
@@ -101,15 +110,16 @@ namespace SqlMapperFw.BuildMapper
             _commandsDictionary.Add("SELECTALL", cmd);
 
             cmd = _sqlConnection.CreateCommand();
-            cmd.CommandText = "SELECT " + _pkKeyValuePair.Key + ", " + DBfields + " FROM " + _tableName + " WHERE "+ _pkKeyValuePair.Key + " = @ID";
+            cmd.CommandText = "SELECT " + DBfields + " FROM " + _tableName + " WHERE "+ _pkKeyValuePair.Key + " = @ID";
             _commandsDictionary.Add("SELECTONE", cmd);
 
             cmd = _sqlConnection.CreateCommand();
-            cmd.CommandText = "INSERT INTO " + _tableName + " (" + DBfields + ")" + " VALUES (" + _fieldsMatchDictionary.Keys.StringBuilder() + ") SET @ID = SCOPE_IDENTITY();";
+            cmd.CommandText = "INSERT INTO " + _tableName + " (" + DBfields + ")" + " VALUES (" + _fieldsMatchDictionary.Keys.StringBuilderKeyCollection() + ") SET @ID = SCOPE_IDENTITY();";
             _commandsDictionary.Add("INSERT", cmd);
 
             cmd = _sqlConnection.CreateCommand();
-            cmd.CommandText = "UPDATE " + _tableName + " SET " + _fieldsMatchDictionary.StringBuilder() + " WHERE " + _pkKeyValuePair.Key + "= @ID";
+            cmd.CommandText = "UPDATE " + _tableName + " SET @TO_REPLACE WHERE " + _pkKeyValuePair.Key + "= @ID";
+            //cmd.CommandText = "UPDATE " + _tableName + " SET "+ _fieldsMatchDictionary.StringBuilderDicionary() +" WHERE " + _pkKeyValuePair.Key + "= @ID";
             _commandsDictionary.Add("UPDATE", cmd);
 
             cmd = _sqlConnection.CreateCommand();
@@ -123,122 +133,130 @@ namespace SqlMapperFw.BuildMapper
             if (!_commandsDictionary.TryGetValue("SELECTALL", out cmd))
                 throw new Exception("This Command doesn't exist!");
 
+            //TODO tentar resolver problema de outra forma
+            int idx = cmd.CommandText.IndexOf(" WHERE", StringComparison.Ordinal);
+            if (idx > 0)
+                cmd.CommandText = cmd.CommandText.Remove(idx);
+
             return new SqlEnumerable<T>(cmd, _fieldsMatchDictionary.Values, _pkKeyValuePair.Value, _mapperSqlConnection);
         }
 
-        //public T GetById(object id)
-        //{
-        //    SqlCommand cmd;
-        //    if (!_commandsDictionary.TryGetValue("SELECTONE", out cmd))
-        //        throw new Exception("This Command doesn't exist!");
-        //    T newInstance = (T)Activator.CreateInstance(typeof(T));
-        //    SqlParameter pkSqlParameter = new SqlParameter("@ID", _pkKeyValuePair.Value.MemberInfo.GetSqlDbType(newInstance))
-        //    {
-        //        Value = id
-        //    };
-        //    cmd.Parameters.Add(pkSqlParameter);
+        //2.2 TODO OPCIONAL
+        SqlEnumerable IDataMapper.GetAll()
+        {
+            throw new NotImplementedException();
+        }
 
-        //    SqlDataReader _sqlDataReader = _mapperSqlConnection.ReadTransactionAutoClosable(cmd);
+        public T GetById(object id)
+        {
+            SqlCommand cmd;
+            if (!_commandsDictionary.TryGetValue("SELECTONE", out cmd))
+                throw new Exception("This Command doesn't exist!");
 
-        //    foreach (var DBRowValues in _sqlDataReader.AsEnumerable())
-        //    {
-        //        foreach (AbstractBindMember bm in _bindMembersAux)
-        //            if (bm.bind(newInstance, _pkKeyValuePair.Value.MemberInfo, DBRowValues[0]))
-        //                break;
-        //        int idx = 1;
-        //        Dictionary<string, PairInfoBind>.ValueCollection MemberInfos = _fieldsMatchDictionary.Values;
-        //        foreach (PairInfoBind pair in MemberInfos)
-        //        {
-        //            foreach (AbstractBindMember bm in _bindMembersAux)
-        //                if (bm.bind(newInstance, pair.MemberInfo, DBRowValues[idx]))
-        //                    break;
-        //            idx++;
-        //        }
-        //    }
-        //    _sqlDataReader.Close();
-        //    return newInstance;
-        //}
+            T newInstance = (T)Activator.CreateInstance(typeof(T));
 
-        //minimizar reflexão neste método
-        public void Insert(T val)
+            MemberInfo mipk = _pkKeyValuePair.Value.MemberInfo;
+            AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;
+            bmpk.bind(newInstance, mipk, id);
+
+            SqlParameter pkSqlParameter = new SqlParameter("@ID", mipk.GetSqlDbType(newInstance, bmpk))
+            {
+                Value = id
+            };
+            cmd.Parameters.Add(pkSqlParameter);
+
+            SqlDataReader _sqlDataReader = _mapperSqlConnection.ReadTransactionAutoClosable(cmd);
+            if (!_sqlDataReader.HasRows)
+                throw new Exception("No element reference for this id");
+
+            try
+            {
+                _sqlDataReader.Read();
+                Object[] DBRowValues = new Object[_sqlDataReader.FieldCount];
+                int i = 0;
+
+                foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
+                {
+                    MemberInfo mi = pair.Value.MemberInfo;
+                    AbstractBindMember bm = pair.Value.BindMember;
+                    bm.bind(newInstance, mi, DBRowValues[i++]);
+                }
+                _sqlDataReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Problem occur on getById:\n" + ex);
+            }
+            return newInstance;
+        }
+
+        public void Insert(object val)
         {
             SqlCommand cmd;
             if (!_commandsDictionary.TryGetValue("INSERT", out cmd))
                 throw new Exception("This Command doesn't exist!");
 
+            //Dictionary<String, PairInfoBind> filterInfos = filterMemberInfos(val);
+
             MemberInfo mipk = _pkKeyValuePair.Value.MemberInfo;
             AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;
             cmd.Parameters.Add("@ID", mipk.GetSqlDbType(val, bmpk)).Direction = ParameterDirection.Output;
-            
+
             foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
             {
                 MemberInfo mi = pair.Value.MemberInfo;
                 AbstractBindMember bm = pair.Value.BindMember;
 
-                SqlParameter p = new SqlParameter(pair.Key, mi.GetSqlDbType(val, bm))
+                Object fieldValue = val.GetEDFieldValue(mi, bm);
+
+                SqlParameter p = new SqlParameter(pair.Key, ReflectionMethods.GetSqlDbType(fieldValue))
                 {
-                    Value = bm.GetValue(val, mi)
+                    Value = fieldValue
                 };
+
                 cmd.Parameters.Add(p);
             }
             _mapperSqlConnection.ExecuteTransaction(cmd);
-            bmpk.bind(val, mipk, cmd.Parameters[0].Value);      
+            val.BindEDFieldValue(mipk, bmpk, cmd.Parameters[0].Value);
         }
 
-        //private Dictionary<String, MemberInfo> filterMemberInfos(T toUpdate)
-        //{
-        //    T OnDB = GetById(_pkKeyValuePair.Value.MemberInfo.GetValue(toUpdate));
-
-        //    MyDictionary toInsertInfos = new MyDictionary();
-
-        //    foreach (MemberInfo mi in OnDB.GetType().GetMembers())
-        //    {
-        //        if (_fieldsMatchDictionary.ContainsValue(mi))
-        //        {
-        //            Object valueOnBD = mi.GetValue(OnDB);
-        //            Object valueToUpdate = mi.GetValue(toUpdate);
-        //            if (valueOnBD.Equals(valueToUpdate)) continue;
-        //            MemberInfo info;
-        //            if(_fieldsMatchDictionary.TryGetValue(mi.getDBFieldName(), out info))
-        //                toInsertInfos.Add(mi.getDBFieldName(), info);
-        //        }
-        //    }
-        //    return toInsertInfos;
-        //} 
-
-        //minimizar reflexão neste método
-        public void Update(T val)
+        public void Update(object val)
         {
             SqlCommand cmd;
             if (!_commandsDictionary.TryGetValue("UPDATE", out cmd))
                 throw new Exception("This Command doesn't exist!");
 
-            //Dictionary<String, MemberInfo> filterInfos = filterMemberInfos(val);
+            Dictionary<String, PairInfoBind> filterInfos = filterMemberInfos(val);
+
+            cmd.CommandText = cmd.CommandText.Replace("@TO_REPLACE", filterInfos.StringBuilderDicionary());
+
             MemberInfo mipk = _pkKeyValuePair.Value.MemberInfo;
             AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;
 
-            SqlParameter pkSqlParameter = new SqlParameter("@ID", mipk.GetSqlDbType(val, bmpk))
+            Object pkValue = val.GetEDFieldValue(mipk, bmpk);
+            SqlParameter pkSqlParameter = new SqlParameter("@ID", ReflectionMethods.GetSqlDbType(pkValue))
             {
-                Value = bmpk.GetValue(val, mipk)
+                Value = pkValue
             };
             cmd.Parameters.Add(pkSqlParameter);
 
-            foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary) //_fieldsMatchDictionary
+            foreach (KeyValuePair<string, PairInfoBind> pair in filterInfos)
             {
                 MemberInfo mi = pair.Value.MemberInfo;
                 AbstractBindMember bm = pair.Value.BindMember;
 
-                SqlParameter p = new SqlParameter(pair.Key, mi.GetSqlDbType(val, bm))
+                Object fieldValue = val.GetEDFieldValue(mi, bm);
+                SqlParameter p = new SqlParameter(pair.Key, fieldValue)
                 {
-                    Value = bm.GetValue(val, mi)
+                    Value = fieldValue
                 };
                 cmd.Parameters.Add(p);
+                val.BindEDFieldValue(mi, bm, fieldValue);
             }
             _mapperSqlConnection.ExecuteTransaction(cmd);
         }
 
-        //minimizar reflexão neste método
-        public void Delete(T val)
+        public void Delete(object val)
         {
             SqlCommand cmd;
             if (!_commandsDictionary.TryGetValue("DELETE", out cmd))
@@ -247,12 +265,29 @@ namespace SqlMapperFw.BuildMapper
             MemberInfo mipk = _pkKeyValuePair.Value.MemberInfo;
             AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;
 
-            SqlParameter pkSqlParameter = new SqlParameter("@ID", mipk.GetSqlDbType(val, bmpk))
+            Object pkValue = val.GetEDFieldValue(mipk, bmpk);
+            SqlParameter pkSqlParameter = new SqlParameter("@ID", ReflectionMethods.GetSqlDbType(pkValue))
             {
-                Value = bmpk.GetValue(val, mipk)
+                Value = pkValue
             };
             cmd.Parameters.Add(pkSqlParameter);
             _mapperSqlConnection.ExecuteTransaction(cmd);
         }
+
+        // Objectivo: Apenas fazer update dos fields com valores non-default em toUpdate
+        //TODO melhorar
+        private Dictionary<String, PairInfoBind> filterMemberInfos(object toUpdate)
+        {
+            MyDictionary toUpdateInfos = new MyDictionary();
+            foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
+            {
+                MemberInfo mi = pair.Value.MemberInfo;
+                AbstractBindMember bm = pair.Value.BindMember;
+                if (toUpdate.GetEDFieldValue(mi, bm) == null)
+                    continue;
+                toUpdateInfos.Add(pair.Key, mi, bm);
+            }
+            return toUpdateInfos;
+        } 
     }
 }

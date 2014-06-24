@@ -9,13 +9,13 @@ using SqlMapperFw.DataMappers;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
-namespace SqlMapperTests.WithoutAssociations.MultipleConnection
+namespace SqlMapperTests.SingleConnection
 {
     [TestClass]
-    public class EmployeeTests
+    public class CustomerTests
     {
         static Builder _builder;
-        static IDataMapper<Employee> _employeeDataMapper;
+        static IDataMapper<Customer> _customerDataMapper;
         static SqlConnectionStringBuilder _connectionStringBuilder;
 
         [ClassInitialize]
@@ -29,17 +29,17 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, true);
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, true);
 
-            _employeeDataMapper = _builder.Build<Employee>();
+            _customerDataMapper = _builder.Build<Customer>();
+            CleanToDefault();
         }
 
-        [TestInitialize]
-        public void CleanToDefault()
+        public static void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("DELETE FROM Employees WHERE EmployeeId > 9", conSql);
+                SqlCommand cmd = new SqlCommand("DELETE FROM Customers WHERE CustomerId = 'xpto'", conSql);
                 conSql.Open();
                 cmd.ExecuteNonQuery();
                 conSql.Close();
@@ -49,16 +49,16 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         [ClassCleanup]
         public static void TearDown()
         {
-
+           _builder.CloseConnection();
         }
 
         [TestMethod]
-        public void TestReadAllEmployees()
+        public void TestReadAllCustomers()
         {
             Console.WriteLine("-----------------------------------------------------");
-            int count = _employeeDataMapper.GetAll().Count();
+            int count = _customerDataMapper.GetAll().Count();
             Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
-            Assert.AreEqual(9, count);
+            Assert.AreEqual(91, count);
             Console.WriteLine("-----------------------------------------------------");
         }
     }

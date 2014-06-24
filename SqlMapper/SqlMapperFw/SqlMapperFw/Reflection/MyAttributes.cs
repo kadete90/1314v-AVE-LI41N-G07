@@ -2,28 +2,32 @@
 
 namespace SqlMapperFw.Reflection
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class DBTableNameAttribute : Attribute
-    {
-        public string Name;
-
-        public DBTableNameAttribute(string name)
-        {
-            Name = name;
-        }
-    }
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-    public class DBFieldNameAttribute : Attribute
+    public class DBNameAttribute : Attribute
     {
         public string Name;
 
-        public DBFieldNameAttribute(string name)
+        public DBNameAttribute(string name)
         {
             Name = name;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    public class DBTableNameAttribute : DBNameAttribute
+    {
+        public DBTableNameAttribute(string name) : base(name){}
+    }
+
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
-    public class PropPKAttribute : Attribute
+    public class PKAttribute : DBNameAttribute
+    {
+        public PKAttribute(string name) : base(name){}
+    }
+
+    // TODO AttributeTargets.All
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)] 
+    public class FKAttribute : Attribute
     {
     }
 }

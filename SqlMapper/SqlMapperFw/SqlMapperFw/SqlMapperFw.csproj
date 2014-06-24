@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildMapper\StringBuilder.cs" />
     <Compile Include="Reflection\Binder\AbstractBindMember.cs" />
     <Compile Include="Reflection\Binder\BindProperties.cs" />
     <Compile Include="BuildMapper\CmdBuilderDataMapper.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="MySqlConnection\SingleConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MySqlConnection\IMapperSqlConnection.cs" />
+    <Compile Include="Reflection\FkMemberInfo.cs" />
     <Compile Include="Reflection\ReflectionMethods.cs" />
   </ItemGroup>
   <ItemGroup>

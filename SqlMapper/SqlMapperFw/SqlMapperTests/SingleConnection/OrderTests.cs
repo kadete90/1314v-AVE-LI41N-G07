@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Odbc;
 using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,7 +9,7 @@ using SqlMapperFw.DataMappers;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
-namespace SqlMapperTests.WithoutAssociations.SingleConnection
+namespace SqlMapperTests.SingleConnection
 {
     [TestClass]
     public class OrderTests
@@ -33,14 +32,14 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, false);
 
             _orderDataMapper = _builder.Build<Order>();
+            CleanToDefault();
         }
 
-        [TestInitialize]
-        public void CleanToDefault()
+        public static void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("DELETE FROM Orders WHERE OrderId > 11077", conSql);
+                SqlCommand cmd = new SqlCommand("DELETE FROM Orders WHERE OrderID > 11077", conSql);
                 conSql.Open();
                 cmd.ExecuteNonQuery();
                 conSql.Close();
@@ -67,21 +66,21 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
         [TestMethod]
         public void TestWhereOnReadAllOrder()
         {
-            IEnumerable<Order> prods = _orderDataMapper.GetAll().Where("EmployeeID = 5").Where("Freight > 255.5").Where("ShipVia = 3");
-
-            IEnumerator<Order> iterator = prods.GetEnumerator();
+            IEnumerable<Order> orders = _orderDataMapper.GetAll().Where("EmployeeID = 5").Where("Freight > 255.5").Where("ShipVia = 3");
             Order order = null;
-            int countProds = 0;
-            while (iterator.MoveNext())
+            int countOrders = 0;
+            foreach (Order ord in orders)
             {
-                countProds++;
-                order = iterator.Current;
-                Console.WriteLine("OrderId: {0}, EmployeeId: {1}", order.OrderId, order.EmployeeId);
+                order = ord;
+                countOrders++;
             }
-            
+           
             Assert.IsNotNull(order);
-            Assert.AreEqual(1, countProds);
-            Assert.AreEqual(10359, order.OrderId);
+            Assert.AreEqual(1, countOrders);
+            Assert.AreEqual(10359, order.ID);
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("    --> OrderID: {0}, EmployeeID: {1} <--", order.ID, order.Employee.ID);
+            Console.WriteLine("---------------------------------------------");
             _builder.Commit();
         }
 
@@ -91,52 +90,55 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
             Order order = InsertOrder();
             Assert.AreEqual(831, _orderDataMapper.GetAll().Count());
             _builder.Commit();
-            Console.WriteLine("    --> Inserted new order with id = {0} <--\n", order.OrderId);
+            Console.WriteLine("    --> Inserted new order with ID = {0} <--\n", order.ID);
             UpdateOrder(order);
-            Console.WriteLine("    --> Updated the order with id = {0} <--", order.OrderId);
-            Console.WriteLine("           --> Rollback update <--\n");
+            Console.WriteLine("    --> Updated the order with ID = {0} <--\n", order.ID);
             DeleteOrder(order);
             Assert.AreEqual(830, _orderDataMapper.GetAll().Count());
             _builder.Commit();
-            Console.WriteLine("    --> Deleted the order with id = {0} <--", order.OrderId);
+            Console.WriteLine("    --> Deleted the order with ID = {0} <--", order.ID);
         }
 
         private Order InsertOrder()
         {
+            Customer customer = new Customer { ID = "VINET" };
+            Employee employee = new Employee { ID = 4 };
+            DateTime dt = DateTime.Now;
             Order order = new Order
             {
-                CustomerId = "VINET",
-                EmployeeId = 4,
-                //OrderDate = dt,
-                //RequiredDate = dt,
-                //ShippedDate = dt,
+                Customer = customer,
+                Employee = employee,
+                OrderDate = dt,
+                RequiredDate = dt.AddDays(20),
+                ShippedDate = dt.AddDays(10),
                 ShipVia = 2,
                 Freight = (decimal)10.2,
                 ShipName = "KadeteShip",
                 ShipAddress = "PevidesAdress",
-                //ShipCity = "Kadete Town",
-                //ShipRegion = "RL",
-                ShipPostalCode = "2640"
-                //,ShipCountry = "Portugal"
+                ShipCity = "Kadete Town",
+                ShipRegion = "RL",
+                ShipPostalCode = "2640",
+                ShipCountry = "Portugal"
             };
             _orderDataMapper.Insert(order);
-
-            Assert.IsNotNull(order.OrderId);
-            Assert.AreNotEqual(0, order.OrderId);
             _builder.Commit();
+            Assert.IsNotNull(order.ID);
+            Assert.AreNotEqual(0, order.ID);
+            Assert.AreEqual(4, order.Employee.ID);
+            Assert.AreEqual("VINET", order.Customer.ID);
             return order;
         }
 
         public void UpdateOrder(Order order)
         {
-            order.CustomerId = "TOMSP";
-            order.EmployeeId = 6;
+            order.Customer.ID = "TOMSP";
+            order.Employee.ID = 6;
             order.ShipName = "KadeteShip";
 
             _orderDataMapper.Update(order);
             
-            Assert.AreEqual("TOMSP", order.CustomerId);
-            Assert.AreEqual(6, order.EmployeeId);
+            Assert.AreEqual("TOMSP", order.Customer.ID);
+            Assert.AreEqual(6, order.Employee.ID);
             Assert.AreEqual("KadeteShip", order.ShipName);
             Assert.AreEqual("PevidesAdress", order.ShipAddress);
             _builder.Rollback();
@@ -145,8 +147,7 @@ namespace SqlMapperTests.WithoutAssociations.SingleConnection
 
         private void DeleteOrder(Order orderToDel)
         {
-            Order order = new Order { OrderId = orderToDel.OrderId };
-            _orderDataMapper.Delete(order);
+            _orderDataMapper.Delete(orderToDel);
             _builder.Commit();
         }
     }

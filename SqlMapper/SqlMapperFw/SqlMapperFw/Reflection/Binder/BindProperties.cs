@@ -4,7 +4,7 @@ namespace SqlMapperFw.Reflection.Binder
 {
     public class BindProperties : AbstractBindMember
     {
-        public override MemberInfo GetMemberInfoValid(MemberInfo mi)
+        public override MemberInfo GetMemberInfo(MemberInfo mi)
         {
             return (mi.MemberType == MemberTypes.Property) ? mi : null;
         }
@@ -12,7 +12,8 @@ namespace SqlMapperFw.Reflection.Binder
         protected override void SetValue<T>(T instance, MemberInfo mi, object value)
         {
             if(mi.MemberType == MemberTypes.Property)
-                ((PropertyInfo)mi).SetValue(instance, value);
+                ((PropertyInfo)mi).
+                    SetValue(instance, value);
         }
 
         public override object GetValue<T>(T instance, MemberInfo mi)

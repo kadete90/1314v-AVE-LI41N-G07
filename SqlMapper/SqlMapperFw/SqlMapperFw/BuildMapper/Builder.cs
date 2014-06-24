@@ -60,7 +60,7 @@ namespace SqlMapperFw.BuildMapper
         public IDataMapper<T> Build<T>()
         {
             if (!_typeConnection.ImplementsInterface(typeof(IMapperSqlConnection)))
-                throw new Exception("This type of connection doesn't implements IMapperSqlConnection");
+                throw new Exception("This Type of connection doesn't implements IMapperSqlConnection");
 
             _mapperSqlConnection = (IMapperSqlConnection)
             Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder, _bindMembers, _autoCommit);

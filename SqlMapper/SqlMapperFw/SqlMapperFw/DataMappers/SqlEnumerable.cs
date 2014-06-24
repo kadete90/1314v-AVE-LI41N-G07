@@ -7,6 +7,37 @@ using SqlMapperFw.MySqlConnection;
 
 namespace SqlMapperFw.DataMappers
 {
+
+    public class SqlEnumerable
+    {
+        //private readonly SqlCommand _cmd;
+        //private readonly Dictionary<string, PairInfoBind>.ValueCollection _values;
+        //private readonly PairInfoBind _value;
+        //private readonly IDataMapper _dataMapper;
+
+        public SqlEnumerable(SqlCommand cmd, Dictionary<string, PairInfoBind>.ValueCollection values, PairInfoBind value, IDataMapper dataMapper )
+        {
+            throw new NotImplementedException();
+            //_cmd = cmd;
+            //_values = values;
+            //_value = value;
+            //_dataMapper = dataMapper;
+            //_dataMapper = (IDataMapper)Activator.CreateInstance(dataMapper.GetType());
+            
+            
+        }
+        public SqlEnumerable Where(string clause)
+        {
+            throw new NotImplementedException();
+            //if (clause == null)
+            //    throw new ArgumentNullException("clause");
+            //_cmd.CommandText += ((!_cmd.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
+            //return new SqlEnumerable(_cmd, _values, _value, _dataMapper);
+        }
+
+
+    }
+
     public sealed class SqlEnumerable<T> : ISqlEnumerable<T>
     {
         internal readonly SqlCommand SqlCommand;
@@ -14,6 +45,7 @@ namespace SqlMapperFw.DataMappers
         internal readonly PairInfoBind PkMemberInfoBind;
         internal readonly AbstractMapperSqlConnection<T> MapperSqlConnection;
 
+        //TODO problema: depois de fazer um where num sqlEnumerable todos os outros sqlEnumerables desse Builder terão a clausula where
         public SqlEnumerable(SqlCommand cmd, Dictionary<string, PairInfoBind>.ValueCollection membersInfoBind, PairInfoBind pkMemberInfoBind, AbstractMapperSqlConnection<T> mapperSqlConnection)
         {
             SqlCommand = cmd;
@@ -26,8 +58,9 @@ namespace SqlMapperFw.DataMappers
         {
             if (clause == null)
                 throw new ArgumentNullException("clause");
-            SqlCommand.CommandText += ((!SqlCommand.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
-            return new SqlEnumerable<T>(SqlCommand, MembersInfoBind, PkMemberInfoBind, MapperSqlConnection);
+            SqlCommand sqlCommand = SqlCommand;
+            sqlCommand.CommandText += ((!SqlCommand.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
+            return new SqlEnumerable<T>(sqlCommand, MembersInfoBind, PkMemberInfoBind, MapperSqlConnection);
         }
 
         public IEnumerator<T> GetEnumerator()

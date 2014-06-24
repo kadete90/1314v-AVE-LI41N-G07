@@ -9,7 +9,7 @@ using SqlMapperFw.DataMappers;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
-namespace SqlMapperTests.WithoutAssociations.MultipleConnection
+namespace SqlMapperTests.MultipleConnection
 {
     [TestClass]
     public class ProductTests
@@ -18,7 +18,6 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
         static IDataMapper<Product> _productDataMapper;
         static SqlConnectionStringBuilder _connectionStringBuilder;
 
-        //TODO: apenas fazer no inicio da classe e não em cada teste
         [ClassInitialize]
         public static void Setup(TestContext testContext)
         {
@@ -30,13 +29,13 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, false);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, true);
 
             _productDataMapper = _builder.Build<Product>();
+            CleanToDefault();
         }
 
-        [TestInitialize]
-        public void CleanToDefault()
+        public static void CleanToDefault()
         {
             using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
             {
@@ -46,19 +45,12 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             }
         }
 
-        //TODO: apenas fazer no fim de todos os testes terem sido executados
-        [ClassCleanup]
-        public static void TearDown()
-        {
-        }
-
         [TestMethod]
         public void TestReadAllProducts()
         {
             int count = _productDataMapper.GetAll().Count();
             Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
             Assert.AreEqual(77, count);
-            _builder.Commit();
         }
 
         [TestMethod]
@@ -73,72 +65,66 @@ namespace SqlMapperTests.WithoutAssociations.MultipleConnection
             {
                 countProds++;
                 product = iterator.Current;
-                Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", product.id, product.ProductName, product.UnitsInStock);
+                Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", product.ID, product.ProductName, product.UnitsInStock);
             }
-            _builder.Commit();
             Assert.IsNotNull(product);
             Assert.AreEqual(1, countProds);
-            Assert.AreEqual(14, product.id);
+            Assert.AreEqual(14, product.ID);
         }
 
         [TestMethod]
         public void TestCommandsOnProduct()
         {
-            Int32 id = InsertProduct();
+            Product prod = InsertProduct();
             Assert.AreEqual(78, _productDataMapper.GetAll().Count());
-            _builder.Commit();
-            Console.WriteLine("    --> Inserted new product with id = {0} <--\n", id);
-            UpdateProduct(id);
-            Console.WriteLine("    --> Updated the product with id = {0} <--", id);
-            Console.WriteLine("           --> Rollback update <--\n");
-            DeleteProduct(id);
-            Assert.AreEqual(77, _productDataMapper.GetAll().Count());
-            _builder.Commit();
-            Console.WriteLine("    --> Deleted the product with id = {0} <--", id);
+            Console.WriteLine("    --> Inserted new product with ID = {0} <--\n", prod.ID);
+            UpdateProduct(prod);
+            Console.WriteLine("    --> Updated the product with ID = {0} <--\n", prod.ID);
+            DeleteProduct(prod);
+            IEnumerable<Product> enumerable = _productDataMapper.GetAll();
+            Assert.AreEqual(77, enumerable.Count());
+            Console.WriteLine("    --> Deleted the product with ID = {0} <--", prod.ID);
         }
 
-        private Int32 InsertProduct()
+        private Product InsertProduct()
         {
+            Supplier sup = new Supplier { ID = 4 };
+
             Product product = new Product
             {
                 ProductName = "ProductName",
                 QuantityPerUnit = "100",
                 UnitPrice = 100,
                 UnitsInStock = 50,
-                UnitsOnOrder = 30
+                UnitsOnOrder = 30,
+                Supplier = sup
             };
             _productDataMapper.Insert(product);
 
-            Assert.IsNotNull(product.id);
-            Assert.AreNotEqual(0, product.id);
-            _builder.Commit();
-            return product.id;
+            Assert.IsNotNull(product.ID);
+            Assert.AreNotEqual(0, product.ID);
+            return product;
         }
 
-        public void UpdateProduct(Int32 productId)
+        public void UpdateProduct(Product product)
         {
+            product.ProductName = "NewProductname";
+            product.Supplier.ID = 3;
 
-            Product product = new Product
-            {
-                id = productId,
-                ProductName = "NewProductname",
-                QuantityPerUnit = "100",
-                UnitPrice = 100,
-                UnitsInStock = 50,
-                UnitsOnOrder = 30
-            };
             _productDataMapper.Update(product);
-            Assert.AreEqual("NewProductname", product.ProductName);
-            _builder.Rollback();
+            //TODO _productDataMapper.getById()
+            IEnumerator<Product> enumerator = _productDataMapper.GetAll().Where("ProductID =" + product.ID).GetEnumerator();
+            Assert.IsTrue(enumerator.MoveNext());
+            Product prod = enumerator.Current;
+            Assert.AreEqual("NewProductname", prod.ProductName);
+            Assert.AreEqual(3, prod.Supplier.ID);
+            while (enumerator.MoveNext()) { }
         }
 
-        private void DeleteProduct(Int32 productId)
+        private void DeleteProduct(Product product)
         {
-            Product product = new Product { id = productId };
             _productDataMapper.Delete(product);
-            _builder.Commit();
-
-
         }
     }
+   
 }

@@ -39,6 +39,8 @@ namespace SqlMapperFw.MySqlConnection
             {
                 case "GetAll":
                     return MyCmdBuilder.GetAll();
+                case "GetById":
+                    return MyCmdBuilder.GetById(elem);
                 case "Delete":
                     MyCmdBuilder.Delete((T)elem);
                     break;
@@ -65,9 +67,8 @@ namespace SqlMapperFw.MySqlConnection
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occur on ReadTransaction(...): \nnRollback this transaction...");
                 Rollback();
-                throw new Exception(ex.Message);
+                throw new Exception("An error occur on ReadTransaction(...): \n\nRollback this transaction...\n" + ex.Message);
             }
         }
 
@@ -82,9 +83,8 @@ namespace SqlMapperFw.MySqlConnection
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("An error occur on ReadTransaction(...): \nnRollback this transaction...");
                     Rollback();
-                    throw new Exception(ex.Message);
+                    throw new Exception("An error occur on ReadTransactionAutoClosable(...): \n\nRollback this transaction...\n" + ex.Message);
                 }
             }
         }
@@ -101,9 +101,8 @@ namespace SqlMapperFw.MySqlConnection
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occur on ReadTransaction(...): \nnRollback this transaction...");
                 Rollback();
-                throw new Exception(ex.Message);
+                throw new Exception("An error occur on ExecuteTransaction(...): \n\nRollback this transaction...\n" + ex.Message);
             }
             if (autoCommit)
             {

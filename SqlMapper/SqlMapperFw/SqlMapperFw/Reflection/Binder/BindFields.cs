@@ -4,7 +4,7 @@ namespace SqlMapperFw.Reflection.Binder
 {
     public class BindFields : AbstractBindMember
     {
-        public override MemberInfo GetMemberInfoValid(MemberInfo mi)
+        public override MemberInfo GetMemberInfo(MemberInfo mi)
         {
             return (mi.MemberType == MemberTypes.Field) ? mi : null;
         }
