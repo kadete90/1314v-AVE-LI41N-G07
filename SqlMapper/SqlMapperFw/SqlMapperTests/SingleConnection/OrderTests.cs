@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.DataMapper;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
@@ -29,11 +30,12 @@ namespace SqlMapperTests.SingleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, false);
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
 
             _orderDataMapper = _builder.Build<Order>();
             CleanToDefault();
         }
+
 
         public static void CleanToDefault()
         {
@@ -55,17 +57,20 @@ namespace SqlMapperTests.SingleConnection
         [TestMethod]
         public void TestReadAllOrders()
         {
+            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
             Console.WriteLine("-----------------------------------------------------");
             int count = _orderDataMapper.GetAll().Count();
             _builder.Commit();
             Console.WriteLine("    --> TestReadAllOrders Count = {0} <--", count);
             Assert.AreEqual(830, count);
             Console.WriteLine("-----------------------------------------------------");
+            _builder.Commit();
         }
 
         [TestMethod]
         public void TestWhereOnReadAllOrder()
         {
+            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
             IEnumerable<Order> orders = _orderDataMapper.GetAll().Where("EmployeeID = 5").Where("Freight > 255.5").Where("ShipVia = 3");
             Order order = null;
             int countOrders = 0;
@@ -87,16 +92,16 @@ namespace SqlMapperTests.SingleConnection
         [TestMethod]
         public void TestCommandsOnOrder()
         {
+            _builder.BeginTransaction(IsolationLevel.ReadCommitted);
             Order order = InsertOrder();
             Assert.AreEqual(831, _orderDataMapper.GetAll().Count());
-            _builder.Commit();
             Console.WriteLine("    --> Inserted new order with ID = {0} <--\n", order.ID);
             UpdateOrder(order);
             Console.WriteLine("    --> Updated the order with ID = {0} <--\n", order.ID);
             DeleteOrder(order);
             Assert.AreEqual(830, _orderDataMapper.GetAll().Count());
-            _builder.Commit();
             Console.WriteLine("    --> Deleted the order with ID = {0} <--", order.ID);
+            _builder.Rollback();
         }
 
         private Order InsertOrder()
@@ -121,7 +126,6 @@ namespace SqlMapperTests.SingleConnection
                 ShipCountry = "Portugal"
             };
             _orderDataMapper.Insert(order);
-            _builder.Commit();
             Assert.IsNotNull(order.ID);
             Assert.AreNotEqual(0, order.ID);
             Assert.AreEqual(4, order.Employee.ID);
@@ -141,14 +145,12 @@ namespace SqlMapperTests.SingleConnection
             Assert.AreEqual(6, order.Employee.ID);
             Assert.AreEqual("KadeteShip", order.ShipName);
             Assert.AreEqual("PevidesAdress", order.ShipAddress);
-            _builder.Rollback();
             
         }
 
         private void DeleteOrder(Order orderToDel)
         {
             _orderDataMapper.Delete(orderToDel);
-            _builder.Commit();
         }
     }
 }

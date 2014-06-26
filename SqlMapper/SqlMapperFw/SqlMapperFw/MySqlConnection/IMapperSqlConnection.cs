@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace SqlMapperFw.MySqlConnection
 {
@@ -6,6 +7,7 @@ namespace SqlMapperFw.MySqlConnection
     {
         Object Execute(String typeCommand, Object elem);
         void CloseConnection();
+        void BeginTransaction(IsolationLevel isolationLevel);
         void Rollback();
         void Commit();
     }

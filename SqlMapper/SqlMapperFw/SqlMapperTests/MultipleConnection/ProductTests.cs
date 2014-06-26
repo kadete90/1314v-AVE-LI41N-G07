@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.DataMapper;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
@@ -29,7 +29,7 @@ namespace SqlMapperTests.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, true);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList);
 
             _productDataMapper = _builder.Build<Product>();
             CleanToDefault();
@@ -56,20 +56,12 @@ namespace SqlMapperTests.MultipleConnection
         [TestMethod]
         public void TestWhereOnReadAllProduct()
         {
-            IEnumerable<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7");
-
-            IEnumerator<Product> iterator = prods.GetEnumerator();
-            Product product = null;
-            int countProds = 0;
-            while (iterator.MoveNext())
-            {
-                countProds++;
-                product = iterator.Current;
-                Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", product.ID, product.ProductName, product.UnitsInStock);
-            }
-            Assert.IsNotNull(product);
-            Assert.AreEqual(1, countProds);
-            Assert.AreEqual(14, product.ID);
+            List<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7").ToList();
+            Assert.IsNotNull(prods);
+            Assert.AreEqual(1, prods.Count);
+            Assert.AreEqual(14, prods[0].ID);
+            Console.WriteLine("ProductID: {0}, ProductName: {1}, UnitsInStock: {2}", 
+                                prods[0].ID, prods[0].ProductName, prods[0].UnitsInStock);
         }
 
         [TestMethod]

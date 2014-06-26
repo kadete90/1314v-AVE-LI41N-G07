@@ -55,9 +55,9 @@
     <Compile Include="Reflection\Binder\BindFields.cs" />
     <Compile Include="BuildMapper\Builder.cs" />
     <Compile Include="Reflection\MyAttributes.cs" />
-    <Compile Include="DataMappers\IDataMapper.cs" />
-    <Compile Include="DataMappers\ISqlEnumerable.cs" />
-    <Compile Include="DataMappers\SqlEnumerable.cs" />
+    <Compile Include="DataMapper\IDataMapper.cs" />
+    <Compile Include="DataMapper\ISqlEnumerable.cs" />
+    <Compile Include="DataMapper\SqlEnumerable.cs" />
     <Compile Include="MySqlConnection\AbstractMapperSqlConnection.cs" />
     <Compile Include="MySqlConnection\MultiConnection.cs" />
     <Compile Include="MySqlConnection\SingleConnection.cs" />

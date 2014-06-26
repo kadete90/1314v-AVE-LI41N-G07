@@ -7,21 +7,33 @@ namespace SqlMapperFw.MySqlConnection
 {
     public abstract class AbstractMapperSqlConnection<T> : IMapperSqlConnection
     {
-        internal SqlConnection Connection { get; set; }
-        internal CmdBuilderDataMapper<T> MyCmdBuilder;
-        internal SqlTransaction SqlTransaction;
-        internal bool autoCommit = true;
        
+        internal CmdBuilderDataMapper<T> MyCmdBuilder;
+        internal SqlConnection Connection { get; set; }
+        internal SqlTransaction SqlTransaction;
 
         public abstract void Commit();
         public abstract void Rollback();
+        internal abstract void AfterCommandExecuted();
+        protected abstract void BeforeCommandExecuted();
+       
+        public void BeginTransaction(IsolationLevel isolationLevel)
+        {
+            if (SqlTransaction != null) throw new InvalidOperationException("Transaction already initialized!");
+            SqlTransaction = Connection.BeginTransaction(isolationLevel);
+        }
+
+        public bool ActiveConnection()
+        {
+            return Connection.State == ConnectionState.Open;
+        }
 
         public void OpenConnection()
         {
-            if (Connection.State == ConnectionState.Open)
+            if (ActiveConnection())
                 return;
             Connection.Open();
-            if (Connection.State != ConnectionState.Open)
+            if (!ActiveConnection())
             {
                 throw new Exception("Could not open a new connection!");
             }
@@ -34,80 +46,37 @@ namespace SqlMapperFw.MySqlConnection
         }
 
         public Object Execute(string typeCommand, Object elem)
-        {
-            switch (typeCommand)
+        {   
+            BeforeCommandExecuted();
+            try
             {
-                case "GetAll":
-                    return MyCmdBuilder.GetAll();
-                case "GetById":
-                    return MyCmdBuilder.GetById(elem);
-                case "Delete":
-                    MyCmdBuilder.Delete((T)elem);
-                    break;
-                case "Insert":
-                    MyCmdBuilder.Insert((T)elem);
-                    break;
-                case "Update":
-                    MyCmdBuilder.Update((T)elem);
-                    break;
-                default:
-                    throw new Exception("This command doesn't exist");
+                switch (typeCommand)
+                {
+                    case "GetAll":
+                        return MyCmdBuilder.GetAll();
+                    case "GetById":
+                        return MyCmdBuilder.GetById(elem);
+                    case "Delete":
+                        MyCmdBuilder.Delete((T) elem);
+                        break;
+                    case "Insert":
+                        MyCmdBuilder.Insert((T) elem);
+                        break;
+                    case "Update":
+                        MyCmdBuilder.Update((T) elem);
+                        break;
+                    default:
+                        throw new Exception("This command doesn't exist");
+                }
             }
+            catch (Exception ex)
+            {
+                Rollback();
+                CloseConnection();
+                Console.WriteLine(" >> Rollback !!\n" + ex.Message);
+            }
+            AfterCommandExecuted();
             return null;
-        }
-
-        public SqlDataReader ReadTransaction(SqlCommand sqlCommand)
-        {
-            OpenConnection();
-            SqlTransaction = Connection.BeginTransaction(IsolationLevel.ReadUncommitted);
-            sqlCommand.Transaction = SqlTransaction;
-            try
-            {
-                return sqlCommand.ExecuteReader();
-            }
-            catch (Exception ex)
-            {
-                Rollback();
-                throw new Exception("An error occur on ReadTransaction(...): \n\nRollback this transaction...\n" + ex.Message);
-            }
-        }
-
-        public SqlDataReader ReadTransactionAutoClosable(SqlCommand sqlCommand)
-        {
-            OpenConnection();
-            using (sqlCommand.Transaction = Connection.BeginTransaction(IsolationLevel.ReadUncommitted))
-            {
-                try
-                {
-                    return sqlCommand.ExecuteReader();
-                }
-                catch (Exception ex)
-                {
-                    Rollback();
-                    throw new Exception("An error occur on ReadTransactionAutoClosable(...): \n\nRollback this transaction...\n" + ex.Message);
-                }
-            }
-        }
-
-        public void ExecuteTransaction(SqlCommand sqlCommand)
-        {
-            OpenConnection();
-            SqlTransaction = Connection.BeginTransaction(IsolationLevel.Serializable);
-            sqlCommand.Transaction = SqlTransaction;
-            try
-            {
-                if (sqlCommand.ExecuteNonQuery() == 0)
-                    Console.WriteLine("No row(s) affected!");
-            }
-            catch (Exception ex)
-            {
-                Rollback();
-                throw new Exception("An error occur on ExecuteTransaction(...): \n\nRollback this transaction...\n" + ex.Message);
-            }
-            if (autoCommit)
-            {
-                Commit();
-            }
         }
     }
 }

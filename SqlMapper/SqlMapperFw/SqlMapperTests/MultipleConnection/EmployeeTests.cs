@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.DataMapper;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
@@ -29,7 +29,7 @@ namespace SqlMapperTests.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, false);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList);
 
             _employeeDataMapper = _builder.Build<Employee>();
             CleanToDefault();
@@ -57,7 +57,6 @@ namespace SqlMapperTests.MultipleConnection
         {
             Console.WriteLine("-----------------------------------------------------");
             int count = _employeeDataMapper.GetAll().Count();
-            _builder.Commit();
             Console.WriteLine("    --> TestReadAllEmployees Count = {0} <--", count);
             Assert.AreEqual(9, count);
             Console.WriteLine("-----------------------------------------------------");
@@ -77,7 +76,6 @@ namespace SqlMapperTests.MultipleConnection
                 Console.WriteLine("EmployeeID: {0}, FirstName: {1}, LastName: {2}, ReportsTo : {3}",
                             Employee.ID, Employee.FirstName, Employee.LastName, Employee.ReportsTo.ID);
             }
-            _builder.Commit();
             Assert.IsNotNull(Employee);
             Assert.AreEqual(1, countProds);
             Assert.AreEqual(7, Employee.ID);
@@ -88,13 +86,11 @@ namespace SqlMapperTests.MultipleConnection
         {
             Employee prod = InsertEmployee();
             Assert.AreEqual(10, _employeeDataMapper.GetAll().Count());
-            _builder.Commit();
             Console.WriteLine("    --> Inserted new Employee with ID = {0} <--\n", prod.ID);
             UpdateEmployee(prod);
             Console.WriteLine("    --> Updated the Employee with ID = {0} <--\n", prod.ID);
             DeleteEmployee(prod);
             Assert.AreEqual(9, _employeeDataMapper.GetAll().Count());
-            _builder.Commit();
             Console.WriteLine("    --> Deleted the Employee with ID = {0} <--", prod.ID);
         }
 
@@ -113,7 +109,6 @@ namespace SqlMapperTests.MultipleConnection
                 ReportsTo = boss
             };
             _employeeDataMapper.Insert(Employee);
-            _builder.Commit();
             Assert.IsNotNull(Employee.ID);
             Assert.AreNotEqual(0, Employee.ID);
             return Employee;
@@ -123,7 +118,6 @@ namespace SqlMapperTests.MultipleConnection
         {
             Employee.LastName = "El Boss";
             _employeeDataMapper.Update(Employee);
-            _builder.Commit();
             //TODO _EmployeeDataMapper.getById()
             IEnumerator<Employee> enumerator = _employeeDataMapper.GetAll().Where("EmployeeID =" + Employee.ID).GetEnumerator();
             Assert.IsTrue(enumerator.MoveNext());
@@ -131,13 +125,11 @@ namespace SqlMapperTests.MultipleConnection
             Assert.AreEqual("El Boss", emp.LastName);
             Assert.AreEqual(6, emp.ReportsTo.ID);
             while (enumerator.MoveNext()) { }
-            _builder.Commit();
         }
 
         private void DeleteEmployee(Employee Employee)
         {
             _employeeDataMapper.Delete(Employee);
-            _builder.Commit();
         }
 
     }

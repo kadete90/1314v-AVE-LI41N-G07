@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.DataMapper;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
@@ -29,7 +29,7 @@ namespace SqlMapperTests.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList, false);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList);
 
             _orderDataMapper = _builder.Build<Order>();
             CleanToDefault();
@@ -51,7 +51,6 @@ namespace SqlMapperTests.MultipleConnection
         {
             Console.WriteLine("-----------------------------------------------------");
             int count = _orderDataMapper.GetAll().Count();
-            _builder.Commit();
             Console.WriteLine("    --> TestReadAllOrders Count = {0} <--", count);
             Assert.AreEqual(830, count);
             Console.WriteLine("-----------------------------------------------------");
@@ -75,7 +74,6 @@ namespace SqlMapperTests.MultipleConnection
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("    --> OrderID: {0}, EmployeeID: {1} <--", order.ID, order.Employee.ID);
             Console.WriteLine("---------------------------------------------");
-            _builder.Commit();
         }
 
         [TestMethod]
@@ -83,13 +81,11 @@ namespace SqlMapperTests.MultipleConnection
         {
             Order order = InsertOrder();
             Assert.AreEqual(831, _orderDataMapper.GetAll().Count());
-            _builder.Commit();
             Console.WriteLine("    --> Inserted new order with ID = {0} <--\n", order.ID);
             UpdateOrder(order);
             Console.WriteLine("    --> Updated the order with ID = {0} <--\n", order.ID);
             DeleteOrder(order);
             Assert.AreEqual(830, _orderDataMapper.GetAll().Count());
-            _builder.Commit();
             Console.WriteLine("    --> Deleted the order with ID = {0} <--", order.ID);
         }
 
@@ -115,7 +111,6 @@ namespace SqlMapperTests.MultipleConnection
                 ShipCountry = "Portugal"
             };
             _orderDataMapper.Insert(order);
-            _builder.Commit();
             Assert.IsNotNull(order.ID);
             Assert.AreNotEqual(0, order.ID);
             Assert.AreEqual(4, order.Employee.ID);
@@ -135,14 +130,12 @@ namespace SqlMapperTests.MultipleConnection
             Assert.AreEqual(6, order.Employee.ID);
             Assert.AreEqual("KadeteShip", order.ShipName);
             Assert.AreEqual("PevidesAdress", order.ShipAddress);
-            _builder.Rollback();
 
         }
 
         private void DeleteOrder(Order orderToDel)
         {
             _orderDataMapper.Delete(orderToDel);
-            _builder.Commit();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SqlMapperFw.DataMappers
+namespace SqlMapperFw.DataMapper
 {
     //1ªparte
     //public interface IDataMapper<T>
@@ -17,7 +17,7 @@ namespace SqlMapperFw.DataMappers
     //2ªparte
     public interface IDataMapper<T> : IDataMapper
     {
-        new SqlEnumerable<T> GetAll();
+        new ISqlEnumerable<T> GetAll();
         T GetById(Object id);
         void Insert(T val);
         void Update(T val);

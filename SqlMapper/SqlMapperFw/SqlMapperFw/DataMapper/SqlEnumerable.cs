@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.MySqlConnection;
 
-namespace SqlMapperFw.DataMappers
+namespace SqlMapperFw.DataMapper
 {
 
     public class SqlEnumerable
@@ -15,7 +14,7 @@ namespace SqlMapperFw.DataMappers
         //private readonly PairInfoBind _value;
         //private readonly IDataMapper _dataMapper;
 
-        public SqlEnumerable(SqlCommand cmd, Dictionary<string, PairInfoBind>.ValueCollection values, PairInfoBind value, IDataMapper dataMapper )
+        public SqlEnumerable(SqlCommand cmd, Dictionary<string, PairInfoBind>.ValueCollection values, PairInfoBind value, IDataMapper dataMapper)
         {
             throw new NotImplementedException();
             //_cmd = cmd;
@@ -23,8 +22,8 @@ namespace SqlMapperFw.DataMappers
             //_value = value;
             //_dataMapper = dataMapper;
             //_dataMapper = (IDataMapper)Activator.CreateInstance(dataMapper.GetType());
-            
-            
+
+
         }
         public SqlEnumerable Where(string clause)
         {
@@ -34,8 +33,6 @@ namespace SqlMapperFw.DataMappers
             //_cmd.CommandText += ((!_cmd.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
             //return new SqlEnumerable(_cmd, _values, _value, _dataMapper);
         }
-
-
     }
 
     public sealed class SqlEnumerable<T> : ISqlEnumerable<T>
@@ -43,15 +40,20 @@ namespace SqlMapperFw.DataMappers
         internal readonly SqlCommand SqlCommand;
         internal readonly Dictionary<string, PairInfoBind>.ValueCollection MembersInfoBind;
         internal readonly PairInfoBind PkMemberInfoBind;
-        internal readonly AbstractMapperSqlConnection<T> MapperSqlConnection;
+        internal readonly CloseConnection CloseSqlConnection;
+
+        public delegate void CloseConnection();
 
         //TODO problema: depois de fazer um where num sqlEnumerable todos os outros sqlEnumerables desse Builder terão a clausula where
-        public SqlEnumerable(SqlCommand cmd, Dictionary<string, PairInfoBind>.ValueCollection membersInfoBind, PairInfoBind pkMemberInfoBind, AbstractMapperSqlConnection<T> mapperSqlConnection)
+        public SqlEnumerable(SqlCommand cmd, 
+            Dictionary<string, PairInfoBind>.ValueCollection membersInfoBind, 
+            PairInfoBind pkMemberInfoBind,
+            CloseConnection CloseSqlConnection)
         {
             SqlCommand = cmd;
             MembersInfoBind = membersInfoBind;
             PkMemberInfoBind = pkMemberInfoBind;
-            MapperSqlConnection = mapperSqlConnection;
+            this.CloseSqlConnection = CloseSqlConnection;
         }
 
         public ISqlEnumerable<T> Where(string clause)
@@ -60,13 +62,13 @@ namespace SqlMapperFw.DataMappers
                 throw new ArgumentNullException("clause");
             SqlCommand sqlCommand = SqlCommand;
             sqlCommand.CommandText += ((!SqlCommand.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
-            return new SqlEnumerable<T>(sqlCommand, MembersInfoBind, PkMemberInfoBind, MapperSqlConnection);
+            return new SqlEnumerable<T>(sqlCommand, MembersInfoBind, PkMemberInfoBind, CloseSqlConnection);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
             return new SqlEnumerator<T>(
-                new SqlEnumerable<T>(SqlCommand, MembersInfoBind, PkMemberInfoBind, MapperSqlConnection));
+                new SqlEnumerable<T>(SqlCommand, MembersInfoBind, PkMemberInfoBind, CloseSqlConnection));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -79,7 +81,6 @@ namespace SqlMapperFw.DataMappers
     {
         readonly SqlEnumerable<T> _mySqlEnumerable;
         readonly SqlDataReader _sqlDataReader;
-        readonly AbstractMapperSqlConnection<T> _mapperSqlConnection;
 
         private bool gotCurrent;
         private bool gotDisposed;
@@ -88,8 +89,7 @@ namespace SqlMapperFw.DataMappers
         public SqlEnumerator(SqlEnumerable<T> mySqlEnumerable)
         {
             _mySqlEnumerable = mySqlEnumerable;
-            _mapperSqlConnection = _mySqlEnumerable.MapperSqlConnection;
-            _sqlDataReader = _mapperSqlConnection.ReadTransaction(_mySqlEnumerable.SqlCommand);
+            _sqlDataReader = _mySqlEnumerable.SqlCommand.ExecuteReader();
             gotDisposed = false;
         }
 
@@ -98,8 +98,7 @@ namespace SqlMapperFw.DataMappers
             if (gotDisposed) return;
             gotDisposed = true;
             _sqlDataReader.Close();
-            if (_mapperSqlConnection.autoCommit)
-                _mapperSqlConnection.Commit();
+            _mySqlEnumerable.CloseSqlConnection();
         }
 
         public bool MoveNext()
@@ -110,7 +109,7 @@ namespace SqlMapperFw.DataMappers
             {
                 T newInstance = (T)Activator.CreateInstance(typeof(T));
                 int idx = 0;
-                
+
                 Object[] DBRowValues = new Object[_sqlDataReader.FieldCount];
 
                 if (_sqlDataReader.GetValues(DBRowValues) == 0)
@@ -127,7 +126,7 @@ namespace SqlMapperFw.DataMappers
                 current = newInstance;
                 return true;
             }
-            if(!gotDisposed)
+            if (!gotDisposed)
                 Dispose();
             return false;
         }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using LinFu.DynamicProxy;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.DataMapper;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection;
 
@@ -13,7 +14,6 @@ namespace SqlMapperFw.BuildMapper
         readonly Type _typeConnection;
         readonly SqlConnectionStringBuilder _connectionStringBuilder;
         readonly IEnumerable<Type> _bindMembers;
-        readonly bool _autoCommit;
         static IMapperSqlConnection _mapperSqlConnection;  
 
         internal class MyInterceptor : IInvokeWrapper
@@ -42,7 +42,7 @@ namespace SqlMapperFw.BuildMapper
             }
         }
 
-        public Builder(SqlConnectionStringBuilder connectionStringBuilderBuilder, Type typeConnection, IEnumerable<Type> bindMembers, bool autoCommit)
+        public Builder(SqlConnectionStringBuilder connectionStringBuilderBuilder, Type typeConnection, IEnumerable<Type> bindMembers)
         {
             if (connectionStringBuilderBuilder == null)
                 throw new ArgumentNullException("connectionStringBuilderBuilder");
@@ -54,7 +54,6 @@ namespace SqlMapperFw.BuildMapper
             _typeConnection = typeConnection;
             _connectionStringBuilder = connectionStringBuilderBuilder;
             _bindMembers = bindMembers;
-            _autoCommit = autoCommit;
         }
 
         public IDataMapper<T> Build<T>()
@@ -63,7 +62,7 @@ namespace SqlMapperFw.BuildMapper
                 throw new Exception("This Type of connection doesn't implements IMapperSqlConnection");
 
             _mapperSqlConnection = (IMapperSqlConnection)
-            Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder, _bindMembers, _autoCommit);
+            Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder, _bindMembers);
 
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
         }
@@ -82,5 +81,11 @@ namespace SqlMapperFw.BuildMapper
         {
             _mapperSqlConnection.Commit();
         }
+
+        public void BeginTransaction(IsolationLevel isolationLevel)
+        {
+            _mapperSqlConnection.BeginTransaction(isolationLevel);
+        }
+
     }
 }

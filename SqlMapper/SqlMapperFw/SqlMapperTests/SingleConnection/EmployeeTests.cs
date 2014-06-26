@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.DataMapper;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
@@ -29,7 +30,7 @@ namespace SqlMapperTests.SingleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, true);
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
 
             _employeeDataMapper = _builder.Build<Employee>();
             CleanToDefault();
@@ -54,17 +55,20 @@ namespace SqlMapperTests.SingleConnection
 
         [TestMethod]
         public void TestReadAllEmployees()
-        { 
+        {
+            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
             Console.WriteLine("-----------------------------------------------------");
             int count = _employeeDataMapper.GetAll().Count();
             Console.WriteLine("    --> TestReadAllEmployees Count = {0} <--", count);
             Assert.AreEqual(9, count);
             Console.WriteLine("-----------------------------------------------------");
+            _builder.Commit();
         }
 
         [TestMethod]
         public void TestWhereOnReadAllEmployee()
         {
+            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
             IEnumerable<Employee> prods = _employeeDataMapper.GetAll().Where("Country = 'UK'").Where("Extension = 465");
 
             IEnumerator<Employee> iterator = prods.GetEnumerator();
@@ -80,11 +84,13 @@ namespace SqlMapperTests.SingleConnection
             Assert.IsNotNull(Employee);
             Assert.AreEqual(1, countProds);
             Assert.AreEqual(7, Employee.ID);
+            _builder.Commit();
         }
 
         [TestMethod]
         public void TestCommandsOnEmployee()
         {
+            _builder.BeginTransaction(IsolationLevel.ReadCommitted);
             Employee prod = InsertEmployee();
             Assert.AreEqual(10, _employeeDataMapper.GetAll().Count());
             Console.WriteLine("    --> Inserted new Employee with ID = {0} <--\n", prod.ID);
@@ -93,6 +99,7 @@ namespace SqlMapperTests.SingleConnection
             DeleteEmployee(prod);
             Assert.AreEqual(9, _employeeDataMapper.GetAll().Count());
             Console.WriteLine("    --> Deleted the Employee with ID = {0} <--", prod.ID);
+            _builder.Rollback();
         }
 
         private Employee InsertEmployee()

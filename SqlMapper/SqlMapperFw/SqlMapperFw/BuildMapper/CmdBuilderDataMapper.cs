@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.DataMapper;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection;
 using SqlMapperFw.Reflection.Binder;
@@ -137,8 +137,8 @@ namespace SqlMapperFw.BuildMapper
             int idx = cmd.CommandText.IndexOf(" WHERE", StringComparison.Ordinal);
             if (idx > 0)
                 cmd.CommandText = cmd.CommandText.Remove(idx);
-
-            return new SqlEnumerable<T>(cmd, _fieldsMatchDictionary.Values, _pkKeyValuePair.Value, _mapperSqlConnection);
+            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
+            return new SqlEnumerable<T>(cmd, _fieldsMatchDictionary.Values, _pkKeyValuePair.Value, _mapperSqlConnection.AfterCommandExecuted);
         }
 
         //2.2 TODO OPCIONAL
@@ -164,13 +164,14 @@ namespace SqlMapperFw.BuildMapper
                 Value = id
             };
             cmd.Parameters.Add(pkSqlParameter);
-
-            SqlDataReader _sqlDataReader = _mapperSqlConnection.ReadTransactionAutoClosable(cmd);
-            if (!_sqlDataReader.HasRows)
-                throw new Exception("No element reference for this id");
-
+            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
             try
             {
+                SqlDataReader _sqlDataReader = cmd.ExecuteReader();
+
+                if (!_sqlDataReader.HasRows)
+                    throw new Exception("No element reference for this id");
+
                 _sqlDataReader.Read();
                 Object[] DBRowValues = new Object[_sqlDataReader.FieldCount];
                 int i = 0;
@@ -185,8 +186,10 @@ namespace SqlMapperFw.BuildMapper
             }
             catch (Exception ex)
             {
-                throw new Exception("Problem occur on getById:\n" + ex);
+                _mapperSqlConnection.Rollback();
+                throw new Exception("Problem occur on getById:\n" + ex.Message);
             }
+            _mapperSqlConnection.AfterCommandExecuted();
             return newInstance;
         }
 
@@ -216,7 +219,17 @@ namespace SqlMapperFw.BuildMapper
 
                 cmd.Parameters.Add(p);
             }
-            _mapperSqlConnection.ExecuteTransaction(cmd);
+            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
+            try
+            {
+                if (cmd.ExecuteNonQuery() == 0)
+                    Console.WriteLine("No row(s) affected!");
+               
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Exception on Insert\n" + ex.Message);
+            }
             val.BindEDFieldValue(mipk, bmpk, cmd.Parameters[0].Value);
         }
 
@@ -253,7 +266,17 @@ namespace SqlMapperFw.BuildMapper
                 cmd.Parameters.Add(p);
                 val.BindEDFieldValue(mi, bm, fieldValue);
             }
-            _mapperSqlConnection.ExecuteTransaction(cmd);
+            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
+            try
+            {
+                if (cmd.ExecuteNonQuery() == 0)
+                    Console.WriteLine("No row(s) affected!");
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Exception on Update\n" + ex.Message);
+            }
         }
 
         public void Delete(object val)
@@ -271,7 +294,16 @@ namespace SqlMapperFw.BuildMapper
                 Value = pkValue
             };
             cmd.Parameters.Add(pkSqlParameter);
-            _mapperSqlConnection.ExecuteTransaction(cmd);
+            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
+            try
+            {
+                if (cmd.ExecuteNonQuery() == 0)
+                    Console.WriteLine("No row(s) affected!");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Exception on Delete\n" + ex.Message);
+            }
         }
 
         // Objectivo: Apenas fazer update dos fields com valores non-default em toUpdate

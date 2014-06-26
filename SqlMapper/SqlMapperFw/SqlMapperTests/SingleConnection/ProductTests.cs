@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMappers;
+using SqlMapperFw.DataMapper;
 using SqlMapperFw.MySqlConnection;
 using SqlMapperFw.Reflection.Binder;
 
@@ -18,7 +19,6 @@ namespace SqlMapperTests.SingleConnection
         static IDataMapper<Product> _productDataMapper;
         static SqlConnectionStringBuilder _connectionStringBuilder;
 
-        //TODO TIP: executado apenas no inicio(independente do nr de testes a realizar)
         [ClassInitialize]
         public static void Setup(TestContext testContext)
         {
@@ -30,18 +30,10 @@ namespace SqlMapperTests.SingleConnection
             };
 
             List<Type> bindMemberList = new List<Type> {typeof (BindFields), typeof (BindProperties)};
-            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList, true);
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
 
             _productDataMapper = _builder.Build<Product>();
-
             CleanToDefault();
-        }
-
-        //TODO TIP: executado depois todos os testes terem sido executados
-        [ClassCleanup]
-        public static void TearDown()
-        {
-            _builder.CloseConnection();
         }
 
         public static void CleanToDefault()
@@ -54,17 +46,26 @@ namespace SqlMapperTests.SingleConnection
             }
         }
 
+        [ClassCleanup]
+        public static void TearDown()
+        {
+            _builder.CloseConnection();
+        }
+
         [TestMethod]
         public void TestReadAllProducts()
         {
+            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
             int count = _productDataMapper.GetAll().Count();
             Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
             Assert.AreEqual(77, count);
+            _builder.Commit();
         }
 
         [TestMethod]
         public void TestWhereOnReadAllProduct()
         {
+            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
             IEnumerable<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7");
 
             IEnumerator<Product> iterator = prods.GetEnumerator();
@@ -80,11 +81,13 @@ namespace SqlMapperTests.SingleConnection
             Assert.IsNotNull(product);
             Assert.AreEqual(1, countProds);
             Assert.AreEqual(14, product.ID);
+            _builder.Commit();
         }
 
         [TestMethod]
         public void TestCommandsOnProduct()
         {
+            _builder.BeginTransaction(IsolationLevel.ReadCommitted);
             Product prod = InsertProduct();
             Assert.AreEqual(78, _productDataMapper.GetAll().Count());
             Console.WriteLine("    --> Inserted new product with ID = {0} <--\n", prod.ID);
@@ -94,6 +97,7 @@ namespace SqlMapperTests.SingleConnection
             IEnumerable<Product> enumerable = _productDataMapper.GetAll();
             Assert.AreEqual(77, enumerable.Count());
             Console.WriteLine("    --> Deleted the product with ID = {0} <--", prod.ID);
+            _builder.Rollback();
         }
 
         private Product InsertProduct()
