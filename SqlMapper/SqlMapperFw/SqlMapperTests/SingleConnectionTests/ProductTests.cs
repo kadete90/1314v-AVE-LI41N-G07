@@ -5,12 +5,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
+using SqlMapperFw.Binder;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMapper;
+using SqlMapperFw.BuildMapper.DataMapper;
 using SqlMapperFw.MySqlConnection;
-using SqlMapperFw.Reflection.Binder;
 
-namespace SqlMapperTests.SingleConnection
+namespace SqlMapperTests.SingleConnectionTests
 {
     [TestClass]
     public class ProductTests
@@ -30,7 +30,7 @@ namespace SqlMapperTests.SingleConnection
             };
 
             List<Type> bindMemberList = new List<Type> {typeof (BindFields), typeof (BindProperties)};
-            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleSqlConnection), bindMemberList);
 
             _productDataMapper = _builder.Build<Product>();
             CleanToDefault();

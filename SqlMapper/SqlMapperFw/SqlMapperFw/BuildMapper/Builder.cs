@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Reflection;
 using LinFu.DynamicProxy;
-using SqlMapperFw.DataMapper;
+using SqlMapperFw.Binder;
+using SqlMapperFw.BuildMapper.DataMapper;
 using SqlMapperFw.MySqlConnection;
-using SqlMapperFw.Reflection;
+using SqlMapperFw.Utils;
 
 namespace SqlMapperFw.BuildMapper
 {
@@ -14,8 +17,11 @@ namespace SqlMapperFw.BuildMapper
         readonly Type _typeConnection;
         readonly SqlConnectionStringBuilder _connectionStringBuilder;
         readonly IEnumerable<Type> _bindMembers;
-        static IMapperSqlConnection _mapperSqlConnection;  
-
+        private readonly Dictionary<String, KeyValuePair<IDataMapper, AbstractMapperSqlConnection>> mapEDMapper 
+            = new Dictionary<string, KeyValuePair<IDataMapper, AbstractMapperSqlConnection>>();
+        private static KeyValuePair<IDataMapper, AbstractMapperSqlConnection> _activePair;
+        readonly MyDictionary _fieldsMatchDictionary = new MyDictionary(); //DB_Field_Name, <DE_Field_Info, DE_Binder>
+        
         internal class MyInterceptor : IInvokeWrapper
         {
             public void BeforeInvoke(InvocationInfo info)
@@ -27,8 +33,8 @@ namespace SqlMapperFw.BuildMapper
             {
                 try
                 {
-                    return _mapperSqlConnection.Execute(info.TargetMethod.Name, 
-                        (info.Arguments.Length > 0 ) ? info.Arguments.GetValue(0) :info.Arguments );
+                    return _activePair.Key.Execute(info.TargetMethod.Name,
+                        (info.Arguments.Length > 0) ? info.Arguments.GetValue(0) : info.Arguments);
                 }
                 catch(Exception ex)
                 {
@@ -58,33 +64,86 @@ namespace SqlMapperFw.BuildMapper
 
         public IDataMapper<T> Build<T>()
         {
-            if (!_typeConnection.ImplementsInterface(typeof(IMapperSqlConnection)))
+            if (mapEDMapper.ContainsKey(typeof (T).Name)) //testar optimização
+            {
+                KeyValuePair<IDataMapper, AbstractMapperSqlConnection> pair;
+                mapEDMapper.TryGetValue(typeof (T).Name, out pair);
+                _activePair = new KeyValuePair<IDataMapper, AbstractMapperSqlConnection>(pair.Key, pair.Value);
+                return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
+            }
+
+            if (!_typeConnection.ImplementsInterface(typeof(IMySqlConnection)))
                 throw new Exception("This Type of connection doesn't implements IMapperSqlConnection");
 
-            _mapperSqlConnection = (IMapperSqlConnection)
-            Activator.CreateInstance(_typeConnection.MakeGenericType(typeof(T)), _connectionStringBuilder, _bindMembers);
+            List<AbstractBindMember> bindMembersAux = new List<AbstractBindMember>();
+            foreach (Type bmType in _bindMembers)
+            {
+                if (bmType == null)
+                    throw new Exception("Type member cannot be null");
+                if (!typeof(AbstractBindMember).IsAssignableFrom(bmType))
+                    throw new Exception("This TypeAux of binder doesn't extends AbstractBindMember");
+                bindMembersAux.Add((AbstractBindMember)Activator.CreateInstance(bmType));
+            }
 
+            Type type = typeof(T);
+            string _tableName = type.GetTableName();
+            KeyValuePair<String, PairInfoBind> _pkKeyValuePair = new KeyValuePair<string, PairInfoBind>(); //DB_PK_Name, <DE_PK_Info, DE_Binder>
+            foreach (MemberInfo mi in type.GetMembers())
+            {
+
+                MemberInfo validMemberInfo = null;
+                AbstractBindMember binder = bindMembersAux.FirstOrDefault(bm =>
+                    (validMemberInfo = bm.GetMemberInfo(mi)) != null);
+
+                if (binder == null)
+                    continue;
+                if (validMemberInfo.IsForeignKey())
+                    validMemberInfo = new FkMemberInfo(validMemberInfo, type);
+
+                var DEFieldName = validMemberInfo.GetDBFieldName();
+
+                if (_fieldsMatchDictionary.ContainsKey(DEFieldName))
+                    continue;
+
+                //TODO OPCIONAL: chave composta
+                bool isPK = validMemberInfo.IsPrimaryKey();
+            
+                if (isPK && _pkKeyValuePair.Key != null)
+                    continue;
+
+                if (isPK)
+                    _pkKeyValuePair = new KeyValuePair<string, PairInfoBind>(DEFieldName, new PairInfoBind(validMemberInfo, binder));
+                else
+                    _fieldsMatchDictionary.Add(DEFieldName, validMemberInfo, binder);
+            }
+            
+            AbstractMapperSqlConnection _mapperSqlConnection = (AbstractMapperSqlConnection) Activator.CreateInstance(_typeConnection, _connectionStringBuilder);
+            CmdBuilderDataMapper<T> MyCmdBuilder = new CmdBuilderDataMapper<T>(_mapperSqlConnection, _tableName, _pkKeyValuePair, _fieldsMatchDictionary);
+
+            _activePair = new KeyValuePair<IDataMapper, AbstractMapperSqlConnection>(MyCmdBuilder, _mapperSqlConnection);
+            mapEDMapper.Add(typeof(T).Name, _activePair);
+           
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
         }
 
         public void CloseConnection()
         {
-            _mapperSqlConnection.CloseConnection();
+            _activePair.Value.CloseConnection();
         }
 
         public void Rollback()
         {
-            _mapperSqlConnection.Rollback();
+            _activePair.Value.Rollback();
         }
 
         public void Commit()
         {
-            _mapperSqlConnection.Commit();
+            _activePair.Value.Commit();
         }
 
         public void BeginTransaction(IsolationLevel isolationLevel)
         {
-            _mapperSqlConnection.BeginTransaction(isolationLevel);
+            _activePair.Value.BeginTransaction(isolationLevel);
         }
 
     }

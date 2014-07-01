@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using SqlMapperFw.BuildMapper;
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public class MultiConnection<T> : AbstractMapperSqlConnection<T>
+    public class MultiSqlConnection : AbstractMapperSqlConnection
     {
-        public MultiConnection(SqlConnectionStringBuilder connString, IEnumerable<Type> bindMembers)
+        public MultiSqlConnection(SqlConnectionStringBuilder connString)
         {
             Connection = new SqlConnection(connString.ConnectionString);
-            MyCmdBuilder = new CmdBuilderDataMapper<T>(this, bindMembers);
         }
 
         public override void Rollback()
         {
-            if (SqlTransaction == null || !ActiveConnection())
+            if (SqlTransaction == null || !IsActiveConnection())
                 throw new Exception("Cannot Rollback! Transaction doesn't have a active connection or is null!");
 
             SqlTransaction.Dispose();
@@ -27,14 +24,14 @@ namespace SqlMapperFw.MySqlConnection
 
         public override void Commit()
         {
-            if (SqlTransaction == null || !ActiveConnection())
+            if (SqlTransaction == null || !IsActiveConnection())
                 throw new Exception("Cannot Commit! Transaction doesn't have a active connection or is null!");
 
             SqlTransaction.Commit();
             SqlTransaction = null;
         }
 
-        protected override void BeforeCommandExecuted()
+        protected internal override void BeforeCommandExecuted()
         {
             OpenConnection();
             BeginTransaction(IsolationLevel.ReadUncommitted);

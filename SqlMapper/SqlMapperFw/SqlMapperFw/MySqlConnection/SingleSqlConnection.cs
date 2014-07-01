@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using SqlMapperFw.BuildMapper;
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public class SingleConnection<T> : AbstractMapperSqlConnection<T>
+    public class SingleSqlConnection : AbstractMapperSqlConnection
     {
-        public SingleConnection(SqlConnectionStringBuilder connString, IEnumerable<Type> bindMembers)
+        public SingleSqlConnection(SqlConnectionStringBuilder connString)
         {
             Connection = new SqlConnection(connString.ConnectionString);
-            MyCmdBuilder = new CmdBuilderDataMapper<T>(this, bindMembers);
             OpenConnection();
         }
 
         public override void Rollback()
         {
-            if (SqlTransaction == null || !ActiveConnection())
+            if (SqlTransaction == null || !IsActiveConnection())
             {
                 Console.WriteLine("Cannot Rollback! Transaction doesn't have a active connection or is null!");
                 return;
@@ -28,7 +25,7 @@ namespace SqlMapperFw.MySqlConnection
 
         public override void Commit()
         {
-            if (SqlTransaction == null || !ActiveConnection())
+            if (SqlTransaction == null || !IsActiveConnection())
             {
                 Console.WriteLine("Cannot Commit! Transaction doesn't have a active connection or is null!");
                 return;
@@ -37,14 +34,12 @@ namespace SqlMapperFw.MySqlConnection
             SqlTransaction = null;
         }
 
-        protected override void BeforeCommandExecuted()
+        protected internal override void BeforeCommandExecuted()
         {
         }
 
         internal override void AfterCommandExecuted()
         {
         }
-
-        
     }
 }

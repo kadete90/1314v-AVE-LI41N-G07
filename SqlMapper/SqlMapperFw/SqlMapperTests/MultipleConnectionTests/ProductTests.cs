@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
+using SqlMapperFw.Binder;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMapper;
+using SqlMapperFw.BuildMapper.DataMapper;
 using SqlMapperFw.MySqlConnection;
-using SqlMapperFw.Reflection.Binder;
 
-namespace SqlMapperTests.MultipleConnection
+namespace SqlMapperTests.MultipleConnectionTests
 {
     [TestClass]
     public class ProductTests
@@ -29,7 +29,7 @@ namespace SqlMapperTests.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiSqlConnection), bindMemberList);
 
             _productDataMapper = _builder.Build<Product>();
             CleanToDefault();
@@ -48,6 +48,10 @@ namespace SqlMapperTests.MultipleConnection
         [TestMethod]
         public void TestReadAllProducts()
         {
+            //fazer um Count para optimizar código
+            // cmd.CommandText = "SELECT COUNT(*) FROM dbo.region";
+            //Int32 count = (Int32)cmd.ExecuteScalar();
+
             int count = _productDataMapper.GetAll().Count();
             Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
             Assert.AreEqual(77, count);

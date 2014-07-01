@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
+using SqlMapperFw.Binder;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMapper;
+using SqlMapperFw.BuildMapper.DataMapper;
 using SqlMapperFw.MySqlConnection;
-using SqlMapperFw.Reflection.Binder;
 
-namespace SqlMapperTests.MultipleConnection
+namespace SqlMapperTests.MultipleConnectionTests
 {
     [TestClass]
     public class OrderTests
@@ -29,7 +29,7 @@ namespace SqlMapperTests.MultipleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(MultiConnection<>), bindMemberList);
+            _builder = new Builder(_connectionStringBuilder, typeof(MultiSqlConnection), bindMemberList);
 
             _orderDataMapper = _builder.Build<Order>();
             CleanToDefault();

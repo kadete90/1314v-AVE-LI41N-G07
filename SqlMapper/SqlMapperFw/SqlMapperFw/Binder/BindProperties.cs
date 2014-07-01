@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace SqlMapperFw.Reflection.Binder
+namespace SqlMapperFw.Binder
 {
     public class BindProperties : AbstractBindMember
     {

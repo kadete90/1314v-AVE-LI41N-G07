@@ -2,73 +2,86 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using SqlMapperFw.BuildMapper;
+using SqlMapperFw.Utils;
 
-namespace SqlMapperFw.DataMapper
+namespace SqlMapperFw.BuildMapper.DataMapper
 {
 
     public class SqlEnumerable
     {
-        //private readonly SqlCommand _cmd;
-        //private readonly Dictionary<string, PairInfoBind>.ValueCollection _values;
-        //private readonly PairInfoBind _value;
-        //private readonly IDataMapper _dataMapper;
-
-        public SqlEnumerable(SqlCommand cmd, Dictionary<string, PairInfoBind>.ValueCollection values, PairInfoBind value, IDataMapper dataMapper)
+        public SqlEnumerable()
         {
             throw new NotImplementedException();
-            //_cmd = cmd;
-            //_values = values;
-            //_value = value;
-            //_dataMapper = dataMapper;
-            //_dataMapper = (IDataMapper)Activator.CreateInstance(dataMapper.GetType());
-
-
         }
         public SqlEnumerable Where(string clause)
         {
             throw new NotImplementedException();
-            //if (clause == null)
-            //    throw new ArgumentNullException("clause");
-            //_cmd.CommandText += ((!_cmd.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
-            //return new SqlEnumerable(_cmd, _values, _value, _dataMapper);
         }
     }
 
     public sealed class SqlEnumerable<T> : ISqlEnumerable<T>
     {
-        internal readonly SqlCommand SqlCommand;
+        internal readonly SqlCommand MySqlCommand;
+        private readonly string _tableName;
         internal readonly Dictionary<string, PairInfoBind>.ValueCollection MembersInfoBind;
         internal readonly PairInfoBind PkMemberInfoBind;
-        internal readonly CloseConnection CloseSqlConnection;
+        internal readonly CloseConnection CloseSqlConnection;  //depends on type of connection
+        internal List<String> WhereClauses;
 
         public delegate void CloseConnection();
 
         //TODO problema: depois de fazer um where num sqlEnumerable todos os outros sqlEnumerables desse Builder terão a clausula where
-        public SqlEnumerable(SqlCommand cmd, 
+        public SqlEnumerable(SqlCommand cmd,
+            String tableName,
             Dictionary<string, PairInfoBind>.ValueCollection membersInfoBind, 
             PairInfoBind pkMemberInfoBind,
-            CloseConnection CloseSqlConnection)
+            CloseConnection closeSqlConnection) //depends on type of connection
         {
-            SqlCommand = cmd;
+            MySqlCommand = cmd;
+            _tableName = tableName;
             MembersInfoBind = membersInfoBind;
             PkMemberInfoBind = pkMemberInfoBind;
-            this.CloseSqlConnection = CloseSqlConnection;
+            CloseSqlConnection = closeSqlConnection;
+            WhereClauses = new List<string>();
+        }
+
+        public SqlEnumerable(SqlCommand cmd,
+            String tableName,
+            Dictionary<string, PairInfoBind>.ValueCollection membersInfoBind,
+            PairInfoBind pkMemberInfoBind,
+            CloseConnection closeSqlConnection, //depends on type of connection
+            List<string> whereClauses)
+        {
+            MySqlCommand = cmd;
+            _tableName = tableName;
+            MembersInfoBind = membersInfoBind;
+            PkMemberInfoBind = pkMemberInfoBind;
+            CloseSqlConnection = closeSqlConnection;
+            WhereClauses = whereClauses;
         }
 
         public ISqlEnumerable<T> Where(string clause)
         {
             if (clause == null)
-                throw new ArgumentNullException("clause");
-            SqlCommand sqlCommand = SqlCommand;
-            sqlCommand.CommandText += ((!SqlCommand.CommandText.Contains("WHERE")) ? " WHERE " : " AND ") + clause;
-            return new SqlEnumerable<T>(sqlCommand, MembersInfoBind, PkMemberInfoBind, CloseSqlConnection);
+                throw new ArgumentException("clause invalid");
+            WhereClauses.Add(clause);
+            return new SqlEnumerable<T>(MySqlCommand, _tableName, MembersInfoBind, PkMemberInfoBind, CloseSqlConnection, WhereClauses);
         }
+
+        //public int Count()
+        //{
+        //    String aux = MySqlCommand.CommandText;
+        //    MySqlCommand.CommandText += " SELECT COUNT(*) FROM " + _tableName;
+        //    int count = MySqlCommand.ExecuteReader().GetFieldValue<int>(0);
+        //    MySqlCommand.CommandText = aux;//repor query
+        //    CloseSqlConnection();
+        //    return count;
+        //}
 
         public IEnumerator<T> GetEnumerator()
         {
             return new SqlEnumerator<T>(
-                new SqlEnumerable<T>(SqlCommand, MembersInfoBind, PkMemberInfoBind, CloseSqlConnection));
+                new SqlEnumerable<T>(MySqlCommand, _tableName, MembersInfoBind, PkMemberInfoBind, CloseSqlConnection, WhereClauses));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -89,7 +102,18 @@ namespace SqlMapperFw.DataMapper
         public SqlEnumerator(SqlEnumerable<T> mySqlEnumerable)
         {
             _mySqlEnumerable = mySqlEnumerable;
-            _sqlDataReader = _mySqlEnumerable.SqlCommand.ExecuteReader();
+
+            String whereClauses = "";
+            foreach (String clause in _mySqlEnumerable.WhereClauses)
+                whereClauses += ((ReferenceEquals(whereClauses, "")) ? " WHERE " : " AND ") + clause;
+
+            SqlCommand cmd = _mySqlEnumerable.MySqlCommand;
+            String aux = cmd.CommandText;
+
+            cmd.CommandText += whereClauses;
+            _sqlDataReader = _mySqlEnumerable.MySqlCommand.ExecuteReader();
+            
+            cmd.CommandText = aux;//repor query sem clausulas where
             gotDisposed = false;
         }
 
@@ -99,6 +123,7 @@ namespace SqlMapperFw.DataMapper
             gotDisposed = true;
             _sqlDataReader.Close();
             _mySqlEnumerable.CloseSqlConnection();
+            _mySqlEnumerable.WhereClauses.Clear();
         }
 
         public bool MoveNext()

@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using SqlMapperFw.BuildMapper;
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public abstract class AbstractMapperSqlConnection<T> : IMapperSqlConnection
+    public abstract class AbstractMapperSqlConnection : IMySqlConnection
     {
-       
-        internal CmdBuilderDataMapper<T> MyCmdBuilder;
+      
         internal SqlConnection Connection { get; set; }
         internal SqlTransaction SqlTransaction;
 
         public abstract void Commit();
         public abstract void Rollback();
         internal abstract void AfterCommandExecuted();
-        protected abstract void BeforeCommandExecuted();
+        protected internal abstract void BeforeCommandExecuted();
        
         public void BeginTransaction(IsolationLevel isolationLevel)
         {
@@ -23,17 +21,17 @@ namespace SqlMapperFw.MySqlConnection
             SqlTransaction = Connection.BeginTransaction(isolationLevel);
         }
 
-        public bool ActiveConnection()
+        public bool IsActiveConnection()
         {
             return Connection.State == ConnectionState.Open;
         }
 
         public void OpenConnection()
         {
-            if (ActiveConnection())
+            if (IsActiveConnection())
                 return;
             Connection.Open();
-            if (!ActiveConnection())
+            if (!IsActiveConnection())
             {
                 throw new Exception("Could not open a new connection!");
             }
@@ -45,38 +43,5 @@ namespace SqlMapperFw.MySqlConnection
                 Connection.Close();
         }
 
-        public Object Execute(string typeCommand, Object elem)
-        {   
-            BeforeCommandExecuted();
-            try
-            {
-                switch (typeCommand)
-                {
-                    case "GetAll":
-                        return MyCmdBuilder.GetAll();
-                    case "GetById":
-                        return MyCmdBuilder.GetById(elem);
-                    case "Delete":
-                        MyCmdBuilder.Delete((T) elem);
-                        break;
-                    case "Insert":
-                        MyCmdBuilder.Insert((T) elem);
-                        break;
-                    case "Update":
-                        MyCmdBuilder.Update((T) elem);
-                        break;
-                    default:
-                        throw new Exception("This command doesn't exist");
-                }
-            }
-            catch (Exception ex)
-            {
-                Rollback();
-                CloseConnection();
-                Console.WriteLine(" >> Rollback !!\n" + ex.Message);
-            }
-            AfterCommandExecuted();
-            return null;
-        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SqlMapperFw.BuildMapper
+namespace SqlMapperFw.Utils
 {
     public static class StringBuilder
     {

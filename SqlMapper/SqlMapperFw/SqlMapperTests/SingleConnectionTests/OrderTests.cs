@@ -5,12 +5,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
+using SqlMapperFw.Binder;
 using SqlMapperFw.BuildMapper;
-using SqlMapperFw.DataMapper;
+using SqlMapperFw.BuildMapper.DataMapper;
 using SqlMapperFw.MySqlConnection;
-using SqlMapperFw.Reflection.Binder;
 
-namespace SqlMapperTests.SingleConnection
+namespace SqlMapperTests.SingleConnectionTests
 {
     [TestClass]
     public class OrderTests
@@ -30,7 +30,7 @@ namespace SqlMapperTests.SingleConnection
             };
 
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
-            _builder = new Builder(_connectionStringBuilder, typeof(SingleConnection<>), bindMemberList);
+            _builder = new Builder(_connectionStringBuilder, typeof(SingleSqlConnection), bindMemberList);
 
             _orderDataMapper = _builder.Build<Order>();
             CleanToDefault();
@@ -51,7 +51,7 @@ namespace SqlMapperTests.SingleConnection
         [ClassCleanup]
         public static void TearDown()
         {
-           _builder.CloseConnection();
+            _builder.CloseConnection();
         }
 
         [TestMethod]
@@ -64,7 +64,6 @@ namespace SqlMapperTests.SingleConnection
             Console.WriteLine("    --> TestReadAllOrders Count = {0} <--", count);
             Assert.AreEqual(830, count);
             Console.WriteLine("-----------------------------------------------------");
-            _builder.Commit();
         }
 
         [TestMethod]
@@ -79,14 +78,14 @@ namespace SqlMapperTests.SingleConnection
                 order = ord;
                 countOrders++;
             }
-           
+            _builder.Commit();
             Assert.IsNotNull(order);
             Assert.AreEqual(1, countOrders);
             Assert.AreEqual(10359, order.ID);
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("    --> OrderID: {0}, EmployeeID: {1} <--", order.ID, order.Employee.ID);
             Console.WriteLine("---------------------------------------------");
-            _builder.Commit();
+
         }
 
         [TestMethod]

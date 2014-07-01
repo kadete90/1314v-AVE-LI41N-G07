@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace SqlMapperFw.Reflection
+namespace SqlMapperFw.Utils
 {
     //encapsular instâncias -> FK
     public class FkMemberInfo : MemberInfo

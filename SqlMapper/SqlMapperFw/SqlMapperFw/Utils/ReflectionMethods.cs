@@ -2,9 +2,9 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
-using SqlMapperFw.Reflection.Binder;
+using SqlMapperFw.Binder;
 
-namespace SqlMapperFw.Reflection
+namespace SqlMapperFw.Utils
 {
     public static class ReflectionMethods
     {

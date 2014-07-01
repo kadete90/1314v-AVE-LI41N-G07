@@ -4,37 +4,17 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using SqlMapperFw.DataMapper;
+using SqlMapperFw.Binder;
 using SqlMapperFw.MySqlConnection;
-using SqlMapperFw.Reflection;
-using SqlMapperFw.Reflection.Binder;
+using SqlMapperFw.Utils;
 
-namespace SqlMapperFw.BuildMapper
+namespace SqlMapperFw.BuildMapper.DataMapper
 {
-    public struct PairInfoBind
-    {
-        public MemberInfo MemberInfo;
-        public AbstractBindMember BindMember;
-
-        public PairInfoBind(MemberInfo memberInfo, AbstractBindMember bindMember)
-        {
-            MemberInfo = memberInfo;
-            BindMember = bindMember;
-        }
-    }
-
-    class MyDictionary : Dictionary<String, PairInfoBind>
-    {
-        public void Add(String key, MemberInfo memberInfo, AbstractBindMember bindMember)
-        {
-            Add(key, new PairInfoBind(memberInfo, bindMember));
-        }
-    }
 
     public class CmdBuilderDataMapper<T> : IDataMapper
     {
         readonly SqlConnection _sqlConnection;
-        readonly AbstractMapperSqlConnection<T> _mapperSqlConnection;
+        readonly AbstractMapperSqlConnection _mapperSqlConnection;
 
         readonly String _tableName;
         readonly KeyValuePair<String, PairInfoBind> _pkKeyValuePair; //DB_PK_Name, <DE_PK_Info, DE_Binder>
@@ -42,52 +22,13 @@ namespace SqlMapperFw.BuildMapper
 
         readonly Dictionary<String, SqlCommand> _commandsDictionary = new Dictionary<String, SqlCommand>(); //TypeCommand, Command
 
-        public CmdBuilderDataMapper(AbstractMapperSqlConnection<T> abstractMapperSqlConnection, IEnumerable<Type> bindMembersTypes)
+        public CmdBuilderDataMapper(AbstractMapperSqlConnection abstractMapperSqlConnection, string tableName, KeyValuePair<string, PairInfoBind> pkKeyValuePair, MyDictionary fieldsMatchDictionary)
         {
-
             _mapperSqlConnection = abstractMapperSqlConnection;
             _sqlConnection = _mapperSqlConnection.Connection;
-
-            Type type = typeof(T);
-            _tableName = type.GetTableName();
-
-            List<AbstractBindMember> _bindMembersAux = new List<AbstractBindMember>();
-            foreach (Type bmType in bindMembersTypes)
-            {
-                if (bmType == null)
-                    throw new ArgumentNullException("bindMembersTypes");
-                if (!typeof(AbstractBindMember).IsAssignableFrom(bmType))
-                    throw new Exception("This TypeAux of binder doesn't extends AbstractBindMember");
-                _bindMembersAux.Add((AbstractBindMember)Activator.CreateInstance(bmType));
-            }
-
-            foreach (MemberInfo mi in type.GetMembers())
-            {
-
-                MemberInfo validMemberInfo = null;
-                AbstractBindMember binder = _bindMembersAux.FirstOrDefault(bm =>
-                    (validMemberInfo = bm.GetMemberInfo(mi)) != null);
-
-                if (binder == null)
-                    continue;
-                if (validMemberInfo.IsForeignKey())
-                    validMemberInfo = new FkMemberInfo(validMemberInfo, type);
-
-                var DEFieldName = validMemberInfo.GetDBFieldName();
-
-                if (_fieldsMatchDictionary.ContainsKey(DEFieldName))  
-                    continue;
-
-                //TODO OPCIONAL: chave composta
-                bool isPK = validMemberInfo.IsPrimaryKey();
-                if (isPK && _pkKeyValuePair.Key != null)
-                    continue;
-
-                if (isPK)
-                    _pkKeyValuePair = new KeyValuePair<string, PairInfoBind>(DEFieldName,new PairInfoBind(validMemberInfo, binder));
-                else
-                    _fieldsMatchDictionary.Add(DEFieldName, validMemberInfo, binder);
-            }
+            _tableName = tableName;
+            _pkKeyValuePair = pkKeyValuePair;           
+            _fieldsMatchDictionary = fieldsMatchDictionary;
 
             if (_fieldsMatchDictionary.Count == 0 || _pkKeyValuePair.Key == null)
                 throw new Exception("No domain entity fields recognized or no PK defined!!");
@@ -118,13 +59,47 @@ namespace SqlMapperFw.BuildMapper
             _commandsDictionary.Add("INSERT", cmd);
 
             cmd = _sqlConnection.CreateCommand();
-            cmd.CommandText = "UPDATE " + _tableName + " SET @TO_REPLACE WHERE " + _pkKeyValuePair.Key + "= @ID";
-            //cmd.CommandText = "UPDATE " + _tableName + " SET "+ _fieldsMatchDictionary.StringBuilderDicionary() +" WHERE " + _pkKeyValuePair.Key + "= @ID";
+            //cmd.CommandText = "UPDATE " + _tableName + " SET @TO_REPLACE WHERE " + _pkKeyValuePair.Key + "= @ID";
+            cmd.CommandText = "UPDATE " + _tableName + " SET "+ _fieldsMatchDictionary.StringBuilderDicionary() +" WHERE " + _pkKeyValuePair.Key + "= @ID";
             _commandsDictionary.Add("UPDATE", cmd);
 
             cmd = _sqlConnection.CreateCommand();
             cmd.CommandText = "DELETE FROM " + _tableName + " WHERE " + _pkKeyValuePair.Key + " = @ID";
             _commandsDictionary.Add("DELETE", cmd);
+        }
+
+        public Object Execute(string typeCommand, Object elem)
+        {
+            _mapperSqlConnection.BeforeCommandExecuted();
+            try
+            {
+                switch (typeCommand)
+                {
+                    case "GetAll":
+                        return GetAll();
+                    case "GetById":
+                        return GetById(elem);
+                    case "Delete":
+                        Delete((T)elem);
+                        break;
+                    case "Insert":
+                        Insert((T)elem);
+                        break;
+                    case "Update":
+                        Update((T)elem);
+                        break;
+                    default:
+                        throw new Exception("This command doesn't exist");
+                }
+            }
+            catch (Exception ex)
+            {
+                Rollback();
+                CloseConnection();
+                Console.WriteLine(" >> Rollback !!\n" + ex.Message);
+            }
+            _mapperSqlConnection.AfterCommandExecuted();
+            return null;
         }
 
         public ISqlEnumerable<T> GetAll()
@@ -133,12 +108,8 @@ namespace SqlMapperFw.BuildMapper
             if (!_commandsDictionary.TryGetValue("SELECTALL", out cmd))
                 throw new Exception("This Command doesn't exist!");
 
-            //TODO tentar resolver problema de outra forma
-            int idx = cmd.CommandText.IndexOf(" WHERE", StringComparison.Ordinal);
-            if (idx > 0)
-                cmd.CommandText = cmd.CommandText.Remove(idx);
             cmd.Transaction = _mapperSqlConnection.SqlTransaction;
-            return new SqlEnumerable<T>(cmd, _fieldsMatchDictionary.Values, _pkKeyValuePair.Value, _mapperSqlConnection.AfterCommandExecuted);
+            return new SqlEnumerable<T>(cmd, _tableName, _fieldsMatchDictionary.Values, _pkKeyValuePair.Value, _mapperSqlConnection.AfterCommandExecuted);
         }
 
         //2.2 TODO OPCIONAL
@@ -239,9 +210,8 @@ namespace SqlMapperFw.BuildMapper
             if (!_commandsDictionary.TryGetValue("UPDATE", out cmd))
                 throw new Exception("This Command doesn't exist!");
 
-            Dictionary<String, PairInfoBind> filterInfos = filterMemberInfos(val);
-
-            cmd.CommandText = cmd.CommandText.Replace("@TO_REPLACE", filterInfos.StringBuilderDicionary());
+            //Dictionary<String, PairInfoBind> filterInfos = filterMemberInfos(val);
+            //cmd.CommandText = cmd.CommandText.Replace("@TO_REPLACE", filterInfos.StringBuilderDicionary());
 
             MemberInfo mipk = _pkKeyValuePair.Value.MemberInfo;
             AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;
@@ -253,7 +223,7 @@ namespace SqlMapperFw.BuildMapper
             };
             cmd.Parameters.Add(pkSqlParameter);
 
-            foreach (KeyValuePair<string, PairInfoBind> pair in filterInfos)
+            foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
             {
                 MemberInfo mi = pair.Value.MemberInfo;
                 AbstractBindMember bm = pair.Value.BindMember;
@@ -306,20 +276,40 @@ namespace SqlMapperFw.BuildMapper
             }
         }
 
-        // Objectivo: Apenas fazer update dos fields com valores non-default em toUpdate
         //TODO melhorar
-        private Dictionary<String, PairInfoBind> filterMemberInfos(object toUpdate)
+        // Goal: Apenas fazer update dos fields com valores non-default em toUpdate
+        //private Dictionary<String, PairInfoBind> filterMemberInfos(object toUpdate)
+        //{
+        //    MyDictionary toUpdateInfos = new MyDictionary();
+        //    foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
+        //    {
+        //        MemberInfo mi = pair.Value.MemberInfo;
+        //        AbstractBindMember bm = pair.Value.BindMember;
+        //        if (toUpdate.GetEDFieldValue(mi, bm) == null)
+        //            continue;
+        //        toUpdateInfos.Add(pair.Key, mi, bm);
+        //    }
+        //    return toUpdateInfos;
+        //}
+
+        public void CloseConnection()
         {
-            MyDictionary toUpdateInfos = new MyDictionary();
-            foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
-            {
-                MemberInfo mi = pair.Value.MemberInfo;
-                AbstractBindMember bm = pair.Value.BindMember;
-                if (toUpdate.GetEDFieldValue(mi, bm) == null)
-                    continue;
-                toUpdateInfos.Add(pair.Key, mi, bm);
-            }
-            return toUpdateInfos;
-        } 
+            _mapperSqlConnection.CloseConnection();
+        }
+
+        public void Rollback()
+        {
+            _mapperSqlConnection.Rollback();
+        }
+
+        public void Commit()
+        {
+            _mapperSqlConnection.Commit();
+        }
+
+        public void BeginTransaction(IsolationLevel isolationLevel)
+        {
+            _mapperSqlConnection.BeginTransaction(isolationLevel);
+        }
     }
 }

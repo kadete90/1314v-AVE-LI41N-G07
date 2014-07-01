@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Reflection;
+using SqlMapperFw.Utils;
 
-namespace SqlMapperFw.Reflection.Binder
+namespace SqlMapperFw.Binder
 {
     public abstract class AbstractBindMember
     {

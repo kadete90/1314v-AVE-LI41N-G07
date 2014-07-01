@@ -1,11 +1,9 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public interface IMapperSqlConnection
+    public interface IMySqlConnection
     {
-        Object Execute(String typeCommand, Object elem);
         void CloseConnection();
         void BeginTransaction(IsolationLevel isolationLevel);
         void Rollback();

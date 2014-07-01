@@ -1,5 +1,5 @@
 ﻿using System;
-using SqlMapperFw.Reflection;
+using SqlMapperFw.Utils;
 
 namespace SqlMapperClient.Entities
 {
