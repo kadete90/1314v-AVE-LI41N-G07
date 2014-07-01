@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using SqlMapperFw.MySqlConnection;
 
 namespace SqlMapperFw.BuildMapper.DataMapper
@@ -16,7 +17,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
     //}
     //2ªparte
-    public interface IDataMapper<T> : IDataMapper,  IMySqlConnection
+    public interface IDataMapper<T> : IDataMapper
     {
         new ISqlEnumerable<T> GetAll();
         T GetById(Object id);
@@ -26,13 +27,17 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
     }
 
-    public interface IDataMapper
+    public interface IDataMapper : IMySqlConnection
     {
         SqlEnumerable GetAll();
         void Insert(object val);
         void Update(object val);
         void Delete(object val);
 
+        new void CloseConnection();
+        new void BeginTransaction(IsolationLevel isolationLevel);
+        new void Rollback();
+        new void Commit();
         object Execute(string name, object o);
     }
 }

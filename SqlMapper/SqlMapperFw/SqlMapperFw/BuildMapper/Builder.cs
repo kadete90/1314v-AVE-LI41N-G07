@@ -17,10 +17,9 @@ namespace SqlMapperFw.BuildMapper
         readonly Type _typeConnection;
         readonly SqlConnectionStringBuilder _connectionStringBuilder;
         readonly IEnumerable<Type> _bindMembers;
-        private readonly Dictionary<String, KeyValuePair<IDataMapper, AbstractMapperSqlConnection>> mapEDMapper 
-            = new Dictionary<string, KeyValuePair<IDataMapper, AbstractMapperSqlConnection>>();
-        private static KeyValuePair<IDataMapper, AbstractMapperSqlConnection> _activePair;
-        readonly MyDictionary _fieldsMatchDictionary = new MyDictionary(); //DB_Field_Name, <DE_Field_Info, DE_Binder>
+        private static IDataMapper _activeDataMapper;
+        private readonly Dictionary<String, IDataMapper> mapEDMapper = new Dictionary<string, IDataMapper>(); //typeof(T), <IDataMapper, AbstractSqlConnection>
+        readonly MyMemberDictionary _fieldsMatchMemberDictionary = new MyMemberDictionary(); //DB_Field_Name, <DE_Field_Info, DE_Binder>
         
         internal class MyInterceptor : IInvokeWrapper
         {
@@ -33,7 +32,7 @@ namespace SqlMapperFw.BuildMapper
             {
                 try
                 {
-                    return _activePair.Key.Execute(info.TargetMethod.Name,
+                    return _activeDataMapper.Execute(info.TargetMethod.Name,
                         (info.Arguments.Length > 0) ? info.Arguments.GetValue(0) : info.Arguments);
                 }
                 catch(Exception ex)
@@ -66,9 +65,7 @@ namespace SqlMapperFw.BuildMapper
         {
             if (mapEDMapper.ContainsKey(typeof (T).Name)) //testar optimização
             {
-                KeyValuePair<IDataMapper, AbstractMapperSqlConnection> pair;
-                mapEDMapper.TryGetValue(typeof (T).Name, out pair);
-                _activePair = new KeyValuePair<IDataMapper, AbstractMapperSqlConnection>(pair.Key, pair.Value);
+                mapEDMapper.TryGetValue(typeof(T).Name, out _activeDataMapper);
                 return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
             }
 
@@ -102,7 +99,7 @@ namespace SqlMapperFw.BuildMapper
 
                 var DEFieldName = validMemberInfo.GetDBFieldName();
 
-                if (_fieldsMatchDictionary.ContainsKey(DEFieldName))
+                if (_fieldsMatchMemberDictionary.ContainsKey(DEFieldName))
                     continue;
 
                 //TODO OPCIONAL: chave composta
@@ -114,36 +111,34 @@ namespace SqlMapperFw.BuildMapper
                 if (isPK)
                     _pkKeyValuePair = new KeyValuePair<string, PairInfoBind>(DEFieldName, new PairInfoBind(validMemberInfo, binder));
                 else
-                    _fieldsMatchDictionary.Add(DEFieldName, validMemberInfo, binder);
+                    _fieldsMatchMemberDictionary.Add(DEFieldName, validMemberInfo, binder);
             }
             
-            AbstractMapperSqlConnection _mapperSqlConnection = (AbstractMapperSqlConnection) Activator.CreateInstance(_typeConnection, _connectionStringBuilder);
-            CmdBuilderDataMapper<T> MyCmdBuilder = new CmdBuilderDataMapper<T>(_mapperSqlConnection, _tableName, _pkKeyValuePair, _fieldsMatchDictionary);
-
-            _activePair = new KeyValuePair<IDataMapper, AbstractMapperSqlConnection>(MyCmdBuilder, _mapperSqlConnection);
-            mapEDMapper.Add(typeof(T).Name, _activePair);
+            AbstractSqlConnection _sqlConnection = (AbstractSqlConnection) Activator.CreateInstance(_typeConnection, _connectionStringBuilder);
+            _activeDataMapper = new CmdBuilderDataMapper<T>(_sqlConnection, _tableName, _pkKeyValuePair, _fieldsMatchMemberDictionary);
+            mapEDMapper.Add(typeof(T).Name, _activeDataMapper);
            
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
         }
 
         public void CloseConnection()
         {
-            _activePair.Value.CloseConnection();
+            _activeDataMapper.CloseConnection();
         }
 
         public void Rollback()
         {
-            _activePair.Value.Rollback();
+            _activeDataMapper.Rollback();
         }
 
         public void Commit()
         {
-            _activePair.Value.Commit();
+            _activeDataMapper.Commit();
         }
 
         public void BeginTransaction(IsolationLevel isolationLevel)
         {
-            _activePair.Value.BeginTransaction(isolationLevel);
+            _activeDataMapper.BeginTransaction(isolationLevel);
         }
 
     }

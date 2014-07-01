@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public class MultiSqlConnection : AbstractMapperSqlConnection
+    public class MultiSqlConnection : AbstractSqlConnection
     {
         public MultiSqlConnection(SqlConnectionStringBuilder connString)
         {

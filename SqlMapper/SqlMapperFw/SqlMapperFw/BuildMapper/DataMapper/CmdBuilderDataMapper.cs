@@ -13,24 +13,24 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
     public class CmdBuilderDataMapper<T> : IDataMapper
     {
-        readonly SqlConnection _sqlConnection;
-        readonly AbstractMapperSqlConnection _mapperSqlConnection;
+        readonly SqlConnection _connection;
+        readonly AbstractSqlConnection _mySqlConnection;
 
         readonly String _tableName;
         readonly KeyValuePair<String, PairInfoBind> _pkKeyValuePair; //DB_PK_Name, <DE_PK_Info, DE_Binder>
-        readonly MyDictionary _fieldsMatchDictionary = new MyDictionary(); //DB_Field_Name, <DE_Field_Info, DE_Binder>
+        readonly MyMemberDictionary _fieldsMatchMemberDictionary = new MyMemberDictionary(); //DB_Field_Name, <DE_Field_Info, DE_Binder>
 
         readonly Dictionary<String, SqlCommand> _commandsDictionary = new Dictionary<String, SqlCommand>(); //TypeCommand, Command
 
-        public CmdBuilderDataMapper(AbstractMapperSqlConnection abstractMapperSqlConnection, string tableName, KeyValuePair<string, PairInfoBind> pkKeyValuePair, MyDictionary fieldsMatchDictionary)
+        public CmdBuilderDataMapper(AbstractSqlConnection abstractMySqlConnection, string tableName, KeyValuePair<string, PairInfoBind> pkKeyValuePair, MyMemberDictionary fieldsMatchMemberDictionary)
         {
-            _mapperSqlConnection = abstractMapperSqlConnection;
-            _sqlConnection = _mapperSqlConnection.Connection;
+            _mySqlConnection = abstractMySqlConnection;
+            _connection = _mySqlConnection.Connection;
             _tableName = tableName;
             _pkKeyValuePair = pkKeyValuePair;           
-            _fieldsMatchDictionary = fieldsMatchDictionary;
+            _fieldsMatchMemberDictionary = fieldsMatchMemberDictionary;
 
-            if (_fieldsMatchDictionary.Count == 0 || _pkKeyValuePair.Key == null)
+            if (_fieldsMatchMemberDictionary.Count == 0 || _pkKeyValuePair.Key == null)
                 throw new Exception("No domain entity fields recognized or no PK defined!!");
 
             CreateCommands();
@@ -38,39 +38,39 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
         public void CreateCommands()
         {
-            if (_sqlConnection == null)
+            if (_mySqlConnection == null)
                 throw  new Exception("Connection needed to create commands");
 
-            String DBfields = _fieldsMatchDictionary.Keys.Aggregate("", (current, fieldName) => current + (fieldName + ", "));
+            String DBfields = _fieldsMatchMemberDictionary.Keys.Aggregate("", (current, fieldName) => current + (fieldName + ", "));
 
             if (DBfields != "")
                 DBfields = DBfields.Substring(0, DBfields.Length - 2); //remove última vírgula
 
-            SqlCommand cmd = _sqlConnection.CreateCommand();
+            SqlCommand cmd = _connection.CreateCommand();
             cmd.CommandText = "SELECT " + _pkKeyValuePair.Key +", " +DBfields + " FROM " + _tableName;
             _commandsDictionary.Add("SELECTALL", cmd);
 
-            cmd = _sqlConnection.CreateCommand();
+            cmd = _connection.CreateCommand();
             cmd.CommandText = "SELECT " + DBfields + " FROM " + _tableName + " WHERE "+ _pkKeyValuePair.Key + " = @ID";
             _commandsDictionary.Add("SELECTONE", cmd);
 
-            cmd = _sqlConnection.CreateCommand();
-            cmd.CommandText = "INSERT INTO " + _tableName + " (" + DBfields + ")" + " VALUES (" + _fieldsMatchDictionary.Keys.StringBuilderKeyCollection() + ") SET @ID = SCOPE_IDENTITY();";
+            cmd = _connection.CreateCommand();
+            cmd.CommandText = "INSERT INTO " + _tableName + " (" + DBfields + ")" + " VALUES (" + _fieldsMatchMemberDictionary.Keys.StringBuilderKeyCollection() + ") SET @ID = SCOPE_IDENTITY();";
             _commandsDictionary.Add("INSERT", cmd);
 
-            cmd = _sqlConnection.CreateCommand();
+            cmd = _connection.CreateCommand();
             //cmd.CommandText = "UPDATE " + _tableName + " SET @TO_REPLACE WHERE " + _pkKeyValuePair.Key + "= @ID";
-            cmd.CommandText = "UPDATE " + _tableName + " SET "+ _fieldsMatchDictionary.StringBuilderDicionary() +" WHERE " + _pkKeyValuePair.Key + "= @ID";
+            cmd.CommandText = "UPDATE " + _tableName + " SET "+ _fieldsMatchMemberDictionary.StringBuilderDicionary() +" WHERE " + _pkKeyValuePair.Key + "= @ID";
             _commandsDictionary.Add("UPDATE", cmd);
 
-            cmd = _sqlConnection.CreateCommand();
+            cmd = _connection.CreateCommand();
             cmd.CommandText = "DELETE FROM " + _tableName + " WHERE " + _pkKeyValuePair.Key + " = @ID";
             _commandsDictionary.Add("DELETE", cmd);
         }
 
         public Object Execute(string typeCommand, Object elem)
         {
-            _mapperSqlConnection.BeforeCommandExecuted();
+            _mySqlConnection.BeforeCommandExecuted();
             try
             {
                 switch (typeCommand)
@@ -94,11 +94,11 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             }
             catch (Exception ex)
             {
-                Rollback();
-                CloseConnection();
+                _mySqlConnection.Rollback();
+                _mySqlConnection.CloseConnection();
                 Console.WriteLine(" >> Rollback !!\n" + ex.Message);
             }
-            _mapperSqlConnection.AfterCommandExecuted();
+            _mySqlConnection.AfterCommandExecuted();
             return null;
         }
 
@@ -108,8 +108,8 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             if (!_commandsDictionary.TryGetValue("SELECTALL", out cmd))
                 throw new Exception("This Command doesn't exist!");
 
-            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
-            return new SqlEnumerable<T>(cmd, _tableName, _fieldsMatchDictionary.Values, _pkKeyValuePair.Value, _mapperSqlConnection.AfterCommandExecuted);
+            cmd.Transaction = _mySqlConnection.SqlTransaction;
+            return new SqlEnumerable<T>(cmd, _tableName, _fieldsMatchMemberDictionary.Values, _pkKeyValuePair.Value, _mySqlConnection.AfterCommandExecuted);
         }
 
         //2.2 TODO OPCIONAL
@@ -135,7 +135,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                 Value = id
             };
             cmd.Parameters.Add(pkSqlParameter);
-            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
+            cmd.Transaction = _mySqlConnection.SqlTransaction;
             try
             {
                 SqlDataReader _sqlDataReader = cmd.ExecuteReader();
@@ -147,7 +147,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                 Object[] DBRowValues = new Object[_sqlDataReader.FieldCount];
                 int i = 0;
 
-                foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
+                foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchMemberDictionary)
                 {
                     MemberInfo mi = pair.Value.MemberInfo;
                     AbstractBindMember bm = pair.Value.BindMember;
@@ -157,10 +157,10 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             }
             catch (Exception ex)
             {
-                _mapperSqlConnection.Rollback();
+                _mySqlConnection.Rollback();
                 throw new Exception("Problem occur on getById:\n" + ex.Message);
             }
-            _mapperSqlConnection.AfterCommandExecuted();
+            _mySqlConnection.AfterCommandExecuted();
             return newInstance;
         }
 
@@ -176,7 +176,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;
             cmd.Parameters.Add("@ID", mipk.GetSqlDbType(val, bmpk)).Direction = ParameterDirection.Output;
 
-            foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
+            foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchMemberDictionary)
             {
                 MemberInfo mi = pair.Value.MemberInfo;
                 AbstractBindMember bm = pair.Value.BindMember;
@@ -190,7 +190,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
                 cmd.Parameters.Add(p);
             }
-            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
+            cmd.Transaction = _mySqlConnection.SqlTransaction;
             try
             {
                 if (cmd.ExecuteNonQuery() == 0)
@@ -223,7 +223,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             };
             cmd.Parameters.Add(pkSqlParameter);
 
-            foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
+            foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchMemberDictionary)
             {
                 MemberInfo mi = pair.Value.MemberInfo;
                 AbstractBindMember bm = pair.Value.BindMember;
@@ -236,7 +236,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                 cmd.Parameters.Add(p);
                 val.BindEDFieldValue(mi, bm, fieldValue);
             }
-            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
+            cmd.Transaction = _mySqlConnection.SqlTransaction;
             try
             {
                 if (cmd.ExecuteNonQuery() == 0)
@@ -264,7 +264,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                 Value = pkValue
             };
             cmd.Parameters.Add(pkSqlParameter);
-            cmd.Transaction = _mapperSqlConnection.SqlTransaction;
+            cmd.Transaction = _mySqlConnection.SqlTransaction;
             try
             {
                 if (cmd.ExecuteNonQuery() == 0)
@@ -280,8 +280,8 @@ namespace SqlMapperFw.BuildMapper.DataMapper
         // Goal: Apenas fazer update dos fields com valores non-default em toUpdate
         //private Dictionary<String, PairInfoBind> filterMemberInfos(object toUpdate)
         //{
-        //    MyDictionary toUpdateInfos = new MyDictionary();
-        //    foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchDictionary)
+        //    MyMemberDictionary toUpdateInfos = new MyMemberDictionary();
+        //    foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchMemberDictionary)
         //    {
         //        MemberInfo mi = pair.Value.MemberInfo;
         //        AbstractBindMember bm = pair.Value.BindMember;
@@ -294,22 +294,22 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
         public void CloseConnection()
         {
-            _mapperSqlConnection.CloseConnection();
+            _mySqlConnection.CloseConnection();
         }
 
         public void Rollback()
         {
-            _mapperSqlConnection.Rollback();
+            _mySqlConnection.Rollback();
         }
 
         public void Commit()
         {
-            _mapperSqlConnection.Commit();
+            _mySqlConnection.Commit();
         }
 
         public void BeginTransaction(IsolationLevel isolationLevel)
         {
-            _mapperSqlConnection.BeginTransaction(isolationLevel);
+            _mySqlConnection.BeginTransaction(isolationLevel);
         }
     }
 }

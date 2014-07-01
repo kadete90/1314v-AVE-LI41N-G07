@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace SqlMapperFw.MySqlConnection
 {
-    public class SingleSqlConnection : AbstractMapperSqlConnection
+    public class SingleSqlConnection : AbstractSqlConnection
     {
         public SingleSqlConnection(SqlConnectionStringBuilder connString)
         {
