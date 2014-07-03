@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using SqlMapperFw.Utils;
 
 namespace SqlMapperFw.BuildMapper.DataMapper
@@ -68,15 +69,10 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             return new SqlEnumerable<T>(MySqlCommand, _tableName, MembersInfoBind, PkMemberInfoBind, CloseSqlConnection, WhereClauses);
         }
 
-        //public int Count()
-        //{
-        //    String aux = MySqlCommand.CommandText;
-        //    MySqlCommand.CommandText += " SELECT COUNT(*) FROM " + _tableName;
-        //    int count = MySqlCommand.ExecuteReader().GetFieldValue<int>(0);
-        //    MySqlCommand.CommandText = aux;//repor query
-        //    CloseSqlConnection();
-        //    return count;
-        //}
+        public int Count()
+        {
+            return Enumerable.Count(this);
+        }
 
         public IEnumerator<T> GetEnumerator()
         {

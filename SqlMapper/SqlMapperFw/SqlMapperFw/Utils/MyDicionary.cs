@@ -5,26 +5,6 @@ using SqlMapperFw.Binder;
 
 namespace SqlMapperFw.Utils
 {
-    //public class MyMapperDictionary : Dictionary<String, PairDataConnection>
-    //{
-    //    public void Add(String key, IDataMapper dataMapper, AbstractSqlConnection mySqlConnection)
-    //    {
-    //        Add(key, new PairDataConnection(dataMapper, mySqlConnection));
-    //    }
-    //}
-
-    //public struct PairDataConnection
-    //{
-    //    public IDataMapper DataMapper;
-    //    public AbstractSqlConnection MySqlConnection;
-
-    //    public PairDataConnection(IDataMapper dataMapper, AbstractSqlConnection mySqlConnection)
-    //    {
-    //        DataMapper = dataMapper;
-    //        MySqlConnection = mySqlConnection;
-    //    }
-    //}
-
     public struct PairInfoBind
     {
         public MemberInfo MemberInfo;

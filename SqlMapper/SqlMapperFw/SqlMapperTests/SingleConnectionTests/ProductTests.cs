@@ -63,9 +63,23 @@ namespace SqlMapperTests.SingleConnectionTests
         }
 
         [TestMethod]
+        public void TestGetProductById()
+        {
+            _builder.BeginTransaction();
+            Product prod = _productDataMapper.GetById(7);
+
+            Console.WriteLine(prod.ToString());
+
+            Assert.IsNotNull(prod);
+            Assert.AreEqual("Uncle Bob's Organic Dried Pears", prod.ProductName);
+            Assert.IsFalse(prod.Discontinued);
+            _builder.Commit();
+        }
+
+        [TestMethod]
         public void TestWhereOnReadAllProduct()
         {
-            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
+            _builder.BeginTransaction();
             IEnumerable<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7");
 
             IEnumerator<Product> iterator = prods.GetEnumerator();
@@ -87,7 +101,7 @@ namespace SqlMapperTests.SingleConnectionTests
         [TestMethod]
         public void TestCommandsOnProduct()
         {
-            _builder.BeginTransaction(IsolationLevel.ReadCommitted);
+            _builder.BeginTransaction(IsolationLevel.RepeatableRead);
             Product prod = InsertProduct();
             Assert.AreEqual(78, _productDataMapper.GetAll().Count());
             Console.WriteLine("    --> Inserted new product with ID = {0} <--\n", prod.ID);

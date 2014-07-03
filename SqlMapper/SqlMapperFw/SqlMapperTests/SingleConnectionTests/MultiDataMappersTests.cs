@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlMapperClient.Entities;
 using SqlMapperFw.Binder;
@@ -13,10 +11,11 @@ using SqlMapperFw.MySqlConnection;
 namespace SqlMapperTests.SingleConnectionTests
 {
     [TestClass]
-    public class CustomerTests
+    public class MultiDataMappersTests
     {
         static Builder _builder;
-        static IDataMapper<Customer> _customerDataMapper;
+        static IDataMapper<Product> _productDataMapper;
+        static IDataMapper<Order> _orderDataMapper;
         static SqlConnectionStringBuilder _connectionStringBuilder;
 
         [ClassInitialize]
@@ -32,19 +31,8 @@ namespace SqlMapperTests.SingleConnectionTests
             List<Type> bindMemberList = new List<Type> { typeof(BindFields), typeof(BindProperties) };
             _builder = new Builder(_connectionStringBuilder, typeof(SingleSqlConnection), bindMemberList);
 
-            _customerDataMapper = _builder.Build<Customer>();
-            CleanToDefault();
-        }
-
-        public static void CleanToDefault()
-        {
-            using (SqlConnection conSql = new SqlConnection(_connectionStringBuilder.ConnectionString))
-            {
-                SqlCommand cmd = new SqlCommand("DELETE FROM Customers WHERE CustomerId = 'xpto'", conSql);
-                conSql.Open();
-                cmd.ExecuteNonQuery();
-                conSql.Close();
-            }
+            _productDataMapper = _builder.Build<Product>();
+            _orderDataMapper = _builder.Build<Order>();
         }
 
         [ClassCleanup]
@@ -54,15 +42,25 @@ namespace SqlMapperTests.SingleConnectionTests
         }
 
         [TestMethod]
-        public void TestReadAllCustomers()
+        public void TestDataMapper()
         {
+            _builder.ActivateDataMapper(_productDataMapper);
             _builder.BeginTransaction();
-            Console.WriteLine("-----------------------------------------------------");
-            int count = _customerDataMapper.GetAll().Count();
-            Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
-            Assert.AreEqual(91, count);
-            Console.WriteLine("-----------------------------------------------------");
+                int countProducts = _productDataMapper.GetAll().Count();
+                Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", countProducts);
+                Assert.AreEqual(77, countProducts);
+                //... more commands
+            _builder.Commit();
+
+            _builder.ActivateDataMapper(_orderDataMapper);
+            _builder.BeginTransaction();
+                int countOrders = _orderDataMapper.GetAll().Count();
+                Console.WriteLine("    --> TestReadAllOrders Count = {0} <--", countOrders);
+                Assert.AreEqual(830, countOrders);
+                //... more commands
             _builder.Commit();
         }
+
     }
+   
 }

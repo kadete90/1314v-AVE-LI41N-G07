@@ -57,7 +57,7 @@ namespace SqlMapperTests.SingleConnectionTests
         [TestMethod]
         public void TestReadAllOrders()
         {
-            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
+            _builder.BeginTransaction();
             Console.WriteLine("-----------------------------------------------------");
             int count = _orderDataMapper.GetAll().Count();
             _builder.Commit();
@@ -69,7 +69,7 @@ namespace SqlMapperTests.SingleConnectionTests
         [TestMethod]
         public void TestWhereOnReadAllOrder()
         {
-            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
+            _builder.BeginTransaction();
             IEnumerable<Order> orders = _orderDataMapper.GetAll().Where("EmployeeID = 5").Where("Freight > 255.5").Where("ShipVia = 3");
             Order order = null;
             int countOrders = 0;
@@ -91,7 +91,7 @@ namespace SqlMapperTests.SingleConnectionTests
         [TestMethod]
         public void TestCommandsOnOrder()
         {
-            _builder.BeginTransaction(IsolationLevel.ReadCommitted);
+            _builder.BeginTransaction(IsolationLevel.RepeatableRead);
             Order order = InsertOrder();
             Assert.AreEqual(831, _orderDataMapper.GetAll().Count());
             Console.WriteLine("    --> Inserted new order with ID = {0} <--\n", order.ID);

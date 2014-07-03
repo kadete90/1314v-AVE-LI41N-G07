@@ -56,7 +56,7 @@ namespace SqlMapperTests.SingleConnectionTests
         [TestMethod]
         public void TestReadAllEmployees()
         {
-            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
+            _builder.BeginTransaction();
             Console.WriteLine("-----------------------------------------------------");
             int count = _employeeDataMapper.GetAll().Count();
             Console.WriteLine("    --> TestReadAllEmployees Count = {0} <--", count);
@@ -68,7 +68,7 @@ namespace SqlMapperTests.SingleConnectionTests
         [TestMethod]
         public void TestWhereOnReadAllEmployee()
         {
-            _builder.BeginTransaction(IsolationLevel.ReadUncommitted);
+            _builder.BeginTransaction();
             IEnumerable<Employee> prods = _employeeDataMapper.GetAll().Where("Country = 'UK'").Where("Extension = 465");
 
             IEnumerator<Employee> iterator = prods.GetEnumerator();
@@ -90,7 +90,7 @@ namespace SqlMapperTests.SingleConnectionTests
         [TestMethod]
         public void TestCommandsOnEmployee()
         {
-            _builder.BeginTransaction(IsolationLevel.ReadCommitted);
+            _builder.BeginTransaction(IsolationLevel.RepeatableRead);
             Employee prod = InsertEmployee();
             Assert.AreEqual(10, _employeeDataMapper.GetAll().Count());
             Console.WriteLine("    --> Inserted new Employee with ID = {0} <--\n", prod.ID);

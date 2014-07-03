@@ -14,8 +14,10 @@ namespace SqlMapperFw.MySqlConnection
         public override void Rollback()
         {
             if (SqlTransaction == null || !IsActiveConnection())
-                throw new Exception("Cannot Rollback! Transaction doesn't have a active connection or is null!");
-
+            {
+                Console.WriteLine("Cannot Rollback! Transaction doesn't have a active connection or is null!");
+                return;
+            }
             SqlTransaction.Dispose();
             SqlTransaction.Rollback();
             SqlTransaction = null;
@@ -25,7 +27,10 @@ namespace SqlMapperFw.MySqlConnection
         public override void Commit()
         {
             if (SqlTransaction == null || !IsActiveConnection())
-                throw new Exception("Cannot Commit! Transaction doesn't have a active connection or is null!");
+            {
+                Console.WriteLine("Cannot Rollback! Transaction doesn't have a active connection or is null!");
+                return;
+            }
 
             SqlTransaction.Commit();
             SqlTransaction = null;
@@ -34,7 +39,7 @@ namespace SqlMapperFw.MySqlConnection
         protected internal override void BeforeCommandExecuted()
         {
             OpenConnection();
-            BeginTransaction(IsolationLevel.ReadUncommitted);
+            BeginTransaction();
         }
 
         internal override void AfterCommandExecuted()

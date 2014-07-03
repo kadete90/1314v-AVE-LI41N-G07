@@ -24,7 +24,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
         void Insert(T val);
         void Update(T val);
         void Delete(T val);
-
     }
 
     public interface IDataMapper : IMySqlConnection
@@ -34,10 +33,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
         void Update(object val);
         void Delete(object val);
 
-        new void CloseConnection();
-        new void BeginTransaction(IsolationLevel isolationLevel);
-        new void Rollback();
-        new void Commit();
         object Execute(string name, object o);
     }
 }

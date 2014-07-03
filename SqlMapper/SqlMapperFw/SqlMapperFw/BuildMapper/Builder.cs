@@ -18,8 +18,7 @@ namespace SqlMapperFw.BuildMapper
         readonly SqlConnectionStringBuilder _connectionStringBuilder;
         readonly IEnumerable<Type> _bindMembers;
         private static IDataMapper _activeDataMapper;
-        private readonly Dictionary<String, IDataMapper> mapEDMapper = new Dictionary<string, IDataMapper>(); //typeof(T), <IDataMapper, AbstractSqlConnection>
-        readonly MyMemberDictionary _fieldsMatchMemberDictionary = new MyMemberDictionary(); //DB_Field_Name, <DE_Field_Info, DE_Binder>
+        private readonly Dictionary<Type, IDataMapper> mapEDMapper = new Dictionary<Type, IDataMapper>();
         
         internal class MyInterceptor : IInvokeWrapper
         {
@@ -63,9 +62,9 @@ namespace SqlMapperFw.BuildMapper
 
         public IDataMapper<T> Build<T>()
         {
-            if (mapEDMapper.ContainsKey(typeof (T).Name)) //testar optimização
+            if (mapEDMapper.ContainsKey(typeof (T))) //testar optimização
             {
-                mapEDMapper.TryGetValue(typeof(T).Name, out _activeDataMapper);
+                mapEDMapper.TryGetValue(typeof(T), out _activeDataMapper);
                 return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
             }
 
@@ -85,6 +84,7 @@ namespace SqlMapperFw.BuildMapper
             Type type = typeof(T);
             string _tableName = type.GetTableName();
             KeyValuePair<String, PairInfoBind> _pkKeyValuePair = new KeyValuePair<string, PairInfoBind>(); //DB_PK_Name, <DE_PK_Info, DE_Binder>
+            MyMemberDictionary _fieldsMatchMemberDictionary = new MyMemberDictionary(); //DB_Field_Name, <DE_Field_Info, DE_Binder>
             foreach (MemberInfo mi in type.GetMembers())
             {
 
@@ -115,10 +115,16 @@ namespace SqlMapperFw.BuildMapper
             }
             
             AbstractSqlConnection _sqlConnection = (AbstractSqlConnection) Activator.CreateInstance(_typeConnection, _connectionStringBuilder);
-            _activeDataMapper = new CmdBuilderDataMapper<T>(_sqlConnection, _tableName, _pkKeyValuePair, _fieldsMatchMemberDictionary);
-            mapEDMapper.Add(typeof(T).Name, _activeDataMapper);
-           
+            _activeDataMapper = new CmdBuilderDataMapper<T>(_sqlConnection, _tableName, _pkKeyValuePair, _fieldsMatchMemberDictionary);            
+            mapEDMapper.Add(typeof(T), _activeDataMapper);
+
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
+        }
+
+        public void ActivateDataMapper<T>(IDataMapper<T> dataMapper)
+        {
+            if (mapEDMapper.ContainsKey(typeof(T)))
+                mapEDMapper.TryGetValue(typeof (T), out _activeDataMapper);
         }
 
         public void CloseConnection()
@@ -136,7 +142,7 @@ namespace SqlMapperFw.BuildMapper
             _activeDataMapper.Commit();
         }
 
-        public void BeginTransaction(IsolationLevel isolationLevel)
+        public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             _activeDataMapper.BeginTransaction(isolationLevel);
         }

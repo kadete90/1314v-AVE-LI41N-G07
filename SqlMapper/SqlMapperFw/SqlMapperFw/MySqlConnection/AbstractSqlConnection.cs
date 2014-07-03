@@ -15,7 +15,7 @@ namespace SqlMapperFw.MySqlConnection
         internal abstract void AfterCommandExecuted();
         protected internal abstract void BeforeCommandExecuted();
        
-        public void BeginTransaction(IsolationLevel isolationLevel)
+        public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             if (SqlTransaction != null) throw new InvalidOperationException("Transaction already initialized!");
             SqlTransaction = Connection.BeginTransaction(isolationLevel);

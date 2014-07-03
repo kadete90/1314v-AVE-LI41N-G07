@@ -48,10 +48,6 @@ namespace SqlMapperTests.MultipleConnectionTests
         [TestMethod]
         public void TestReadAllProducts()
         {
-            //fazer um Count para optimizar código
-            // cmd.CommandText = "SELECT COUNT(*) FROM dbo.region";
-            //Int32 count = (Int32)cmd.ExecuteScalar();
-
             int count = _productDataMapper.GetAll().Count();
             Console.WriteLine("    --> TestReadAllProducts Count = {0} <--", count);
             Assert.AreEqual(77, count);

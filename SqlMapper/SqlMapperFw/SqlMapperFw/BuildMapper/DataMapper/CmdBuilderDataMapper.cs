@@ -128,7 +128,8 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
             MemberInfo mipk = _pkKeyValuePair.Value.MemberInfo;
             AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;
-            bmpk.bind(newInstance, mipk, id);
+            if(!bmpk.bind(newInstance, mipk, id))
+                throw new Exception(String.Format("Could not bind this id [{0}] on ED [{1}]",id,typeof(T).Name));
 
             SqlParameter pkSqlParameter = new SqlParameter("@ID", mipk.GetSqlDbType(newInstance, bmpk))
             {
@@ -144,14 +145,25 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                     throw new Exception("No element reference for this id");
 
                 _sqlDataReader.Read();
+                
                 Object[] DBRowValues = new Object[_sqlDataReader.FieldCount];
                 int i = 0;
+                
+                if (_sqlDataReader.GetValues(DBRowValues) == 0)
+                    throw new Exception("Couldn't get DataBase row values from SqlDataReader");
 
                 foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchMemberDictionary)
                 {
+                    if (DBRowValues[i] == null)
+                    {
+                        i++;
+                        continue;
+                    }
                     MemberInfo mi = pair.Value.MemberInfo;
                     AbstractBindMember bm = pair.Value.BindMember;
-                    bm.bind(newInstance, mi, DBRowValues[i++]);
+
+                    if(!bm.bind(newInstance, mi, DBRowValues[i++]))
+                        throw new Exception(String.Format("Could not bind this field [{0}] on ED [{1}]", mi.Name, typeof(T).Name));
                 }
                 _sqlDataReader.Close();
             }
@@ -169,8 +181,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             SqlCommand cmd;
             if (!_commandsDictionary.TryGetValue("INSERT", out cmd))
                 throw new Exception("This Command doesn't exist!");
-
-            //Dictionary<String, PairInfoBind> filterInfos = filterMemberInfos(val);
 
             MemberInfo mipk = _pkKeyValuePair.Value.MemberInfo;
             AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;
@@ -275,22 +285,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                 throw new Exception("Exception on Delete\n" + ex.Message);
             }
         }
-
-        //TODO melhorar
-        // Goal: Apenas fazer update dos fields com valores non-default em toUpdate
-        //private Dictionary<String, PairInfoBind> filterMemberInfos(object toUpdate)
-        //{
-        //    MyMemberDictionary toUpdateInfos = new MyMemberDictionary();
-        //    foreach (KeyValuePair<string, PairInfoBind> pair in _fieldsMatchMemberDictionary)
-        //    {
-        //        MemberInfo mi = pair.Value.MemberInfo;
-        //        AbstractBindMember bm = pair.Value.BindMember;
-        //        if (toUpdate.GetEDFieldValue(mi, bm) == null)
-        //            continue;
-        //        toUpdateInfos.Add(pair.Key, mi, bm);
-        //    }
-        //    return toUpdateInfos;
-        //}
 
         public void CloseConnection()
         {

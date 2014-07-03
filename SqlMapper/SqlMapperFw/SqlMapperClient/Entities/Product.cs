@@ -18,5 +18,11 @@ namespace SqlMapperClient.Entities
         public short UnitsOnOrder { set; get; }
         public short ReorderLevel;
         public Boolean Discontinued;
+
+        public override string ToString()
+        {
+            return "{Product: " + ID + ", " + ProductName + ", " + Supplier.ID + ", " + QuantityPerUnit + ", " +
+            UnitPrice + ", " + UnitsInStock + ", " + UnitsOnOrder + ", " + ReorderLevel + ", " + Discontinued + "} ";
+        }
     }
 }
