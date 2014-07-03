@@ -54,6 +54,18 @@ namespace SqlMapperTests.MultipleConnectionTests
         }
 
         [TestMethod]
+        public void TestGetProductById()
+        {
+            Product prod = _productDataMapper.GetById(7);
+
+            Console.WriteLine(prod.ToString());
+
+            Assert.IsNotNull(prod);
+            Assert.AreEqual("Uncle Bob's Organic Dried Pears", prod.ProductName);
+            Assert.IsFalse(prod.Discontinued);
+        }
+
+        [TestMethod]
         public void TestWhereOnReadAllProduct()
         {
             List<Product> prods = _productDataMapper.GetAll().Where("UnitsInStock > 30").Where("CategoryID = 7").ToList();

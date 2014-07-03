@@ -110,13 +110,10 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             _sqlDataReader = _mySqlEnumerable.MySqlCommand.ExecuteReader();
             
             cmd.CommandText = aux;//repor query sem clausulas where
-            gotDisposed = false;
         }
 
         public void Dispose()
         {
-            if (gotDisposed) return;
-            gotDisposed = true;
             _sqlDataReader.Close();
             _mySqlEnumerable.CloseSqlConnection();
             _mySqlEnumerable.WhereClauses.Clear();
@@ -147,8 +144,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                 current = newInstance;
                 return true;
             }
-            if (!gotDisposed)
-                Dispose();
+            Dispose();
             return false;
         }
 
