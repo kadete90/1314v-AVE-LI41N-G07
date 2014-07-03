@@ -2,7 +2,7 @@
 
 namespace SqlMapperFw.BuildMapper.DataMapper
 {
-    interface ICmdBuilder : IMySqlConnection
+    interface ICmdExecute : IMySqlConnection
     {
         object Execute(string name, object o);
     }

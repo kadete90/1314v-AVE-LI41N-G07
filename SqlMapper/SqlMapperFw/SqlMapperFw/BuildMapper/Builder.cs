@@ -17,8 +17,8 @@ namespace SqlMapperFw.BuildMapper
         readonly Type _typeConnection;
         readonly SqlConnectionStringBuilder _connectionStringBuilder;
         readonly IEnumerable<Type> _bindMembers;
-        private static ICmdBuilder _activeDataMapper;
-        private readonly Dictionary<Type, ICmdBuilder> mapEDMapper = new Dictionary<Type, ICmdBuilder>();
+        private static ICmdExecute _activeDataMapper;
+        private readonly Dictionary<Type, ICmdExecute> mapEDMapper = new Dictionary<Type, ICmdExecute>();
         
         internal class MyInterceptor : IInvokeWrapper
         {
@@ -113,7 +113,7 @@ namespace SqlMapperFw.BuildMapper
             }
             
             AbstractSqlConnection _sqlConnection = (AbstractSqlConnection) Activator.CreateInstance(_typeConnection, _connectionStringBuilder);
-            _activeDataMapper = new CmdBuilderDataMapper<T>(_sqlConnection, _tableName, _pkKeyValuePair, _fieldsMatchMemberDictionary);            
+            _activeDataMapper = new CmdBuilder<T>(_sqlConnection, _tableName, _pkKeyValuePair, _fieldsMatchMemberDictionary);            
             mapEDMapper.Add(typeof(T), _activeDataMapper);
 
             return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());

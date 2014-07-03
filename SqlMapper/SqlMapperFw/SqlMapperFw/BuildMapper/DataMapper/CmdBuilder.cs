@@ -10,7 +10,7 @@ using SqlMapperFw.Utils;
 
 namespace SqlMapperFw.BuildMapper.DataMapper
 {
-    public class CmdBuilderDataMapper<T> : IDataMapper<T>, ICmdBuilder
+    public class CmdBuilder<T> : IDataMapper<T>, ICmdExecute
     {
         readonly SqlConnection _connection;
         readonly AbstractSqlConnection _mySqlConnection;
@@ -21,7 +21,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
         readonly Dictionary<String, SqlCommand> _commandsDictionary = new Dictionary<String, SqlCommand>(); //TypeCommand, Command
 
-        public CmdBuilderDataMapper(AbstractSqlConnection abstractMySqlConnection, string tableName, KeyValuePair<string, PairInfoBind> pkKeyValuePair, MyMemberDictionary fieldsMatchMemberDictionary)
+        public CmdBuilder(AbstractSqlConnection abstractMySqlConnection, string tableName, KeyValuePair<string, PairInfoBind> pkKeyValuePair, MyMemberDictionary fieldsMatchMemberDictionary)
         {
             _mySqlConnection = abstractMySqlConnection;
             _connection = _mySqlConnection.Connection;
@@ -47,11 +47,11 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
             SqlCommand cmd = _connection.CreateCommand();
             cmd.CommandText = "SELECT " + _pkKeyValuePair.Key +", " +DBfields + " FROM " + _tableName;
-            _commandsDictionary.Add("SELECTALL", cmd);
+            _commandsDictionary.Add("GetAll", cmd);
 
             cmd = _connection.CreateCommand();
             cmd.CommandText = "SELECT " + DBfields + " FROM " + _tableName + " WHERE "+ _pkKeyValuePair.Key + " = @ID";
-            _commandsDictionary.Add("SELECTONE", cmd);
+            _commandsDictionary.Add("GetById", cmd);
 
             cmd = _connection.CreateCommand();
             cmd.CommandText = "INSERT INTO " + _tableName + " (" + DBfields + ")" + " VALUES (" + _fieldsMatchMemberDictionary.Keys.StringBuilderKeyCollection() + ") SET @ID = SCOPE_IDENTITY();";
@@ -102,7 +102,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
         public ISqlEnumerable<T> GetAll()
         {
             SqlCommand cmd;
-            if (!_commandsDictionary.TryGetValue("SELECTALL", out cmd))
+            if (!_commandsDictionary.TryGetValue("GetAll", out cmd))
                 throw new Exception("This Command doesn't exist!");
 
             cmd.Transaction = _mySqlConnection.SqlTransaction;
@@ -133,7 +133,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
         public T GetById(object id)
         {
             SqlCommand cmd;
-            if (!_commandsDictionary.TryGetValue("SELECTONE", out cmd))
+            if (!_commandsDictionary.TryGetValue("GetById", out cmd))
                 throw new Exception("This Command doesn't exist!");
 
             T newInstance = (T)Activator.CreateInstance(typeof(T));

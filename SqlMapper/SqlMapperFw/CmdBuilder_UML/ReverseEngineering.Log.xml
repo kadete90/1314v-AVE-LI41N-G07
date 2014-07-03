@@ -6,33 +6,21 @@
   <MessageClass Name="Error" Label="Error" Option="Show errors" />
   <MessageClass Name="Property" Label="Property" Option="Show metadata" />
   <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
-  <Message Timestamp="2014-07-03T16:11:49" Importance="High" Text="Reverse Engineering Started." />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: '009e3118-af91-437d-81f8-2f6f2283bde1' -  (ClassifierTemplateParameter)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: '28b71748-38b3-4f7e-bb7f-cffa11a33c4e' -  (ClassifierTemplateParameter)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw' -  (Package)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Binder' -  (Package)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Binder::AbstractBindMember' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Utils' -  (Package)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Medium" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Utils::MyMemberDictionary' -  (Class)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Utils::MyMemberDictionary::Add' -  (Operation)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Utils::MyMemberDictionary::Add::bindMember' -  (Parameter)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Utils::MyMemberDictionary::Add::key' -  (Parameter)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Utils::MyMemberDictionary::Add::memberInfo' -  (Parameter)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Utils::MyMemberDictionary::MyMemberDictionary' -  (Operation)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::Utils::PairInfoBind' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System' -  (Package)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System::Collections' -  (Package)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System::Collections::Generic' -  (Package)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System::Collections::Generic::Dictionary' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System::Collections::Generic::Dictionary&lt;String‎, PairInfoBind‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System::Reflection' -  (Package)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System::Reflection::MemberInfo' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: CmdBuilder_UML::SqlMapperFw::Utils::MyMemberDictionary to CmdBuilder_UML::System::Collections::Generic::Dictionary&lt;String‎, PairInfoBind‎&gt; (Generalization)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: CmdBuilder_UML::SqlMapperFw::Binder::BindFields to CmdBuilder_UML::SqlMapperFw::Binder::AbstractBindMember (Generalization)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: CmdBuilder_UML::SqlMapperFw::Binder::BindProperties to CmdBuilder_UML::SqlMapperFw::Binder::AbstractBindMember (Generalization)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: CmdBuilder_UML::SqlMapperFw::Utils::MyMemberDictionary to CmdBuilder_UML::System::Collections::Generic::Dictionary (Generalization)" />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="High" Text="(1) type(s) fully reverse engineered." />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="High" Text="(5) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
-  <Message Timestamp="2014-07-03T16:11:51" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
+  <Message Timestamp="2014-07-03T18:01:02" Importance="High" Text="Reverse Engineering Started." />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw' -  (Package)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::BuildMapper' -  (Package)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::BuildMapper::DataMapper' -  (Package)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Medium" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::BuildMapper::DataMapper::ICmdExecute' -  (Interface)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::BuildMapper::DataMapper::ICmdExecute::Execute' -  (Operation)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::BuildMapper::DataMapper::ICmdExecute::Execute::name' -  (Parameter)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::BuildMapper::DataMapper::ICmdExecute::Execute::o' -  (Parameter)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::MySqlConnection' -  (Package)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::SqlMapperFw::MySqlConnection::IMySqlConnection' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System' -  (Package)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'CmdBuilder_UML::System::Object' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: CmdBuilder_UML::SqlMapperFw::BuildMapper::DataMapper::ICmdExecute to CmdBuilder_UML::SqlMapperFw::MySqlConnection::IMySqlConnection (Generalization)" />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="High" Text="(1) type(s) fully reverse engineered." />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="High" Text="(2) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
+  <Message Timestamp="2014-07-03T18:01:04" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
 </Log>

@@ -3,7 +3,7 @@
   <logicalClassDesignerModelMoniker Id="a2833484-175d-469f-9aaa-d3115b998000" />
   <nestedChildShapes>
     <interfaceShape Id="e74dca99-ae0e-43b2-894b-3819f440b00b" absoluteBounds="4, 3.125, 2.75, 1.250503439108531" hideQualifiedName="false" increaseHeight="0.18800345897674564" customColor="207, 223, 191">
-      <interfaceMoniker Id="c166754e-b660-4a97-a1f0-886ace7c9a20" LastKnownName="ICmdBuilder" />
+      <interfaceMoniker Id="c166754e-b660-4a97-a1f0-886ace7c9a20" LastKnownName="ICmdExecute" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="8355afc1-3289-4d9d-bb2c-5f0d31856aa0" absoluteBounds="4.015, 3.7030034589767453, 2.7199999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
         <OperationElementListCompartment Id="81d6dc2c-89c2-4c2e-b8df-5cc3e74c930c" absoluteBounds="4.015, 3.9141753265261654, 2.7199999999999998, 0.36132811258236563" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
@@ -25,7 +25,7 @@
       </nodes>
     </generalizationConnector>
     <classShape Id="140a13f3-7357-446f-97f6-5d75fa5bcc9e" absoluteBounds="1.75, 5.125, 4.375, 1.9886168446143469" hideQualifiedName="false" increaseHeight="0.18800345897674561" customColor="181, 193, 223">
-      <classMoniker Id="c44bc1fd-d157-4b68-a0f8-72e6d60e5a5a" LastKnownName="CmdBuilderDataMapper" />
+      <classMoniker Id="c44bc1fd-d157-4b68-a0f8-72e6d60e5a5a" LastKnownName="CmdBuilder" />
       <relativeChildShapes>
         <templateBoxShape Id="ff64e82b-2b51-460d-8cdb-669e9bdbe22d" absoluteBounds="5.625, 4.965, 1, 0.2">
           <redefinableTemplateSignatureMoniker Id="5f977369-bc7a-47c2-b1d7-83f4f7351ef9" />

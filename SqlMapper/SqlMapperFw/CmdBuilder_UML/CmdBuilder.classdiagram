@@ -17,7 +17,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="c166754e-b660-4a97-a1f0-886ace7c9a20" name="ICmdBuilder" visibility="Package" isAbstract="false" isLeaf="false">
+      <Interface Id="c166754e-b660-4a97-a1f0-886ace7c9a20" name="ICmdExecute" visibility="Package" isAbstract="false" isLeaf="false">
         <referencesInternal>
           <reference Id="1d8c014d-05be-40eb-ad96-76871f1d8e51" handle="viewcode://./CodeSchema_Interface?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.BuildMapper.DataMapper Type%3DICmdBuilder" tag="ViewCode">
             <elementDefinition Id="05d7c986-6c0c-4aea-903d-a3a49dd42bd2" />
@@ -415,7 +415,7 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="c44bc1fd-d157-4b68-a0f8-72e6d60e5a5a" name="CmdBuilderDataMapper" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="c44bc1fd-d157-4b68-a0f8-72e6d60e5a5a" name="CmdBuilder" isAbstract="false" isLeaf="false" isActiveClass="false">
         <referencesInternal>
           <reference Id="35b9d11d-db26-464e-af71-7b598ba6b4af" handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.BuildMapper.DataMapper Type%3D(Name%3DCmdBuilderDataMapper GenericParameterCount%3D1)" tag="ViewCode">
             <elementDefinition Id="0733038e-aaa0-4ff5-9588-259705aa66a3" />
@@ -461,7 +461,7 @@
         <elementDefinition Id="f1fb262c-b5fe-4c73-b111-59115ba7be1e" />
         <suppliersInternal>
           <interfaceRealization Id="4dd07234-7f29-4506-b692-8ef97a17cff1">
-            <interfaceMoniker Id="c166754e-b660-4a97-a1f0-886ace7c9a20" LastKnownName="ICmdBuilder" />
+            <interfaceMoniker Id="c166754e-b660-4a97-a1f0-886ace7c9a20" LastKnownName="ICmdExecute" />
             <elementDefinition Id="4d4c31b9-a1c3-4070-9984-f0a2b41ccfac" />
           </interfaceRealization>
           <interfaceRealization Id="0ec8bf42-5a00-4b19-b98f-1ade6e5039c9">

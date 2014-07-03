@@ -36,6 +36,9 @@
       <SubType>Content</SubType>
       <DependentUpon>BuilderAssociations.classdiagram</DependentUpon>
     </Content>
+    <Content Include="Graph1.dgml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ModelDefinition\Package1_1447.uml">
       <SubType>Content</SubType>
     </Content>

@@ -602,7 +602,7 @@
     <packageHasNamedElement>
       <Interface
         Id="7469269e-8897-4fd0-b591-2f69ca51313b"
-        name="ICmdBuilder"
+        name="ICmdExecute"
         visibility="Package"
         isAbstract="false"
         isLeaf="false">
@@ -3969,7 +3969,7 @@
     <packageHasNamedElement>
       <class
         Id="f1fb262c-b5fe-4c73-b111-59115ba7be1e"
-        name="CmdBuilderDataMapper"
+        name="CmdBuilder"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -4027,7 +4027,7 @@
             Id="4d4c31b9-a1c3-4070-9984-f0a2b41ccfac">
             <interfaceMoniker
               Id="7469269e-8897-4fd0-b591-2f69ca51313b"
-              LastKnownName="ICmdBuilder"
+              LastKnownName="ICmdExecute"
               LastKnownLocation="Package7_1453.uml" />
           </interfaceRealization>
           <interfaceRealization
@@ -6035,6 +6035,186 @@
               LastKnownLocation="Package7_1453.uml" />
           </generalization>
         </generalsInternal>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="4142d38d-3c29-4e23-8248-60f4f0aa7bc5"
+        name="ICmdExecute"
+        visibility="Package"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="67a9c524-d7a2-4d41-874d-0aad2732527b"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.BuildMapper.DataMapper Type%3DICmdExecute"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="643b5ec5-0b17-4ac8-9295-5f7352a8e5cc"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bcfd095b-da82-482d-8c22-b3bd242b04df">
+                <propertyInstance
+                  Id="c4372a40-3f86-4e7b-beaf-e76b339989bc"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="12f1b45f-3d01-4f52-ab61-9c1d1c570a5f">
+                <propertyInstance
+                  Id="a1b77db9-85de-46d3-8e78-a231534ae347"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="63a5a233-3a09-4202-b236-7d7f8930776f">
+                <propertyInstance
+                  Id="c9ff2080-d9cb-422d-8b9f-a584797b99d3"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e073ffc4-fc22-4c83-87fd-02c3bc9c5cc8">
+                <propertyInstance
+                  Id="347981ff-4fad-46a7-91b8-08438a2fd870"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="723dc3f4-334c-419e-9845-d03d6c6dbbf5"
+            isSubstitutable="false">
+            <interfaceMoniker
+              Id="932c58c9-ef23-4871-80b1-bf7a86db742b"
+              LastKnownName="IMySqlConnection"
+              LastKnownLocation="Package1_1454.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperations>
+          <operation
+            Id="66de102a-baa8-4b64-9d32-6000580fcd01"
+            name="Execute"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="6ce5c878-0b26-413f-b8b5-772952feb3ef"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.BuildMapper.DataMapper Type%3DICmdExecute Member%3D(Name%3DExecute OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DString)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="77952081-15c5-4807-8e20-34197d75f50a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="10ba7dab-a531-47cc-95ef-76b64d49f9b4">
+                    <propertyInstance
+                      Id="61555691-a86e-4cec-917c-c3a632d9d5f2"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f3c1bed4-efe6-4145-9184-29dd8d697028">
+                    <propertyInstance
+                      Id="87f4ba2e-478a-4e5d-b3fb-b87ef58fe60a"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="11bda878-93a5-4c52-ab95-07328aeab113">
+                    <propertyInstance
+                      Id="10715eb1-4d73-419d-bdc9-a25750bc359c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0c7db0ca-9bca-4abd-a365-a05e52da2f23">
+                    <propertyInstance
+                      Id="5369eb13-0a74-4f65-b511-3bd1bb961616"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="20e88dab-7102-4f01-b19e-755b3169f713">
+                    <propertyInstance
+                      Id="a525fdf7-86f5-47dd-884f-bc17a34d22f2"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="34dc8da3-f98b-49ef-a6ec-8c1b42eb0d50">
+                    <propertyInstance
+                      Id="d9f87c36-eef7-45a2-9b4a-b7b94d895767"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="483c3a4f-eba9-4692-bfc8-e4c99ae7dd79"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2b0164de-0f84-4f5e-88b7-9f146b989d12"
+                  name="name"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="8a5c1c1c-caeb-40fa-a1fc-53bfddd4a8b3"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.BuildMapper.DataMapper Type%3DICmdExecute Member%3D(Name%3DExecute OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DString)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dname"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="CmdBuilder_UML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c26a3479-5d78-4c5b-b06c-5c77c0fbc07e"
+                  name="o"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="3b792818-9d10-4fd1-a7d2-1bbc0d60ebc4"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.BuildMapper.DataMapper Type%3DICmdExecute Member%3D(Name%3DExecute OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DString)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Do"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
       </Interface>
     </packageHasNamedElement>
   </packagedElements>

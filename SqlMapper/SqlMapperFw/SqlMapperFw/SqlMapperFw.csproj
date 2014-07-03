@@ -48,11 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildMapper\DataMapper\ICmdBuilder.cs" />
+    <Compile Include="BuildMapper\DataMapper\ICmdExecute.cs" />
     <Compile Include="MySqlConnection\IMySqlConnection.cs" />
     <Compile Include="Binder\AbstractBindMember.cs" />
     <Compile Include="Binder\BindProperties.cs" />
-    <Compile Include="BuildMapper\DataMapper\CmdBuilderDataMapper.cs" />
+    <Compile Include="BuildMapper\DataMapper\CmdBuilder.cs" />
     <Compile Include="Binder\BindFields.cs" />
     <Compile Include="BuildMapper\Builder.cs" />
     <Compile Include="Utils\MyAttributes.cs" />
@@ -65,7 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\FkMemberInfo.cs" />
     <Compile Include="Utils\ReflectionMethods.cs" />
-    <Compile Include="Utils\MyDicionary.cs" />
+    <Compile Include="Utils\MyMemberDicionary.cs" />
     <Compile Include="Utils\StringBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

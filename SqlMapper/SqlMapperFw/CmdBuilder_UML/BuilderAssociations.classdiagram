@@ -52,7 +52,7 @@
             <elementDefinition Id="fd2d106e-030b-4fbe-a7ef-3b7dca052f1f" />
           </dependency>
           <dependency Id="29560e8e-30c3-4b22-b917-e21212cc3dea">
-            <interfaceMoniker Id="4c10ceb1-25d3-4850-b486-fd844a2bba85" LastKnownName="ICmdBuilder" />
+            <interfaceMoniker Id="4c10ceb1-25d3-4850-b486-fd844a2bba85" LastKnownName="ICmdExecute" />
             <elementDefinition Id="22c9359b-83f1-4053-a4a4-2bb73782d3b4" />
           </dependency>
           <dependency Id="8f3351ec-d50c-445a-9ea9-d2c20be628ba">
@@ -66,7 +66,7 @@
         </suppliersInternal>
         <targetEnds>
           <association Id="3d0fd456-da35-4896-8f0a-646243ab9887" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-            <interfaceMoniker Id="4c10ceb1-25d3-4850-b486-fd844a2bba85" LastKnownName="ICmdBuilder" />
+            <interfaceMoniker Id="4c10ceb1-25d3-4850-b486-fd844a2bba85" LastKnownName="ICmdExecute" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="11031f74-f90b-4ec5-ae17-702eb584a7ae" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
@@ -144,7 +144,7 @@
             </appliedStereotypesInternal>
             <elementDefinition Id="f082171a-5188-46a6-a48e-296f773f1788" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="91f3bb20-3ca5-465d-b385-4cd0307d374d" LastKnownName="ICmdBuilder" />
+              <referencedTypeMoniker Id="91f3bb20-3ca5-465d-b385-4cd0307d374d" LastKnownName="ICmdExecute" />
             </type_NamedElement>
           </property>
           <property Id="24b86fbc-5953-4fe0-a54d-9cfddcadcd84" name="_bindMembers" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -751,7 +751,7 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="91f3bb20-3ca5-465d-b385-4cd0307d374d" name="ICmdBuilder" isAbstract="false" isLeaf="false" cachedFullName="CmdBuilder_UML::SqlMapperFw::BuildMapper::DataMapper::ICmdBuilder">
+      <referencedType Id="91f3bb20-3ca5-465d-b385-4cd0307d374d" name="ICmdExecute" isAbstract="false" isLeaf="false" cachedFullName="CmdBuilder_UML::SqlMapperFw::BuildMapper::DataMapper::ICmdExecute">
         <elementDefinition Id="7469269e-8897-4fd0-b591-2f69ca51313b" />
       </referencedType>
     </packageHasNamedElement>
@@ -1333,7 +1333,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="4c10ceb1-25d3-4850-b486-fd844a2bba85" name="ICmdBuilder" visibility="Package" isAbstract="false" isLeaf="false">
+      <Interface Id="4c10ceb1-25d3-4850-b486-fd844a2bba85" name="ICmdExecute" visibility="Package" isAbstract="false" isLeaf="false">
         <referencesInternal>
           <reference Id="5c4c6dd4-3647-4c12-b431-2c73e85ee562" handle="viewcode://./CodeSchema_Interface?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.BuildMapper.DataMapper Type%3DICmdBuilder" tag="ViewCode">
             <elementDefinition Id="05d7c986-6c0c-4aea-903d-a3a49dd42bd2" />
