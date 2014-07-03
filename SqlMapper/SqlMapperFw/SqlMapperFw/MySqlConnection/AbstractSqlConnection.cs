@@ -6,7 +6,6 @@ namespace SqlMapperFw.MySqlConnection
 {
     public abstract class AbstractSqlConnection : IMySqlConnection
     {
-      
         internal SqlConnection Connection { get; set; }
         internal SqlTransaction SqlTransaction;
 
@@ -42,6 +41,5 @@ namespace SqlMapperFw.MySqlConnection
             if (Connection.State != ConnectionState.Closed)
                 Connection.Close();
         }
-
     }
 }

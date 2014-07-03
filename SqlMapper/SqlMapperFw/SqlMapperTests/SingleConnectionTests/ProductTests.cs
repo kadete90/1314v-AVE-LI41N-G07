@@ -67,7 +67,6 @@ namespace SqlMapperTests.SingleConnectionTests
         {
             _builder.BeginTransaction();
             Product prod = _productDataMapper.GetById(7);
-
             Console.WriteLine(prod.ToString());
 
             Assert.IsNotNull(prod);

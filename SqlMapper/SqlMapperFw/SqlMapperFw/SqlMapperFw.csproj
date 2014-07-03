@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildMapper\DataMapper\ICmdBuilder.cs" />
     <Compile Include="MySqlConnection\IMySqlConnection.cs" />
     <Compile Include="Binder\AbstractBindMember.cs" />
     <Compile Include="Binder\BindProperties.cs" />

@@ -7,7 +7,7 @@ using SqlMapperFw.Utils;
 
 namespace SqlMapperFw.BuildMapper.DataMapper
 {
-
+    //TODO OPCIONAL: Multiple Associations
     public class SqlEnumerable
     {
         public SqlEnumerable()
@@ -31,7 +31,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
 
         public delegate void CloseConnection();
 
-        //TODO problema: depois de fazer um where num sqlEnumerable todos os outros sqlEnumerables desse Builder terão a clausula where
         public SqlEnumerable(SqlCommand cmd,
             String tableName,
             Dictionary<string, PairInfoBind>.ValueCollection membersInfoBind, 
@@ -92,7 +91,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
         readonly SqlDataReader _sqlDataReader;
 
         private bool gotCurrent;
-        private bool gotDisposed;
         private T current;
 
         public SqlEnumerator(SqlEnumerable<T> mySqlEnumerable)
@@ -109,7 +107,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             cmd.CommandText += whereClauses;
             _sqlDataReader = _mySqlEnumerable.MySqlCommand.ExecuteReader();
             
-            cmd.CommandText = aux;//repor query sem clausulas where
+            cmd.CommandText = aux;//commanText with the inital state (without where)
         }
 
         public void Dispose()
@@ -131,7 +129,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                 Object[] DBRowValues = new Object[_sqlDataReader.FieldCount];
 
                 if (_sqlDataReader.GetValues(DBRowValues) == 0)
-                    continue;
+                    continue; //Couldn't get row Values drom sqlDataReader
 
                 //pk
                 PairInfoBind PairPkInfoBind = _mySqlEnumerable.PkMemberInfoBind;

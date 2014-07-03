@@ -5,7 +5,6 @@ namespace SqlMapperFw.Utils
 {
     public static class StringBuilder
     {
-
         public static string StringBuilderDicionary(this Dictionary<string, PairInfoBind> dictionary)
         {
             //"EmployeeName = @name"

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using SqlMapperFw.Binder;
 
 namespace SqlMapperFw.Utils
 {
-    //encapsular instâncias -> FK
+    //encapsulate reference ED -> FK to a memberInfo to be threated like the others fields
     public class FkMemberInfo : MemberInfo
     {
         public Type InstanceType { get; private set; }
@@ -12,23 +13,12 @@ namespace SqlMapperFw.Utils
         public Object MyInstance { get; private set; }
         public MemberInfo ToBindInfo { get; private set; }
 
-        public FkMemberInfo(MemberInfo memberInfo, Type instanceFrom)
+        public FkMemberInfo(MemberInfo memberInfo, Type instanceFrom, AbstractBindMember bindMember)
         {
-            switch (memberInfo.MemberType)
-            {
-                case MemberTypes.Property:
-                    InstanceType = ((PropertyInfo)memberInfo).PropertyType;
-                    break;
-                case MemberTypes.Field:
-                    InstanceType = ((FieldInfo)memberInfo).FieldType;
-                    break;
-                default:
-                    throw new ArgumentException("memberInfo.MemberType");
-            }
+            ToBindInfo = memberInfo;
+            InstanceType= bindMember.GetMemberType(memberInfo);
 
             if (InstanceType != null) MyInstance = Activator.CreateInstance(InstanceType, null);
-            InstanceType = MyInstance.GetType();
-            ToBindInfo = memberInfo;
             PkInfo = InstanceType.GetPkMemberInfo();
 
             if (PkInfo == null)
@@ -43,7 +33,6 @@ namespace SqlMapperFw.Utils
             }   
             else
                 PkName = memberInfo.Name;
-
         }
 
         public override object[] GetCustomAttributes(bool inherit)

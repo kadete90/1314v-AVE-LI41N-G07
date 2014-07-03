@@ -10,8 +10,7 @@ using SqlMapperFw.Utils;
 
 namespace SqlMapperFw.BuildMapper.DataMapper
 {
-
-    public class CmdBuilderDataMapper<T> : IDataMapper
+    public class CmdBuilderDataMapper<T> : IDataMapper, ICmdBuilder
     {
         readonly SqlConnection _connection;
         readonly AbstractSqlConnection _mySqlConnection;
@@ -44,7 +43,7 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             String DBfields = _fieldsMatchMemberDictionary.Keys.Aggregate("", (current, fieldName) => current + (fieldName + ", "));
 
             if (DBfields != "")
-                DBfields = DBfields.Substring(0, DBfields.Length - 2); //remove última vírgula
+                DBfields = DBfields.Substring(0, DBfields.Length - 2); //remove last ', '
 
             SqlCommand cmd = _connection.CreateCommand();
             cmd.CommandText = "SELECT " + _pkKeyValuePair.Key +", " +DBfields + " FROM " + _tableName;
@@ -59,7 +58,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             _commandsDictionary.Add("INSERT", cmd);
 
             cmd = _connection.CreateCommand();
-            //cmd.CommandText = "UPDATE " + _tableName + " SET @TO_REPLACE WHERE " + _pkKeyValuePair.Key + "= @ID";
             cmd.CommandText = "UPDATE " + _tableName + " SET "+ _fieldsMatchMemberDictionary.StringBuilderDicionary() +" WHERE " + _pkKeyValuePair.Key + "= @ID";
             _commandsDictionary.Add("UPDATE", cmd);
 
@@ -92,10 +90,9 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                         throw new Exception("This command doesn't exist");
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 _mySqlConnection.Rollback();
-                _mySqlConnection.CloseConnection();
                 Console.WriteLine(" >> Rollback !!\n" + ex.Message);
             }
             _mySqlConnection.AfterCommandExecuted();
@@ -205,7 +202,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             {
                 if (cmd.ExecuteNonQuery() == 0)
                     Console.WriteLine("No row(s) affected!");
-               
             }
             catch (Exception ex)
             {
@@ -219,9 +215,6 @@ namespace SqlMapperFw.BuildMapper.DataMapper
             SqlCommand cmd;
             if (!_commandsDictionary.TryGetValue("UPDATE", out cmd))
                 throw new Exception("This Command doesn't exist!");
-
-            //Dictionary<String, PairInfoBind> filterInfos = filterMemberInfos(val);
-            //cmd.CommandText = cmd.CommandText.Replace("@TO_REPLACE", filterInfos.StringBuilderDicionary());
 
             MemberInfo mipk = _pkKeyValuePair.Value.MemberInfo;
             AbstractBindMember bmpk = _pkKeyValuePair.Value.BindMember;

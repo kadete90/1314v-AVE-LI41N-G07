@@ -88,7 +88,7 @@ namespace SqlMapperFw.Utils
             return bm.bind(entity, fk.PkInfo, dbvalue);
         }
 
-        // Converte System.Type em SqlDbType
+        // Convert System.Type to SqlDbType
         public static SqlDbType GetSqlDbType(this MemberInfo mi, Object instance, AbstractBindMember bm)
         {
             return new SqlParameter("x", instance.GetEDFieldValue(mi, bm)).SqlDbType;

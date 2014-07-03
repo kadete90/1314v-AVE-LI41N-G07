@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace SqlMapperFw.Binder
 {
@@ -7,6 +8,11 @@ namespace SqlMapperFw.Binder
         public override MemberInfo GetMemberInfo(MemberInfo mi)
         {
             return (mi.MemberType == MemberTypes.Field) ? mi : null;
+        }
+
+        public override Type GetMemberType(MemberInfo mi)
+        {
+            return ((FieldInfo)mi).FieldType;
         }
 
         protected override void SetValue<T>(T instance, MemberInfo mi, object value)

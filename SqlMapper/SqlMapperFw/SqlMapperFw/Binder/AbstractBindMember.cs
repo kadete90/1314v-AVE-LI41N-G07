@@ -26,8 +26,6 @@ namespace SqlMapperFw.Binder
 
                     SetValue(instance, mymi, dbvalue);
                 }
-                    
-
                 return true;
             }
             catch (Exception ex)
@@ -37,8 +35,11 @@ namespace SqlMapperFw.Binder
         }
 
         public abstract MemberInfo GetMemberInfo(MemberInfo mi);
+        public abstract Type GetMemberType(MemberInfo mi);
 
         protected abstract void SetValue<T>(T instance, MemberInfo mi, Object value);
         public abstract Object GetValue<T>(T instance, MemberInfo mi);
+
+       
     }
 }

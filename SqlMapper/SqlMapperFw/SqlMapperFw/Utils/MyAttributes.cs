@@ -25,8 +25,7 @@ namespace SqlMapperFw.Utils
         public PKAttribute(string name) : base(name){}
     }
 
-    // TODO AttributeTargets.All
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)] 
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)] 
     public class FKAttribute : Attribute
     {
     }

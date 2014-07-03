@@ -17,14 +17,13 @@ namespace SqlMapperFw.BuildMapper
         readonly Type _typeConnection;
         readonly SqlConnectionStringBuilder _connectionStringBuilder;
         readonly IEnumerable<Type> _bindMembers;
-        private static IDataMapper _activeDataMapper;
-        private readonly Dictionary<Type, IDataMapper> mapEDMapper = new Dictionary<Type, IDataMapper>();
+        private static ICmdBuilder _activeDataMapper;
+        private readonly Dictionary<Type, ICmdBuilder> mapEDMapper = new Dictionary<Type, ICmdBuilder>();
         
         internal class MyInterceptor : IInvokeWrapper
         {
             public void BeforeInvoke(InvocationInfo info)
             {
-
             }
 
             public object DoInvoke(InvocationInfo info)
@@ -42,7 +41,6 @@ namespace SqlMapperFw.BuildMapper
 
             public void AfterInvoke(InvocationInfo info, object returnValue)
             {
-
             }
         }
 
@@ -62,7 +60,7 @@ namespace SqlMapperFw.BuildMapper
 
         public IDataMapper<T> Build<T>()
         {
-            if (mapEDMapper.ContainsKey(typeof (T))) //testar optimização
+            if (mapEDMapper.ContainsKey(typeof (T)))
             {
                 mapEDMapper.TryGetValue(typeof(T), out _activeDataMapper);
                 return new ProxyFactory().CreateProxy<IDataMapper<T>>(new MyInterceptor());
@@ -95,14 +93,14 @@ namespace SqlMapperFw.BuildMapper
                 if (binder == null)
                     continue;
                 if (validMemberInfo.IsForeignKey())
-                    validMemberInfo = new FkMemberInfo(validMemberInfo, type);
+                    validMemberInfo = new FkMemberInfo(validMemberInfo, type, binder);
 
                 var DEFieldName = validMemberInfo.GetDBFieldName();
 
                 if (_fieldsMatchMemberDictionary.ContainsKey(DEFieldName))
                     continue;
 
-                //TODO OPCIONAL: chave composta
+                //TODO OPCIONAL: composite key
                 bool isPK = validMemberInfo.IsPrimaryKey();
             
                 if (isPK && _pkKeyValuePair.Key != null)
