@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="ba238e90-fd7a-40a9-8407-958e6f6b1dce"
+  name="DynamicProxy"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="67738f66-3fed-4c73-8328-813590a22584"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DLinFu.DynamicProxy"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="acef22dd-f4c8-4b6f-a182-9ae7744416d4"
+        name="InvocationInfo"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="de6493e0-e161-4406-b9c0-5824d44887ea"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2FLinFu.DynamicProxy.dll&quot; Namespace%3DLinFu.DynamicProxy Type%3DInvocationInfo"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="13413c3c-8520-4f42-90c9-506bcb9f54f0"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7f0b9437-a46e-4b22-b726-051522d658ab">
+                <propertyInstance
+                  Id="1e1a5bde-d64c-4fc0-8dae-9e77ea987f0b"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ea85b25d-16e5-4bff-8327-a5dd0c4c8f46">
+                <propertyInstance
+                  Id="ad6e64bc-2cb1-4e5d-9acd-00f159885cec"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7327089a-b519-4237-9f2d-cd8cc38cffb1">
+                <propertyInstance
+                  Id="75c4a1f8-d501-4c3c-87c1-381e34f2dfe1"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3c96ab65-a96b-4225-89a1-e5b442aa58d4">
+                <propertyInstance
+                  Id="b7bd83a4-678e-439d-b7b1-d4a931163336"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="797874b0-11f4-4cb4-9d70-0aac6de13505">
+                <propertyInstance
+                  Id="e6276a5d-4b7c-4029-ae95-ade6e5fdea25"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="bca73c52-d5dc-4b6e-8cb5-72f220cb3ebd"
+        name="IInvokeWrapper"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="fd3200ff-ec98-40bd-8073-7bdb1dbb7b02"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2FLinFu.DynamicProxy.dll&quot; Namespace%3DLinFu.DynamicProxy Type%3DIInvokeWrapper"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="eb6bda92-8df6-45f7-b10d-41a5e353cee4"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c112913b-ba92-4f12-b0e5-687b42561f66">
+                <propertyInstance
+                  Id="deb25d34-2583-4cb5-b8af-0d295d35eb43"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b07d739e-0b49-4d28-a6ff-016a234f8924">
+                <propertyInstance
+                  Id="12746c0a-4185-4b62-83d4-1f2331b625b2"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0d53102d-a9de-4b05-91db-36f98ed39127">
+                <propertyInstance
+                  Id="92b4cc63-2a97-454d-aeac-3622a8a14e20"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1a74625a-027b-4ef0-bf45-c6543183f8b7">
+                <propertyInstance
+                  Id="2eab7946-2d4b-4c4d-9d23-5b757cb2430d"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </Interface>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

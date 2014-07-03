@@ -1,0 +1,2025 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="419c674b-6973-4846-af29-875e70eef51b"
+  name="MySqlConnection"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="d23e619c-9057-45a4-9935-6f92bbc7ba4f"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DSqlMapperFw.MySqlConnection"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <Interface
+        Id="932c58c9-ef23-4871-80b1-bf7a86db742b"
+        name="IMySqlConnection"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="4091ff1d-0cae-401c-85e7-130357da8526"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DIMySqlConnection"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="b2c9ed51-8429-43a5-99f3-980449fd09e9"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5d4aeb82-338e-44c8-b76d-a8eede1f7a7c">
+                <propertyInstance
+                  Id="b9c32ed2-7958-4aed-b757-44f0e0556040"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="886fe9d8-b5e4-4eb1-bd76-2f08e4689bc4">
+                <propertyInstance
+                  Id="d212269a-540e-459e-9b0f-d9c40585dbb0"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="95e0cabe-158d-41c6-a0c3-e74a6a9cca60">
+                <propertyInstance
+                  Id="8a1bae52-3382-4724-9e46-872c0ca569ac"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ab510a6f-a815-43f9-b3ec-5aa2f2ed9404">
+                <propertyInstance
+                  Id="d45f7c8a-05fa-4a51-892b-ce39076cf63a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperations>
+          <operation
+            Id="dc22a24f-4784-45e3-a551-49d878974341"
+            name="CloseConnection"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8f9368bc-fd08-4a4b-9ed5-a071637a822e"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DIMySqlConnection Member%3DCloseConnection"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="45f71703-524d-4cb3-aa4b-ac5ec6b49500"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d89f1f52-78fe-453b-9bec-5ebfb5aed00b">
+                    <propertyInstance
+                      Id="803af978-26cf-4abf-95b6-f998aa8ceb42"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6d09169d-9788-4e34-b202-bf60e2669014">
+                    <propertyInstance
+                      Id="fc224208-4a95-4109-9872-3f885afe8544"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dccdf0b0-3d66-431d-98a9-078f0699647f">
+                    <propertyInstance
+                      Id="0637bef8-b8aa-4a45-bfa1-125d82c113df"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="27d4b0fa-af7c-4ebc-b2ea-af5ac656f53c">
+                    <propertyInstance
+                      Id="c170a1a5-d859-4bea-a5b8-8feaa2213937"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="db3ac8dc-207c-4fb7-becb-ea03f103f109">
+                    <propertyInstance
+                      Id="5d1905b4-0900-4b73-ba62-35805cf048f8"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="98a3359b-b267-4955-88dc-21956e53af37">
+                    <propertyInstance
+                      Id="3362f7ad-95c3-423c-adbc-91102bb379a2"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="5e0baed6-19b6-4e27-ab1f-c0978a996983"
+            name="BeginTransaction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="ebfa377f-554a-4138-8e04-02eb609651a3"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DIMySqlConnection Member%3D(Name%3DBeginTransaction OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Data.dll&quot; Namespace%3DSystem.Data Type%3DIsolationLevel)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1d57a591-e24e-4c18-a0af-994633b05c6a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f9ea0887-6c08-4657-91d5-6fcf5b1faa4c">
+                    <propertyInstance
+                      Id="5be23896-0326-47d9-ba42-2e7bc3c19a34"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="08a442fd-c74d-42d8-944d-27739cce29bb">
+                    <propertyInstance
+                      Id="2c94aa95-1980-4986-a374-4d4a7765e40e"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="046e2247-f62c-48b2-9cc2-d3b50fe62ff1">
+                    <propertyInstance
+                      Id="281ee7ab-5d93-489b-a813-9849f5da1874"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1f00132c-ef5d-42c2-93f9-e99e00518339">
+                    <propertyInstance
+                      Id="a8a16410-144b-4c99-9f93-35d67e28ad89"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="77c6811b-9163-4cd0-80ab-2d7c9a4c1fd0">
+                    <propertyInstance
+                      Id="555ddb3b-66f8-4588-b3e0-6a1c3b9dd36c"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="44157d83-1785-41dd-95a4-8165e4eef4c3">
+                    <propertyInstance
+                      Id="9ad1d043-d987-47ec-925a-9c8286c02fc6"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3d6385a0-2e4c-44a5-89cf-7989a8cb887c"
+                  name="isolationLevel"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="f5136ca8-c8b0-4e61-aa96-f8c8b0e4ab29"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DIMySqlConnection Member%3D(Name%3DBeginTransaction OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Data.dll&quot; Namespace%3DSystem.Data Type%3DIsolationLevel)]) ParameterIdentifier%3DisolationLevel"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <enumerationMoniker
+                      Id="53fe45e8-b7cc-4eae-9a99-377b40525a8e"
+                      LastKnownName="IsolationLevel"
+                      LastKnownLocation="Package3_1453.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="08646f50-b150-467c-9d42-68970faf994c"
+            name="Rollback"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="b3016b48-631c-4ee8-9cda-55d5ea43c17e"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DIMySqlConnection Member%3DRollback"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="e33b7898-fa0a-4561-bf4a-b6098ff5566c"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5414789c-13b0-4405-8be4-5dfed933bfc5">
+                    <propertyInstance
+                      Id="1517e155-ce2c-44a9-b65a-74e47fc4c48e"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="315262d9-85dc-4d93-bbb6-6ebc6fa159b0">
+                    <propertyInstance
+                      Id="78f7c5e9-54c3-41a5-928d-ffad71f9e2ce"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="613cf448-7ef1-4d60-929a-9b0a8d7b9b9a">
+                    <propertyInstance
+                      Id="05bfc656-9545-40b1-b1b5-118e33115af9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9f530b60-5d0f-4272-b2d6-0e5ed20270e7">
+                    <propertyInstance
+                      Id="43f043da-1f77-4b58-beaf-a017903b563c"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="93fd8504-0c38-45a3-85ea-ca3b29235795">
+                    <propertyInstance
+                      Id="6a907b62-c4b6-4849-b2a5-a06c181f4464"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c95d494f-aa61-4f04-a8a1-3a4c68664421">
+                    <propertyInstance
+                      Id="7dae562a-c1e6-48b9-9d10-a8cba7eb3814"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="c445c63a-536e-49f3-966d-b8712517f650"
+            name="Commit"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="b5d571af-81ca-42ac-9198-3de5760c2ac2"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DIMySqlConnection Member%3DCommit"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="ecf7b041-2f66-4213-911e-ebb36bb34e48"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1667b9f6-bdf8-438e-b821-d89242bd3906">
+                    <propertyInstance
+                      Id="a79d6861-1d7b-40cb-8a82-8d8d7d566cef"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="40d544d8-c3eb-4ec0-9db1-8f3b7138558e">
+                    <propertyInstance
+                      Id="fd89ba59-0b56-4e20-a291-d11fa8d94a5e"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c960ce9f-4307-4570-9076-f27a749d35ac">
+                    <propertyInstance
+                      Id="1382583a-eb82-4a90-a4ae-c2116ee4cb19"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9ec4aa21-2b34-4007-b198-16a3615a30cd">
+                    <propertyInstance
+                      Id="e0c15da7-63b3-4f0f-bcfe-4f6fb20815fc"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="89220feb-326d-4382-a92f-b36fbf073b53">
+                    <propertyInstance
+                      Id="aae28c24-2e65-4319-98d2-d4f16558652f"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5190598f-5f23-4d4f-bd75-1f432d4ceea5">
+                    <propertyInstance
+                      Id="e79a7fc7-8e30-4663-bb0e-354a6477642b"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="7a371b74-0faf-442c-a7d0-a890e56e6014"
+        name="AbstractSqlConnection"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="6e8ea974-cc0f-4862-a3d8-ca8d14785388"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="e50ece98-d2c4-4cb6-b588-3e357a4af310"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4d653216-eeb9-42cc-b7bc-6c4132cecb80">
+                <propertyInstance
+                  Id="79c0352d-8c50-4832-92fa-63e0de508e69"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="be6488cb-f2dd-4695-895a-e5941825b61d">
+                <propertyInstance
+                  Id="8a3461e2-b3f6-4f8c-899b-a3f6f332161f"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8c3abe14-3216-42c6-9627-dc2db49dd440">
+                <propertyInstance
+                  Id="5f66ec9b-2558-4b1b-8e88-4af64148ed30"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8597dc73-ebed-4ea6-b740-e468e7f5d128">
+                <propertyInstance
+                  Id="4a029e99-a882-4e61-b0f1-a31f6fd1d044"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="87da2e17-66a8-47fe-b8f4-f095618c43c6">
+                <propertyInstance
+                  Id="9840cfc6-3fa0-4ea2-ae34-a342cd2bf7d4"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="7e3fb1ab-75f8-4850-b797-d033bdb5af4f">
+            <interfaceMoniker
+              Id="932c58c9-ef23-4871-80b1-bf7a86db742b"
+              LastKnownName="IMySqlConnection"
+              LastKnownLocation="Package1_1454.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="4ef77188-f4bf-4ecc-92ca-190e84b2c6fe"
+            name="Connection"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="15232f33-93ec-4801-bdcb-a5a155827b40"
+                handle="viewcode://./CodeSchema_Property?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DConnection"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="d6ea1ce2-9f08-43db-93a2-04c4add9b128"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="24d09793-33be-4aa2-861c-085920586b65">
+                    <propertyInstance
+                      Id="9bc14e5f-dd95-4e7c-b9ec-0abcca6b558d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8818c963-25d1-419b-88b9-751da5c9bf9a">
+                    <propertyInstance
+                      Id="8021dd58-1268-4e98-9ed0-73d4fcfd921c"
+                      name="Get"
+                      value="package" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ab7caac8-ee07-4ba0-bd53-3fa911e5e22a">
+                    <propertyInstance
+                      Id="6563503d-5d38-48ef-9419-2ba8b26c4492"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="865a7718-b6e6-47be-8aa2-6a7de8bd9935">
+                    <propertyInstance
+                      Id="2a6596b4-a8c4-4462-9d83-371d6ba5def9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="542aab91-385c-4f4e-9f58-5499b6ffbdd6">
+                    <propertyInstance
+                      Id="c4bf2d2e-4031-4022-829b-8475683c1b3d"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="336adc0e-ead0-45b5-9987-640efd2e675c">
+                    <propertyInstance
+                      Id="d46f6ff7-168c-4595-bb98-1e6bf113c5d7"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c715884c-b6d4-4357-891b-be04de4555fd">
+                    <propertyInstance
+                      Id="c30c9acb-1951-48e9-9d45-7e5511714a95"
+                      name="Set"
+                      value="package" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="325bb9e7-28f4-4374-a519-a71906cffade"
+                LastKnownName="SqlConnection"
+                LastKnownLocation="Package4_1453.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="8381ded0-f8fb-41f5-a855-059ab2527657"
+            name="SqlTransaction"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="27093690-f3c1-423f-bdac-a5b1f976ea8d"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DSqlTransaction"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="c457496c-de2c-4238-a8fa-8ce885d20a72"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b4622cbc-0ad3-4ec4-9375-b08343c7da61">
+                    <propertyInstance
+                      Id="ff1712a7-20e3-4f34-9e15-b78f8b65692d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d31b8f93-c621-4ffe-b252-e5babd0de439">
+                    <propertyInstance
+                      Id="3d936e02-4556-4348-806a-d74e16a1c9c6"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="04d36f00-7f59-49ac-9de2-4dff4c40072f">
+                    <propertyInstance
+                      Id="eae3989f-38a1-48f5-a2a5-1bac37d9d070"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dd0e15fe-75e5-4925-931e-9a3db01fa52a">
+                    <propertyInstance
+                      Id="b6d06d54-49bc-4284-83e3-8f0af43f4bd3"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d38a6971-0a7f-4b8d-be20-9b108624c9e2">
+                    <propertyInstance
+                      Id="71697d23-17bd-46b9-aa6a-98c35e4bcdc1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="b97914c3-594e-48e2-8cde-af0dc6da3623"
+                LastKnownName="SqlTransaction"
+                LastKnownLocation="Package4_1453.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="68bc7d10-93b8-400e-b61a-db98f6659bbf"
+            name="CloseConnection"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="235e2ba1-5e3b-4dbf-9ea0-0b9ed6d59ed5"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DCloseConnection"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="124e4f4e-4c8c-45fa-b4e2-a4673de44daa"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c10a4a72-847e-48f1-bd03-55ada91f3497">
+                    <propertyInstance
+                      Id="ac0cfa1c-5c5f-4a28-a9cb-89b5e5d552d2"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="93cc18e1-fdae-496e-9b37-fb6a30d24ae5">
+                    <propertyInstance
+                      Id="9d2827a8-879f-4fb1-80a2-147384bca0db"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6b195414-81da-4112-9062-691e84d8ccb3">
+                    <propertyInstance
+                      Id="932a501f-dbba-41af-b106-b6fdad331ca9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="307a1d05-13ad-40be-b16f-d2522f5ba29d">
+                    <propertyInstance
+                      Id="4822ce42-efed-46fa-9da9-e1c5aa89d9c6"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="562e29e9-556b-4246-b7ec-3edecbe5b02f">
+                    <propertyInstance
+                      Id="509b3da5-da86-4065-adc5-f31e4d138a94"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a9e18ce7-95bc-4ab1-998b-ac4dd43f1507">
+                    <propertyInstance
+                      Id="a215721b-7782-487f-85c3-e1449d54dbb8"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="fd18cc3c-84de-4eba-a127-f8a6b921c7ea"
+            name="BeginTransaction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="3f3fb9ba-20b4-49a3-9b69-f0ed0c3d948c"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3D(Name%3DBeginTransaction OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Data.dll&quot; Namespace%3DSystem.Data Type%3DIsolationLevel)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="7df5d199-a294-4a8b-bf9f-5b45bfe47386"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="56048123-77e8-436c-acd4-b3e6f77060fa">
+                    <propertyInstance
+                      Id="d02e6673-e71b-48b4-9f6e-9e7cbc67fc01"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f4149717-3fcb-4cd1-a765-604286834447">
+                    <propertyInstance
+                      Id="6ab92922-5620-4402-93f4-3e255bfe1fbf"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="42603582-d4b0-4cee-91e6-890a66093e88">
+                    <propertyInstance
+                      Id="5f331437-77ad-4dc9-909e-2236e0280a01"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0973a1ef-e0cc-4538-b877-f29ec10adefc">
+                    <propertyInstance
+                      Id="f3591902-f5da-48d2-8bad-bc24c358af79"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3b5e87cc-0a9c-4e07-a773-3fcc7fdf1b44">
+                    <propertyInstance
+                      Id="a8f9916d-3c29-4f64-b860-d125230196d5"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a9d18b26-7e19-4a20-a489-944fb3c5344d">
+                    <propertyInstance
+                      Id="e92d5b09-c8c4-4d7a-bf74-9d2b54a129c2"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f05aabda-16d7-4e43-86a5-4dcda28a8d52"
+                  name="isolationLevel"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="b00d5fb2-a377-40c9-9e04-4d4210647cee"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3D(Name%3DBeginTransaction OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Data.dll&quot; Namespace%3DSystem.Data Type%3DIsolationLevel)]) ParameterIdentifier%3DisolationLevel"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <enumerationMoniker
+                      Id="53fe45e8-b7cc-4eae-9a99-377b40525a8e"
+                      LastKnownName="IsolationLevel"
+                      LastKnownLocation="Package3_1453.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="186d6cfb-60f6-457c-ae0c-80b93e1370f2"
+            name="Rollback"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="03437215-7f16-4b29-ba8f-3ed98b4697aa"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DRollback"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="af3eabc7-f4d2-459d-a122-5694d27a6afa"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b0cec0c0-d4a0-47ed-9010-dbbad6cb8107">
+                    <propertyInstance
+                      Id="4add8ed6-cd32-4b2b-8bbe-22a01e3ac920"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6ebff907-56f0-43bd-b72c-a66e10619527">
+                    <propertyInstance
+                      Id="4c6e7806-9722-4f30-92cd-c4522cf3a2f5"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="169493ce-f473-4b05-8d3c-6738c714c770">
+                    <propertyInstance
+                      Id="110a64f4-2db7-4c95-8db9-db3819391f09"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ca91cba2-ee18-45a9-b931-4dfbd088d933">
+                    <propertyInstance
+                      Id="478c0349-82be-45d8-b895-1b1d622a6e33"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c8010ac4-3b9f-4057-a26b-a3645a96a63a">
+                    <propertyInstance
+                      Id="d7465d90-92d6-4a24-b0e1-1577e915111e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="49a3c57a-255e-4cbe-b6f4-914004b9d06a">
+                    <propertyInstance
+                      Id="0be5c025-6568-4399-b257-6c605843e78d"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="bcb8b800-31f3-468b-a854-b383b9e47182"
+            name="Commit"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="0742a21a-0968-464e-ac91-a4ee7469f9a2"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DCommit"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="ab8ccdd2-73a5-4d80-987a-3bbbc310ca14"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ef61b7fc-ba8c-477e-950f-c1420d654615">
+                    <propertyInstance
+                      Id="6aeee08d-783c-4336-951d-f1e10716f3da"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="96719209-f89c-4164-b575-569f259e53df">
+                    <propertyInstance
+                      Id="cb120ccb-7913-4d72-8be2-9b2fadbeed3d"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cf0e5e6e-d3b4-45ae-8c29-9b73c6fc1b6c">
+                    <propertyInstance
+                      Id="8f3a15d5-d17b-44d8-a522-cfeb04918202"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d13079bd-446f-41c6-8e43-6c1d04196247">
+                    <propertyInstance
+                      Id="30c3829c-6aff-4ec1-a40d-1f1b34a11275"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c9645ab5-a770-41ac-a1a2-668243b8e566">
+                    <propertyInstance
+                      Id="7f29a4f7-9c60-469a-8cdb-4bd07ab6a6e9"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bbbb44e9-5d00-4d46-bccb-3715eed4a42b">
+                    <propertyInstance
+                      Id="284ce457-3f25-4815-b910-b13e77cfb6d9"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="e87551ad-3208-4a0f-8aa1-4df1ef3d1979"
+            name="AfterCommandExecuted"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="2c1bcca3-c0de-4739-b667-eabb1735f491"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DAfterCommandExecuted"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="061b7e50-4047-4080-82f6-1b6bd0d26f8b"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9484283d-d368-473a-ab98-6bfa3f0fd0b0">
+                    <propertyInstance
+                      Id="5fa0b752-c0e1-44f3-bb69-8cb6f963ea44"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6ccde2e7-f16b-4b36-97ee-eee065fff50e">
+                    <propertyInstance
+                      Id="f849796f-a052-4c84-bc85-b3947ba1b2a7"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1688650f-6ed4-49f2-8cb1-094c7c824e85">
+                    <propertyInstance
+                      Id="5d5e7e43-620d-4495-9df0-dd97f07854aa"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="063f1e0d-6730-41bd-84bb-981824419d1c">
+                    <propertyInstance
+                      Id="50b0b67f-2b33-433c-813a-84b02ca4971d"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1aa46316-a2da-45e0-a4fa-7c26bbec5dc2">
+                    <propertyInstance
+                      Id="50914bce-707b-486f-871c-108f1569a65d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ad717250-0e36-47f9-aad7-d0acdcf0b789">
+                    <propertyInstance
+                      Id="2b4305c0-d8d2-4866-b8c6-119182c4471c"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="07f3fa14-123d-4a1d-b3b6-6fab344ca580"
+            name="BeforeCommandExecuted"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="0265af5f-c7f0-4324-9d29-a54a24fc0e9b"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DBeforeCommandExecuted"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f9aa23c4-053b-4bac-b30d-87a97fbd4a70"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b671b93c-72da-47d2-a2ab-a30d7839b747">
+                    <propertyInstance
+                      Id="0901e677-e352-4c43-8166-0afd8bf97704"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="64a05ac8-05aa-4f79-a373-8774c6421084">
+                    <propertyInstance
+                      Id="3817f7dc-23e8-4c8f-8130-bbbbacdd19d1"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dddadbab-a9dc-46a1-aa06-814737ada0e4">
+                    <propertyInstance
+                      Id="0e76b51e-0efa-4189-94a9-c1be9a257faf"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="47ffc6c4-d82f-4fb4-85a0-8374055b9026">
+                    <propertyInstance
+                      Id="ae5c6ed2-91d2-479f-86e4-577c90470098"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="af02f212-8a95-49fc-aa8b-b6cb07ff6c60">
+                    <propertyInstance
+                      Id="b61b3553-fbf9-46cd-af6b-ef8d1f322ac0"
+                      name="PackageVisibility"
+                      value="protectedinternal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="66e9de57-5b14-42a3-ac85-afc263b561f5">
+                    <propertyInstance
+                      Id="d900f583-02ba-47bd-af39-bb65cf317580"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="6b24e60b-457f-4a84-8eba-f3f0d7dbacd0"
+            name="IsActiveConnection"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="5e2f1b82-b00b-4ed0-bfcc-06c9a0678e21"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DIsActiveConnection"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="6f43897c-9139-4b22-84b3-03761076a8fb"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d813e8f5-a039-4dc7-98f2-17b60bc25c31">
+                    <propertyInstance
+                      Id="cfa85aff-d109-4781-b9d0-334dd9d0aefb"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1e41b57b-e8f4-44e6-9c17-6fc8991b2f51">
+                    <propertyInstance
+                      Id="09f2ccae-c8d1-4ab5-a9fc-3ea2a73ce757"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d51e7c29-0e26-49e1-a7ba-fff2aecfaaa4">
+                    <propertyInstance
+                      Id="9b4308e5-3ba5-4d92-b91e-407ef9525f0a"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7faac6d3-77f0-41be-8f35-18f99287867c">
+                    <propertyInstance
+                      Id="34a64a83-65e1-42ba-a434-2cfb8b64eaa2"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f19e5fd4-e539-4629-8efc-9b309d96f609">
+                    <propertyInstance
+                      Id="88316819-2410-47dc-a875-6abd4e654ae9"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c4b55a71-b9ea-4177-b52d-30ff97a14d5e">
+                    <propertyInstance
+                      Id="c27a7445-ee06-4803-8598-24e1e1ddb168"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="623de4d2-f267-4a52-9af2-34eebc59ac26"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="CmdBuilder_UML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="e4a7b289-b1ce-4bdf-b1de-854e447df583"
+            name="OpenConnection"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c25a6a29-7080-470c-9fce-a97aa55fbce2"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3DOpenConnection"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="548e6e64-4b31-4cd4-b052-f2339369b41b"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="51a64759-a526-47ed-b13a-b56b212ae1da">
+                    <propertyInstance
+                      Id="c9617b35-d21e-4f2e-97e3-ce61291f71b9"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5d794337-9be9-406f-b8f8-49e929c4308d">
+                    <propertyInstance
+                      Id="b93dbdbd-0274-4941-9235-8ff07c73446f"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9c60dad8-c7d2-4766-a3e4-c4891dd79159">
+                    <propertyInstance
+                      Id="e0e0eb12-af3d-4ce4-aa10-184798dfd3ce"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="207115aa-cc5d-404d-bed5-1eafa7e716ed">
+                    <propertyInstance
+                      Id="fcf37d04-a4c3-4907-9aad-db8fc63b35e8"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6d6f646e-bcd5-481d-b73d-6fa91394a531">
+                    <propertyInstance
+                      Id="1f57df1c-d41b-4017-a30f-e533a4bab6ca"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="58b65b78-8bcc-4edd-9b81-c85efdf30e36">
+                    <propertyInstance
+                      Id="f807e336-ecbb-4825-bfb5-bfd6c85237c7"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="61227af2-9607-46c9-9ff0-ca81f3e81157"
+            name="AbstractSqlConnection"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="4e3380b7-3630-4796-bb18-221fddb3dd1a"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DAbstractSqlConnection Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="43aadf0d-3994-4c38-9e7c-7e1d44775f25"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b3728d44-b040-409b-b1cd-b5629b4a1f69">
+                    <propertyInstance
+                      Id="c53f029a-a6a4-4092-8eb9-4efb38e89ada"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7620ed45-98e5-410a-8799-922db6d0bacf">
+                    <propertyInstance
+                      Id="27dcd5c2-36bb-48da-8a7d-eb7054b11202"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a73cdef6-acb7-4f18-b7eb-3da7957adfbb">
+                    <propertyInstance
+                      Id="88e12d3b-78e5-44e3-a630-d9efbf861637"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dc2b7c1d-915b-43a4-ae4f-7d3034d5eaa2">
+                    <propertyInstance
+                      Id="5f48162c-b6af-41c4-8095-58765be3991f"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f1f5803d-194c-4ace-a8ef-910cf73afd2f">
+                    <propertyInstance
+                      Id="266408a0-f5e5-45c2-91d7-56ac6b834d0e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="12074eb2-827b-4741-9130-8184f18e0836">
+                    <propertyInstance
+                      Id="17039416-4d06-4e3b-8ae6-2d7431ec3145"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="add15599-8c0c-47b8-b8ab-89425535de27"
+        name="MultiSqlConnection"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="a33fd1c1-65d5-4ab5-b21f-f1b2ce91c262"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DMultiSqlConnection"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="752256d6-90d7-425f-adc0-324b4dc6140d"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="61b18bdc-d917-4d36-bd05-4a99b73a4c52">
+                <propertyInstance
+                  Id="78a3ed4b-d029-47b2-92e2-cac7e47f3e1c"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="31621f7b-dff5-4b16-9ea2-b3e57fac2fc4">
+                <propertyInstance
+                  Id="26680032-4848-42b3-8622-62a87da881cb"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9f85eb7a-fdbe-4d07-a2b6-b02ca44883fa">
+                <propertyInstance
+                  Id="fe4a843a-9a1e-4989-9d6c-161ca91ab6da"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4491d072-fa5e-4b19-bb80-c7b1435f1fc9">
+                <propertyInstance
+                  Id="9a0793a0-b54e-4f96-aaff-0834a7b102af"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bde631a4-71b6-4ce2-a760-5527274f4a2e">
+                <propertyInstance
+                  Id="c3fab190-9ed6-48a4-96e7-4edc8c23623e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="83cb5d3d-0230-4679-9fe6-667ab2ab3905"
+            isSubstitutable="false">
+            <classMoniker
+              Id="7a371b74-0faf-442c-a7d0-a890e56e6014"
+              LastKnownName="AbstractSqlConnection"
+              LastKnownLocation="Package1_1454.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="4e43d82a-ce93-4b45-a749-526aeb63a8ed"
+            name="MultiSqlConnection"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="3f26d63a-a332-4471-8938-e4062892d676"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DMultiSqlConnection Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Data.dll&quot; Namespace%3DSystem.Data.SqlClient Type%3DSqlConnectionStringBuilder)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1bc57c20-bd20-4eee-8bf2-5be652fc06cf"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="99516095-915c-410d-9e41-50f7db357ad8">
+                    <propertyInstance
+                      Id="d57ece1c-b723-4c95-b998-3cce086ffc17"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ae49e66d-facf-4ec3-9230-204fb12dbea9">
+                    <propertyInstance
+                      Id="d348d993-31ba-4360-b572-f87a0487bafc"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8f55f79e-ef5c-47a9-a54b-a342ab7db70a">
+                    <propertyInstance
+                      Id="9cd3a73f-aada-4e84-b0f3-515b8bf6d2ba"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="479fc459-3c80-4d75-8b01-e9c12c70d52c">
+                    <propertyInstance
+                      Id="583bd479-4fef-4c8f-aa1d-f0d9ec76a305"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="532a993b-ea91-4edf-b286-f22657509b43">
+                    <propertyInstance
+                      Id="1e4ab2b1-a601-45bf-a44b-a85527e94ad1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6cd745a7-0b86-4b07-9753-17f1e9a3a3af">
+                    <propertyInstance
+                      Id="367c205a-4e6e-4e4e-b9bf-2d0d3f5196fa"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1e77e307-aadd-402a-963f-b864a81df913"
+                  name="connString"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="579d69fe-3403-4788-af2c-d39f6dfd8a62"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DMultiSqlConnection Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Data.dll&quot; Namespace%3DSystem.Data.SqlClient Type%3DSqlConnectionStringBuilder)]) ParameterIdentifier%3DconnString"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="45d4dafd-d9cc-4228-8832-00435c855cf3"
+                      LastKnownName="SqlConnectionStringBuilder"
+                      LastKnownLocation="Package4_1453.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bf400318-d065-4090-8872-f9ce8d17ed19"
+            name="Rollback"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8cc868dd-16af-41df-bd9d-006e5202d6c6"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DMultiSqlConnection Member%3DRollback"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="664f8ef9-c4a0-403c-98d9-389db3e306e0"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e442b310-08cd-4d90-9d8e-a21e80f93e8a">
+                    <propertyInstance
+                      Id="2a4ee421-674b-4253-92f0-006b59bc873d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="75286394-6d6f-49c8-b503-5ee30e5224fc">
+                    <propertyInstance
+                      Id="2df2f084-cec9-4b3a-afd5-2083ffb7b087"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="606a92be-4b5e-4ffc-bebb-d3fb122d9e25">
+                    <propertyInstance
+                      Id="e189fd4c-eb14-42b0-88af-1c93c0661da2"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bd7cc01d-1b11-4ed0-a0d0-13e0d2aea8c5">
+                    <propertyInstance
+                      Id="6286809d-799d-45f8-8cb5-7502607e66a2"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="970982a4-f529-40aa-9eda-24370c416c4e">
+                    <propertyInstance
+                      Id="be7be4ef-4fca-4ea8-b042-3232eddc063e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="effcf137-bed8-4021-bc30-30961888c897">
+                    <propertyInstance
+                      Id="f2c5b5c4-a26f-4898-b540-217c6c38023c"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="472e60df-88a4-4e25-aaee-0b614dffb0bd"
+            name="Commit"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="3663646b-a32f-4376-9958-be6583a92b60"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DMultiSqlConnection Member%3DCommit"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="0eb5011a-2a4f-467b-99c9-04975564c32a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d75d9cbc-a96e-4eeb-9d7a-84547c1aed8f">
+                    <propertyInstance
+                      Id="2619abde-d600-4f3a-b6dc-8310a5bdcd4d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="868afb16-d9ea-45ad-b8dd-71bb7408a043">
+                    <propertyInstance
+                      Id="c10ecb31-e473-46d6-a064-3d07293e737d"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e67fd0a7-9789-4e27-b0aa-dbdb86ab80c4">
+                    <propertyInstance
+                      Id="fcd1b646-b167-49c2-b8eb-76a4d942b598"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d8d7133b-1ea9-4680-ad9e-1d8756ba8c9e">
+                    <propertyInstance
+                      Id="c3ea9848-c640-40b2-8e59-178c874e7bfe"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="56807e04-e97b-4c26-af13-7740966733a3">
+                    <propertyInstance
+                      Id="6e34d4ab-70be-4664-b293-88315b968202"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8710a741-44d8-4443-ac7d-56d49af627c4">
+                    <propertyInstance
+                      Id="6135071b-7206-4afe-8a81-71252618eb63"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="825f0b33-5f2e-4d44-b0e5-ff6ffa212d47"
+            name="BeforeCommandExecuted"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="24d4e82a-e209-4a42-b169-0b29b16b0b4c"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DMultiSqlConnection Member%3DBeforeCommandExecuted"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="3c694eaf-094e-4641-a9b3-09cdf01af279"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2e1c3214-eab9-4dee-b2f0-c2bf79e146a5">
+                    <propertyInstance
+                      Id="ff23c3c7-d344-4ff4-9008-ec4047ed3087"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f4004d85-ef9c-49e5-9762-f0460b6ac720">
+                    <propertyInstance
+                      Id="23ca40f3-fe18-47fb-b0d5-cb02018a2e17"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ba13d11c-59ad-4efd-b6f6-31712c520ae6">
+                    <propertyInstance
+                      Id="b3f5d71c-5c97-423a-bf28-16be133f665c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fcfb81fd-ef93-4db6-9838-3602f1d67a60">
+                    <propertyInstance
+                      Id="98cad84e-4974-4990-bd28-ded6588054ad"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3a5e7be6-d700-42fe-aebf-74486dce8e56">
+                    <propertyInstance
+                      Id="2d173864-c885-4917-a74c-547cd3bf3c1f"
+                      name="PackageVisibility"
+                      value="protectedinternal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="138a9cc6-cef7-46f9-9e30-a1542a31eff8">
+                    <propertyInstance
+                      Id="33b66b1d-3753-422d-8239-f2d20e0d8002"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="b181ba07-689e-411a-9d18-510f29c07348"
+            name="AfterCommandExecuted"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="56617c7d-e263-435e-9c3f-5cffc0abd853"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DMultiSqlConnection Member%3DAfterCommandExecuted"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="d9f72cc7-0a8b-4a71-a0cc-eca0ffea6cba"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="69eb019a-fc6b-4e3c-8331-41f0cd0091ed">
+                    <propertyInstance
+                      Id="821cccd4-ac2f-483f-8704-e5222dfc8ee5"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1dacd1cb-e1cc-4657-8b2d-bdf19d5f49d5">
+                    <propertyInstance
+                      Id="8a43cbf7-2087-4b26-bae8-512b07b5478d"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="18d74c8c-ada3-43d7-895a-591ca4ec8bda">
+                    <propertyInstance
+                      Id="8d7d27c5-7a21-4f00-9424-fd10f718636a"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e1897ad4-400f-481e-9d00-e5b8314a91e8">
+                    <propertyInstance
+                      Id="d9394ee7-079e-416c-a2b2-e96adcadcad5"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7b237a83-b492-4ee9-b834-ea923962d26d">
+                    <propertyInstance
+                      Id="8524a771-21f1-48af-b1b7-e13146cd1c28"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="99ff7c43-bf94-418e-b79d-34adda214091">
+                    <propertyInstance
+                      Id="b36bf439-7476-4568-afc7-5bc0fc6dd56e"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4bb001f0-d989-4441-b670-d505deccaba2"
+        name="SingleSqlConnection"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="51239b70-7e72-46bc-866d-e8c972e0182f"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DSingleSqlConnection"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="56a38712-4212-4d7d-8e37-e876dd2f6f46"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8a3debf3-9733-44a8-8192-b6ae2a806639">
+                <propertyInstance
+                  Id="7822e928-e079-43cf-8683-1a2fecdfc0c7"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e8f978bf-0d4b-43c3-8237-58eefce9ba7b">
+                <propertyInstance
+                  Id="55239bd7-52c2-451a-837a-36b12861ae14"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ad485516-d39d-4d78-b341-a34cbb484117">
+                <propertyInstance
+                  Id="408a79b6-12f2-4ea7-bac0-305a1ec621b2"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1eca3db1-0af2-4a5d-ae59-f6d860ae5f89">
+                <propertyInstance
+                  Id="ad819f9d-b71f-4f6d-bd90-bd7222259ce0"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="26d62db3-2c72-496b-b7b6-92f0e9790f37">
+                <propertyInstance
+                  Id="fa52cc21-050d-40d0-84bc-15922dc047ce"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="e6ef9025-bb26-45bd-a156-97c6df4cdf1d"
+            isSubstitutable="false">
+            <classMoniker
+              Id="7a371b74-0faf-442c-a7d0-a890e56e6014"
+              LastKnownName="AbstractSqlConnection"
+              LastKnownLocation="Package1_1454.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="baf57d66-f0d2-40e0-9334-177b1219a168"
+            name="SingleSqlConnection"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="bd37f1b8-6d48-4330-81f4-0fbfc02b0f7d"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DSingleSqlConnection Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Data.dll&quot; Namespace%3DSystem.Data.SqlClient Type%3DSqlConnectionStringBuilder)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1d1f66be-c023-462e-a1c1-1acec64af255"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e4c996a5-d301-4130-8577-2031012590fd">
+                    <propertyInstance
+                      Id="b6d258bf-57dc-4412-b3f4-949d9d4b6f0d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="833e1b22-305d-4bb5-aa64-b99d4904abbf">
+                    <propertyInstance
+                      Id="3988305c-c8d0-4951-a82f-0511a96f62d4"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ab8fb498-323f-4358-86f8-fd3e66a739d5">
+                    <propertyInstance
+                      Id="4483c87a-cbcf-45c6-b559-c696e90e0c3d"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9b60b126-ac33-454a-a170-d5239cfcc926">
+                    <propertyInstance
+                      Id="6f9a7fc6-a1f8-4854-bc26-125451e3ed15"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c7d7243c-c4a2-4c77-ad76-a900c7eaab8e">
+                    <propertyInstance
+                      Id="f6d66ca7-4720-45c9-9c20-8d4110c6cc72"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1f6d00bd-2b8b-474d-b536-48bb70f8db5f">
+                    <propertyInstance
+                      Id="be272677-f221-4835-bce8-009d66523f86"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="29c82715-2294-46ea-9f39-71ee1b90ea3c"
+                  name="connString"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="ca64a7bc-81e1-4030-94d6-fc9d268e3234"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DSingleSqlConnection Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Data.dll&quot; Namespace%3DSystem.Data.SqlClient Type%3DSqlConnectionStringBuilder)]) ParameterIdentifier%3DconnString"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="45d4dafd-d9cc-4228-8832-00435c855cf3"
+                      LastKnownName="SqlConnectionStringBuilder"
+                      LastKnownLocation="Package4_1453.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="90617699-74d7-4af6-8122-6ade543009de"
+            name="Rollback"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c1f72a08-95ab-40a9-a0a0-771743132349"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DSingleSqlConnection Member%3DRollback"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="62943c7e-670f-4913-ad20-410c018c00ab"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fb97f73b-de2e-4853-9c32-4b7a07256286">
+                    <propertyInstance
+                      Id="16fae69a-ef44-4645-a430-710284b5b64c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8c9fa9b6-d837-4a79-8ad2-7d247f43fa29">
+                    <propertyInstance
+                      Id="42066f40-5b22-4d39-9777-21a65c4fcf63"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8501fb85-c448-4149-bb25-26b2e6f9127e">
+                    <propertyInstance
+                      Id="30ffda07-a8ba-429c-ac78-5bb4129682a7"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="328d600d-50da-442f-ae89-9e0e3cb376fa">
+                    <propertyInstance
+                      Id="d6a3774b-1fa8-4654-8d3d-fe7ac257e0cf"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="953bfdd3-e5d5-48eb-8dea-660fa19cd9e9">
+                    <propertyInstance
+                      Id="46024db3-736a-42f0-b075-fc9d12abeda4"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f9000752-719b-4c1f-b165-c90cf8020b74">
+                    <propertyInstance
+                      Id="a04b0630-0e0d-47fb-8cec-ce973ddc680e"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="57dbc1a0-803c-425e-aa46-515d1792b030"
+            name="Commit"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="17ed31e0-9368-4736-b6a4-b9a8cb7d913c"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DSingleSqlConnection Member%3DCommit"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="92e78221-5bea-4474-9b00-ee5d577110ba"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2305125f-8064-4b72-9041-06454246d054">
+                    <propertyInstance
+                      Id="44fc19d7-6c28-483d-a0e1-5991218c55d6"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="170c122c-79a5-4d6e-9df8-372091ce286d">
+                    <propertyInstance
+                      Id="cb7f3785-e60f-4f5a-a193-2600e36bb5fb"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="619b9a3b-bb50-4d4c-af24-9be12ef03502">
+                    <propertyInstance
+                      Id="56f88816-276e-49d0-9513-c5e1736aad4c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="788898ff-9e30-40db-a25c-d6659b5ab6b2">
+                    <propertyInstance
+                      Id="5ecd5431-a8ac-4ce1-b0eb-4eff3cdf2d5d"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2f8b637a-d4b1-4c2b-a3ae-98bfdbab0957">
+                    <propertyInstance
+                      Id="f9057375-c17f-49d2-96d6-f8c433a2a995"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aa5d70c7-df70-423f-9786-e53692c60ed4">
+                    <propertyInstance
+                      Id="243838cb-552c-4e76-b580-b790045dde40"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="91933a38-c23c-43f2-8f74-1391c7498253"
+            name="BeforeCommandExecuted"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="60655ada-f49b-4fb0-ac55-3b0e47a64389"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DSingleSqlConnection Member%3DBeforeCommandExecuted"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="7ff925d5-c1c0-4f2d-94b4-64ec9dda0620"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0e4447e4-37ea-4e5d-a203-30a4a69f1517">
+                    <propertyInstance
+                      Id="cb6bd968-88e3-4c1f-a5d2-bac972217095"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="226d86fa-b2b3-4d0d-aeb5-0dd648e5c2ac">
+                    <propertyInstance
+                      Id="17184ee2-1832-4ebc-a30b-40c40ca9bc54"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="60974ad1-129b-4381-b338-b0766060bb08">
+                    <propertyInstance
+                      Id="9ac812f1-2f88-4c2b-9a9c-38a9a0743bee"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="20ecc8ad-79b7-409d-9c36-eb74815e5bbb">
+                    <propertyInstance
+                      Id="332cac09-bb5f-4f29-aa6b-28c8bdffab02"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c34d3a87-611f-41fe-a593-3fbaee0a8d12">
+                    <propertyInstance
+                      Id="534ec755-37f2-4243-ab88-34d58f7c4dce"
+                      name="PackageVisibility"
+                      value="protectedinternal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b5f7f1e8-7f7f-4964-ae8e-3108e3aad8b4">
+                    <propertyInstance
+                      Id="434be342-9b80-47fd-b146-f76fa8e0266f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="b5779160-d402-4c0f-a1c6-698b9a5520bf"
+            name="AfterCommandExecuted"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="dc21fce6-fe49-4e64-ab48-73426d00f70f"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.MySqlConnection Type%3DSingleSqlConnection Member%3DAfterCommandExecuted"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="53ae86f6-9c68-47b6-81c9-dc025963f3cd"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="619b8a5a-92f5-4a9e-ae80-2093997f8be5">
+                    <propertyInstance
+                      Id="8258e07a-6f37-4070-a377-9a9c3d8c3ba9"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="26231026-f3e8-4323-8d8e-e5dca290a1fa">
+                    <propertyInstance
+                      Id="d4665c55-d6e8-4480-8d36-17a2c808b48a"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3f677c5b-bea9-4103-9864-803b50cc025f">
+                    <propertyInstance
+                      Id="d963f3a1-bac4-4bd0-a24b-f1c508afc6d9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="705326db-4e37-4587-868d-7ed4fde16b6f">
+                    <propertyInstance
+                      Id="a660cf19-aed2-4fbe-8bd3-275e76f9ff64"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9cbb2bdd-43f3-4a40-ad4d-ce99076d90c3">
+                    <propertyInstance
+                      Id="97937cd7-22ca-4b59-a507-db7a4641c2cd"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e70191c2-1b9a-4e2b-8a4c-fe94683eae37">
+                    <propertyInstance
+                      Id="30c8e094-1492-4e2e-a897-86ed150378b7"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

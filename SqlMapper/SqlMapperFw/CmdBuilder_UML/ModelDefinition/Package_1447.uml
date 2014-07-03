@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="d8e079b6-2957-4c86-851d-70c2d4c5cfe5"
+  name="SqlMapperFw"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="59e5c490-b663-48aa-80a5-9aceb12d301c"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DSqlMapperFw"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="77e0828a-325c-45e8-8a33-f34f01b79c8b"
+        LastKnownName="Binder"
+        LastKnownLocation="Package1_1447.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="976a598d-5a3c-4f5f-a1a7-9c71a4de83b5"
+        LastKnownName="BuildMapper"
+        LastKnownLocation="Package_1453.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="f81b35c8-bb49-4956-b6cf-6870ab594d50"
+        LastKnownName="Utils"
+        LastKnownLocation="Package_1454.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="419c674b-6973-4846-af29-875e70eef51b"
+        LastKnownName="MySqlConnection"
+        LastKnownLocation="Package1_1454.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

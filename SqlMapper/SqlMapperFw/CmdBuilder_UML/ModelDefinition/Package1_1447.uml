@@ -1,0 +1,1872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="77e0828a-325c-45e8-8a33-f34f01b79c8b"
+  name="Binder"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="726f54e8-8933-4fb7-8ec1-682789a82453"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DSqlMapperFw.Binder"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="5384a3fc-490c-4823-91fa-83f4c2b7cf60"
+        name="AbstractBindMember"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="2cf866ac-a5e8-4862-ad72-96aa3e9d9696"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="5dcff3a3-4b7c-4a66-89ad-6728c8394bbe"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="31281fa3-9fa6-41af-8ae2-b8269dd9cb20">
+                <propertyInstance
+                  Id="1d83ded1-eb5d-4d4c-a4d2-c080cddfb7c1"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="87c8eb6c-e2a9-4102-8ee8-4fe32d780294">
+                <propertyInstance
+                  Id="1c4fc1a9-0f1f-4ab2-bfb1-d4796a212828"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b673d7b4-3421-46d1-baa8-59a4cc9f8113">
+                <propertyInstance
+                  Id="6e6d435c-041c-4981-80ce-9fb35f90e961"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9e1a5337-65e9-4eb4-8613-0ab42ae86306">
+                <propertyInstance
+                  Id="5c11fc76-ddc4-4b30-8f28-3871a97bd772"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7d2c9cda-6c9d-48e6-b299-83079f2c994b">
+                <propertyInstance
+                  Id="04af08b6-e20f-487e-88c2-df4aadc734c1"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="3ef045c8-966a-4531-a127-ab03427f22c0"
+            name="GetMemberInfo"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="3abcebfe-a35b-4714-a6d1-1d29a28ff0ce"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DGetMemberInfo OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f9c96476-33fb-4ba8-a822-d346da93a862"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2f89783d-bef3-4f9e-9ae5-f117e18d526b">
+                    <propertyInstance
+                      Id="a9da0b82-642b-4bf7-b1d4-9a90f5ca6001"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="07db6d47-1e90-4500-ba29-7b896ae0aba7">
+                    <propertyInstance
+                      Id="8508d40b-3855-4130-8410-0db05833e8d3"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2a200c49-d27f-47f3-8ea5-c66b382e69ab">
+                    <propertyInstance
+                      Id="0067b40d-6093-4c68-8a1e-59319e7f362b"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e637e208-ec1c-4c6e-a713-1207dcc55f86">
+                    <propertyInstance
+                      Id="90795926-558e-4cf6-a51a-9e829708216f"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d1481155-715a-4616-adbd-23e52eb1f204">
+                    <propertyInstance
+                      Id="2b777717-dfed-481b-9e88-ecc468b5ba05"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7d327c9a-0c44-4bf9-9d07-fa711181be1a">
+                    <propertyInstance
+                      Id="d7a97003-fd63-4b3e-851a-253ce041c1f6"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ffefa234-ed61-4e44-8de6-9d9cdc6c37aa"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="34e5d9f6-eb49-4dc6-97ff-80e835866bc3"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="266d66e5-18ed-4d48-ab89-0cdf11ac9ae4"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DGetMemberInfo OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="9dacd29e-05af-4eb3-9f37-891849bc2be2"
+            name="GetMemberType"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="269392e0-2133-486f-8841-a207787ec67c"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DGetMemberType OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9bf65f28-5683-4c46-ba2e-6efa3f17aedd"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d5e4f8fe-f517-400a-98c8-e1d8c2d67f4a">
+                    <propertyInstance
+                      Id="edcd66f9-b16e-4e4f-9d46-a321e26d48fb"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="89a79cf3-3bcf-4b3e-8b3a-02b450731bad">
+                    <propertyInstance
+                      Id="d09c8c7b-a327-4a4b-ae52-feae56d20189"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4252e7b2-85ee-4280-9c1f-07d7e2c33c21">
+                    <propertyInstance
+                      Id="12e0e6f6-db55-4f3d-919d-dc822d9c7d7f"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ab23275b-fdef-4c3a-a0e6-84dfaaefebcc">
+                    <propertyInstance
+                      Id="a24e8e31-3600-4c6a-88a6-5ec802cf959c"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2d873046-5edb-4ffd-bb1f-28ae75d3cdb2">
+                    <propertyInstance
+                      Id="c0f9f60c-9ad1-42c4-898a-76bfc582194c"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2b74790b-993c-4dea-9d60-31e270a9e899">
+                    <propertyInstance
+                      Id="906db572-7a16-4147-a177-7c890f86479f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2091e0b7-099b-4b89-8cb9-e9451a6a6531"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="2ffe4870-b19b-4539-95bd-da2af1aba783"
+                      LastKnownName="Type"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2d55b05a-ca0f-4bdf-a22a-88d351af1830"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="1648be47-24ed-4540-8cb2-88b4a17e0d8d"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DGetMemberType OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="79277cf2-39d5-44d6-8fe1-dbfb26367612"
+            name="bind‎&lt;T‎&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="70f259ba-8c0a-446c-a2cd-91940618c461"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3Dbind GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="623a3288-080e-4fb8-8492-1b9308d8b527"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="caabc339-5d52-47b2-bcdb-8b76a2cd5fb0">
+                    <propertyInstance
+                      Id="b3064255-e11a-49d2-8505-e7569943dbed"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="620781af-2df9-4fef-81d5-22f55e324650">
+                    <propertyInstance
+                      Id="214a3699-71df-497a-bcdc-7f089a437e47"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="44cf0bb6-c3e4-420d-b35f-1ff7eb97f909">
+                    <propertyInstance
+                      Id="8abe8070-8ac0-46c5-85d8-8aec42f3a912"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="775f55dc-7954-4f1a-823d-e4903cdd74ad">
+                    <propertyInstance
+                      Id="495a4d5e-673b-4d90-aed5-acbdf93ada79"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3cac612d-799b-4241-bce0-d6191f903084">
+                    <propertyInstance
+                      Id="bcdcd1c4-fb8f-4341-9f6a-db2a242de69b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ee2b1f96-fb36-4e0c-b8b8-3909d4006489">
+                    <propertyInstance
+                      Id="78628958-01b0-4333-83ec-fa4c1debb9a9"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="aa08042b-e389-4198-a022-d01a9efe5ebb"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="CmdBuilder_UML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6382d230-08dd-44a0-abe4-2358ba8824d4"
+                  name="instance"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="0111b183-6425-46f3-90b5-0f18302866ea"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3Dbind GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dinstance"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="842cd8de-ba83-437b-8c3b-f4d34271a052"
+                      LastKnownName="T"
+                      LastKnownLocation="Package1_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8da9c51e-dc2c-44bf-a82b-5c5afc27f5bb"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="36d5de3f-465c-46ee-b7dd-e4f0cd5ab0c4"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3Dbind GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0290cf30-f7c5-47c7-b39b-0e5d538183f4"
+                  name="dbvalue"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="9518953a-f2a6-4d24-a7a5-0b50a3731944"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3Dbind GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Ddbvalue"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="057b31b0-3307-451a-b0c8-0c0b072ea2fa"
+            name="SetValue‎&lt;T‎&gt;"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="dd770ab8-7e5a-4e5a-a64a-ee29704daf38"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1b45f0dc-92a5-4ed9-9e54-12b8a2994509"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="84135665-c63d-4abc-a295-22e3985e4407">
+                    <propertyInstance
+                      Id="a845927e-07b7-49c1-8ee3-8514800a7c1c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ab610593-d77a-4de2-8741-e5d82528c787">
+                    <propertyInstance
+                      Id="8bfd57e1-2b3d-47e2-a36e-9bf945d67766"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ad517657-3a57-4d38-bc34-3b71081443ed">
+                    <propertyInstance
+                      Id="05f83ddb-c8d1-4d8d-96e4-f13020897e16"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d4341a62-78d1-43df-b5f9-40d104664127">
+                    <propertyInstance
+                      Id="8587df34-5b80-465a-b7e2-98f69a0b2e06"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="80e0a78f-dbfb-4fa0-9052-bca75b9c916a">
+                    <propertyInstance
+                      Id="8d125749-60ab-4878-86a2-235c24ad20c3"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4a7201f5-374c-4b9f-bfb6-f9f126a0c77d">
+                    <propertyInstance
+                      Id="30a662b3-d4d6-45ad-80fa-c2fcef903e20"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="62d3e39a-0b36-41b5-8e5d-4a2986f151d8"
+                  name="instance"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="06107d8c-1b9a-4005-9d78-b7687f9084c2"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dinstance"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="842cd8de-ba83-437b-8c3b-f4d34271a052"
+                      LastKnownName="T"
+                      LastKnownLocation="Package1_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4eb4c97b-e2c5-4bec-9965-0ae1ae2a878c"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="3ca2798b-b951-4bbc-b383-844326271438"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="bae09956-c48a-41c2-b8b5-8ca9b680d600"
+                  name="value"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="764f30b9-0425-4473-9201-515b0569310b"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dvalue"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="60f8df4b-2bd2-4d1d-9e37-e2eff56c0442"
+            name="GetValue‎&lt;T‎&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="4ed51485-dc46-4ad3-a367-f3ece3fae4ba"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="167a1b97-74ec-4a44-901e-05401f5d17c0"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="70b1f137-0e6c-4744-94b0-aa44ffba0c08">
+                    <propertyInstance
+                      Id="4569edf8-8425-40bb-9156-a749e0a0f9be"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="698000c7-615a-464f-870b-26a6f8788cd3">
+                    <propertyInstance
+                      Id="72aa164b-6774-4913-9dce-9b7ec2470d00"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1a6f717f-b962-4fae-b501-d79b7c07bba1">
+                    <propertyInstance
+                      Id="d5352536-920f-49ea-88a8-63766019ee8e"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8d1da115-dd99-4884-a40e-10639bbcef3b">
+                    <propertyInstance
+                      Id="3b3ac6a6-3390-4358-b311-3e1f65f2dc07"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="da4b463e-fdaa-458c-8c58-e9d60c9d1067">
+                    <propertyInstance
+                      Id="72f29442-3a4a-4a03-a680-6995d13aab31"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4eb44a85-1abf-4e9d-aace-d4fb608bd2cb">
+                    <propertyInstance
+                      Id="d3bf56bc-ba30-4d99-8051-ee7169fcdf62"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="25f05d53-aa95-4d46-9a49-5f0819addd45"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="37aee144-f7d3-44a0-8fc0-ae7332dd1e2e"
+                  name="instance"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="7a17ca0e-093e-4aaa-9f80-2cadf8c6f271"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dinstance"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="842cd8de-ba83-437b-8c3b-f4d34271a052"
+                      LastKnownName="T"
+                      LastKnownLocation="Package1_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="cd6a4093-afed-4dd4-9387-3a9583bef72b"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="29964a63-6675-4a72-946e-00737a06fe9d"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="5a71abba-7220-4534-84bd-6e9ccf9770fd"
+            name="AbstractBindMember"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="bf7f2022-432e-451e-bc90-67d1da39bd9a"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9f9d1291-bf1f-46e1-928e-a3a612c8f97c"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b8f97e90-839f-4779-8589-896c7f7d0852">
+                    <propertyInstance
+                      Id="ae5546d3-363e-4996-b393-45e7bb46f119"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="62cb5a83-5f89-4019-9d29-8af912fdd632">
+                    <propertyInstance
+                      Id="7c577b96-0f6a-43a0-b1ef-699147d2e63b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fc84c7b0-0551-41dd-a338-19a1051ebf9d">
+                    <propertyInstance
+                      Id="9ada71f8-1045-4698-88b2-0515b4b24124"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4882a7e8-1950-4f1e-a65e-98def2436557">
+                    <propertyInstance
+                      Id="ff5b9709-97fd-43bd-b74b-2dccf8f4d28b"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d6528c86-5a1e-4370-b846-0615227a4018">
+                    <propertyInstance
+                      Id="b2ed1ef8-19a6-4ce2-b067-7cc13450e7d7"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fb2b7dbe-8481-4d39-8d23-97e3ad580bc6">
+                    <propertyInstance
+                      Id="90f823ff-567e-4235-a258-ca3bc1ac0eeb"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="45a02735-494b-4ecc-8b18-1d2df1651c7d"
+        name="BindFields"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="b442cdaa-b785-49e3-9fa1-e27ae82b57b7"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="489e0780-e6ba-4651-939e-15f34336b63f"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bec4007a-b054-4554-ab2d-df06d7fbdb46">
+                <propertyInstance
+                  Id="cb5804b4-abad-4924-85e1-5b396ae2ebe8"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="164fb97a-f0f6-4739-8ed8-3e7c2479753e">
+                <propertyInstance
+                  Id="d597c700-9f07-4f42-b33d-0138b9c051f5"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d34ce64d-cfa8-4fbb-8a21-c00a037f65cd">
+                <propertyInstance
+                  Id="e8717183-7f2a-45c4-a4bf-3b66880408ed"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="36e581a5-228c-432d-98d8-504a1b07c2d4">
+                <propertyInstance
+                  Id="accec4cb-3978-4923-b2b0-9d590949f41e"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fcf8d6d4-dc5c-4e3c-819f-599987acbed0">
+                <propertyInstance
+                  Id="9c9035f0-e97c-4ecf-b2aa-5683aa745598"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="c2d280a4-6d3a-4d3a-b148-99360ad45a51"
+            isSubstitutable="false">
+            <classMoniker
+              Id="5384a3fc-490c-4823-91fa-83f4c2b7cf60"
+              LastKnownName="AbstractBindMember"
+              LastKnownLocation="Package1_1447.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="d60c023d-b8e6-4438-a553-3a7493f91aea"
+            name="GetMemberInfo"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="51279b84-194e-4fc5-bc86-3a21c0ea25db"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DGetMemberInfo OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="cb1f7a81-8bcc-4190-9c5d-c384e3f0fb9c"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d92ef55e-90ef-49c3-9dee-122613a38bf3">
+                    <propertyInstance
+                      Id="c677bc2b-7818-4297-af35-add415ad9ac8"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f7e9a485-a26d-43d7-a477-3709c6815f48">
+                    <propertyInstance
+                      Id="25612b08-372b-452b-ac7c-ce4f8a4b0260"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1fac5808-114b-478d-b05c-6a7c34ac8308">
+                    <propertyInstance
+                      Id="ffe0f34a-2636-4312-ad8f-0d0c68fe044c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fa40e513-b2e9-4f97-afd6-26f72ddb6ed7">
+                    <propertyInstance
+                      Id="65823e84-6e9b-42b8-845b-6c443e45c5a9"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8c76b8f8-63be-4327-a328-44f3b45c6e77">
+                    <propertyInstance
+                      Id="84fc908a-b23d-4852-91c4-54bee6c02951"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b4b54fd5-d8be-43ad-9122-63b0c5cc5ded">
+                    <propertyInstance
+                      Id="9048f02d-1ca9-43fd-b4a7-08eb9f6bbdc8"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="08b16c2b-779f-43b0-91b8-640f0155045c"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="dc2e6036-074a-4243-bfb5-02f22a537475"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="5dbe4cdf-1238-429b-862a-2cee00057333"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DGetMemberInfo OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="3a88bfd0-4d7e-4697-91e3-8b9c0d594597"
+            name="GetMemberType"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="04f4e338-f413-48e5-a12c-554af01bc3a9"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DGetMemberType OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1a9d3a1e-5108-4df7-afe5-38ee073ddb77"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0b767ce7-fa84-4098-9804-8cf8a85ef90f">
+                    <propertyInstance
+                      Id="8de04a76-1c5e-4a4c-b721-095baa944ade"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="38ce16a0-4fc9-4a3c-acbf-1521398bef03">
+                    <propertyInstance
+                      Id="51057e1b-bdff-4822-8820-dd2a83b1e77f"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2e7b2ff6-2e8a-4761-8f6a-e18fde9d3bff">
+                    <propertyInstance
+                      Id="17fdbc05-2525-4954-83d0-672c3fc3fdce"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b2680d35-02a7-45e9-8120-dded2e74a1cb">
+                    <propertyInstance
+                      Id="5310416f-b39a-4298-aa03-48c1c25cd279"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f50d3b7f-46c9-4a45-b21e-4007933dfa39">
+                    <propertyInstance
+                      Id="d2516018-460b-40ef-a5d4-5f1fcb3c8123"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="01cc5955-8b86-4e4d-8e9e-09e17d0b2b38">
+                    <propertyInstance
+                      Id="d4b09e6c-4ba9-4d2f-8ebc-9c4c7c64612c"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3c36ceed-9346-42cb-8e6c-e829eb53bd4c"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="2ffe4870-b19b-4539-95bd-da2af1aba783"
+                      LastKnownName="Type"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="78dafabf-0be5-40db-bb94-fa1e568ecdc8"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="65fd1693-3749-41d9-840f-eb93363ac528"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DGetMemberType OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="88160f14-1876-4f6b-898b-3ebb0dff5093"
+            name="SetValue‎&lt;T‎&gt;"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="0e7c92a1-c073-467a-a6c3-22a2c7f9a570"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="21233eb7-04ba-4172-97e0-52f374821e8a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="724be0e4-805a-43fe-aaa0-91fd7ef5639b">
+                    <propertyInstance
+                      Id="12de0819-cbf8-40fb-aefa-4e29af7ecd7d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="32310b8f-22da-4be5-b61b-54b0fd5cd25a">
+                    <propertyInstance
+                      Id="17e462e3-3e89-44f8-9200-75343a27340b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="84c2c0db-7104-453f-99c8-296f9c412302">
+                    <propertyInstance
+                      Id="62ae80d0-c373-4ca2-a67c-8207722b66a4"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="79a7adde-e156-45e2-9687-f1867167ebe2">
+                    <propertyInstance
+                      Id="958e34bf-d2db-42c7-907b-9674bd19a6fc"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cbab1add-9bdc-4648-8bbc-8a41e38d584a">
+                    <propertyInstance
+                      Id="a756a1fe-a40a-458e-8563-afbec125d0fb"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c5e01daa-a964-4f0a-a6ed-05f0d1c13ac1">
+                    <propertyInstance
+                      Id="9953eb56-18a8-4d2b-a82f-be9c3b44d444"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7a88bd00-565b-464f-a280-277c03e3830c"
+                  name="instance"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="6cbccdc5-ba6d-4c0a-9af1-c3047ab5c7dc"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dinstance"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="842cd8de-ba83-437b-8c3b-f4d34271a052"
+                      LastKnownName="T"
+                      LastKnownLocation="Package1_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e968aedc-8fe7-4182-b386-49010c2a8e73"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="d58c1410-db61-425e-a6f1-0edb03700c30"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9157d01a-0d2c-4d5b-9c70-cd66d6c458f6"
+                  name="value"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="a4ec087b-a3ee-4d84-ba31-57368b471351"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dvalue"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="0ee4a34c-a3eb-40cb-bf9f-132a68d43936"
+            name="GetValue‎&lt;T‎&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="4f2b5d7e-c9c7-4d04-8e10-3c3428b581ae"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="83e49fe3-1263-47cd-8b51-0bf1c9cbf829"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="85f5261a-ece6-4478-9f5e-0a8d15e1b6b8">
+                    <propertyInstance
+                      Id="bb48e607-ebd8-41a3-b579-075f6edebca8"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3106cc2c-e34c-4f03-9c1a-1f0e6f15d998">
+                    <propertyInstance
+                      Id="66ec44d3-d5af-456c-81e9-f7c682248cdf"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="11e45b12-53c6-471b-afc9-9231419b8ce1">
+                    <propertyInstance
+                      Id="87b8a306-5248-4445-8a2e-922340724eab"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7aaa80b1-176a-4bd7-9067-85e3d9d568b0">
+                    <propertyInstance
+                      Id="6ad9a562-17b4-4f81-b8b9-b7e975d5c9ef"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f4d01dda-d3f3-4041-8cb2-70f9bcddc61d">
+                    <propertyInstance
+                      Id="ac6cf36d-c382-4b90-bb4b-36c7b8e0a3c1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8e17182f-75fe-425e-b976-fa0b97fdacb6">
+                    <propertyInstance
+                      Id="52b49120-7d7c-4b74-85d7-dc24bc0f3401"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="562d7acd-8806-421c-baa4-dc3f2241b5a8"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="bcef00cf-aa76-4aff-8927-f6efa5db8922"
+                  name="instance"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="c867f517-2951-4330-8a9b-65468b294814"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dinstance"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="842cd8de-ba83-437b-8c3b-f4d34271a052"
+                      LastKnownName="T"
+                      LastKnownLocation="Package1_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="854649b7-655f-4ff4-90b9-315e6c941360"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="cc99600c-ed89-40a3-9fa7-3d61f2a7d3f3"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="eaede579-c68e-4096-892c-3be26b306197"
+            name="BindFields"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="bd40ef99-72a3-4d5b-8db5-c6246c61fcd8"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindFields Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="88510ef9-9987-45fc-a9ec-56603967fbf6"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e9eab165-9861-4420-8967-09c8e7efc406">
+                    <propertyInstance
+                      Id="b9bcdc94-bf92-4b27-aff3-d70aa27ad6b0"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c65896ce-a357-4032-800b-0cb68f493cc9">
+                    <propertyInstance
+                      Id="8b8643f5-e240-44c3-b365-b001a1facccd"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="44ecf575-7d5b-479e-a323-a57640985bac">
+                    <propertyInstance
+                      Id="043bb23d-20b6-4681-a74e-15f0836fcb84"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5d6bbbf6-87d5-4a62-9d4c-48bfaff129c4">
+                    <propertyInstance
+                      Id="2f4327cc-756c-4882-a9dd-0723ce1cab94"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9e95f47b-7d7f-4124-9c1f-c8ba8453d0d2">
+                    <propertyInstance
+                      Id="e10271b7-5763-475d-a926-966677250ece"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b00b1513-fc22-4674-8520-6dc1ad3c7a1b">
+                    <propertyInstance
+                      Id="ce9e41bd-7e2b-4af2-b939-85960468c7d0"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="bedf9a46-5daa-4d7b-aef9-89b7614b6013"
+        name="BindProperties"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="f8e1a5f8-054b-4de8-96c4-9b8ca876b37e"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="b2d0d2f1-a312-4c9d-badc-5c383cf8990c"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5d3f8706-2c6c-4f02-b71d-5abf4fb37d2c">
+                <propertyInstance
+                  Id="4c7847c5-2e8e-413a-a3a0-ecffc461a24e"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="50e037b2-5f8a-491d-8f9f-34a5ea62527c">
+                <propertyInstance
+                  Id="8f00d96f-5780-4cf0-9c84-e8f421093065"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3fdfad9e-d7e3-436e-89fe-e90cfe3920d3">
+                <propertyInstance
+                  Id="7961f825-176a-45ce-8746-b6e68757a2ab"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8f6719e1-e37a-43d1-9c61-f6f7109c274a">
+                <propertyInstance
+                  Id="9e8a44af-bdd3-403f-a858-7edda633e09d"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="53c74cae-c5df-4795-ae0d-be7afc7aa6cd">
+                <propertyInstance
+                  Id="38728a71-b701-47b9-a01c-a3a1940f50eb"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="b560949a-3616-4f76-be93-e23c4c225bfc"
+            isSubstitutable="false">
+            <classMoniker
+              Id="5384a3fc-490c-4823-91fa-83f4c2b7cf60"
+              LastKnownName="AbstractBindMember"
+              LastKnownLocation="Package1_1447.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="7a5ad2cc-77d9-4a69-94c6-6f11cf93979e"
+            name="GetMemberInfo"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="ea62d793-9584-41c8-96dc-846c83595c3c"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DGetMemberInfo OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="50220ee2-8886-4c5f-b823-bdf8067a258c"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aece3898-e30a-436e-9fe1-a735bc185c30">
+                    <propertyInstance
+                      Id="41eb41ab-9617-4ab8-8ec8-307793da4e16"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="69313d3c-8783-4a0f-baca-9b8d1ab92542">
+                    <propertyInstance
+                      Id="b33be586-2f35-471e-8685-08c07e3c6c35"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fad52d37-02dd-47ed-8d30-e4cdcdb24ead">
+                    <propertyInstance
+                      Id="4eaa854f-786a-48cc-bdf0-81ea1e0b33c1"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a9c736e5-aee6-4fcc-8c1e-d1d78a271709">
+                    <propertyInstance
+                      Id="84e7d13b-d8b8-46fa-a52b-c80c61185777"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3ef0413b-17de-44fc-bc9a-550d5050e21a">
+                    <propertyInstance
+                      Id="6fce909e-c049-415c-a2f5-721cd065b1cb"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e47d1912-2967-43dd-a8f1-19993b1eae36">
+                    <propertyInstance
+                      Id="f08533ac-61a0-4f5b-b846-98b4da18f734"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0277d99a-11f4-4e9c-ba79-26c3b217125d"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4233f15b-16dc-45e8-bd08-ee0efa7628db"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="ac7e4c0b-4fe2-469e-a856-6c27e4b1042f"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DGetMemberInfo OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="29b25d32-899d-4378-9ba0-bff569977606"
+            name="GetMemberType"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="2f44cbe0-5f80-423a-9e0b-174fb4e7249f"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DGetMemberType OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="ed9e0399-9251-4ba2-9ab6-d1d099e0a54f"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e3267cb8-5554-4719-b23b-cab1638bf63b">
+                    <propertyInstance
+                      Id="ff4cfb35-1592-4224-94a0-6d378219a406"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7b4958c2-2a55-4b8c-a024-f0b8f0daabe9">
+                    <propertyInstance
+                      Id="c42fb155-7014-4245-806f-edb0d8aefd99"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6c1b2dd7-b35e-4ee0-88ec-f7e751a04e1b">
+                    <propertyInstance
+                      Id="c408f5d2-8e7a-42a6-bbca-8bf3ad9ebcc0"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="960622c9-1f0a-4569-9dbd-9e1433435188">
+                    <propertyInstance
+                      Id="dd3e04cb-5a4b-4ffd-9ded-f7c0f18b064e"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="adbcaef0-e04e-4185-98ac-871e21ca7f57">
+                    <propertyInstance
+                      Id="9b1a5af5-4d01-4bcd-98c7-1e326efb14a8"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6a5d33f6-93be-4664-9051-be99a08f6208">
+                    <propertyInstance
+                      Id="ef970718-6e41-4762-a472-4bcd2731e9ed"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="98187aa5-2408-4d1e-b11f-fb6562ea66d6"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="2ffe4870-b19b-4539-95bd-da2af1aba783"
+                      LastKnownName="Type"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="42de4e1f-6f76-4add-9480-50321a1e0f1f"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="6df5041b-ace7-4a55-8f1d-5bd9d250d750"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DGetMemberType OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="21c84306-d4a3-4cae-977f-fc5248c5f016"
+            name="SetValue‎&lt;T‎&gt;"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8a793f76-fead-4bd8-801a-16f6a8b1ab2e"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="523cd68d-96ba-43f5-83af-1d4d1b02dffb"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c544524d-e921-48d4-a8b8-046b3504ccd8">
+                    <propertyInstance
+                      Id="7c917c8d-7136-4114-b3a3-722cce102a60"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="37bf69d6-f4d4-45e3-86b1-d7042e4c6a34">
+                    <propertyInstance
+                      Id="4506c149-c73a-41ca-9ede-56cea0cb546b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dc06627d-78e9-487d-a10c-9f8882d7d1a6">
+                    <propertyInstance
+                      Id="5ad96387-8730-43d1-9466-ca442a47614f"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dc7cb52b-17ff-46f1-af82-31193d14cfb9">
+                    <propertyInstance
+                      Id="51a858f0-2275-4061-a8e0-7e67cf69bd21"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="98df496c-4bab-4b51-ac5f-68bd95593d14">
+                    <propertyInstance
+                      Id="732e621c-14be-46b7-898b-983d10fb8489"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="51bc9df0-c993-4bb0-9d6e-ccd19be2f2a4">
+                    <propertyInstance
+                      Id="bfcfbebd-26aa-40b0-87fc-1cef6cd0b659"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3714dc77-119a-49ff-8c04-dc1a6ae292d2"
+                  name="instance"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="f68d5c5b-2dff-46be-8c51-bbdb60371680"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dinstance"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="842cd8de-ba83-437b-8c3b-f4d34271a052"
+                      LastKnownName="T"
+                      LastKnownLocation="Package1_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="81d3f49e-3493-44ee-9352-92f1781662fb"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="dfc21519-8434-4535-a6ad-45b7d67518ab"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b4a3ac00-d045-469b-bb5f-e10e234610aa"
+                  name="value"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="69f5cfba-0043-40c5-bf16-c4354cb6bfaa"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DSetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DObject)]) ParameterIdentifier%3Dvalue"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="44e6725a-68b7-4f49-a4e4-548962704814"
+            name="GetValue‎&lt;T‎&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="74b84bd5-5886-4ac1-9b3f-58360cf1b5bc"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5b363020-a42a-493f-8abb-1ac56b376a15"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0b8439ff-2bb6-4280-a7ba-0d0f659122ac">
+                    <propertyInstance
+                      Id="d973bdd4-6087-4149-ad61-a59bcfe2e50c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b84b15e2-25ce-46a2-88ed-e2d7afd26df0">
+                    <propertyInstance
+                      Id="f50eb625-50dd-4f0f-a879-7ee305f4df1f"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f1d6dc2d-4269-4f78-91a1-496f3ffaeab9">
+                    <propertyInstance
+                      Id="f31c18a3-58d6-45a3-8e63-1dd81c888c62"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4b333eb5-3acd-468a-be60-ca1b0a3086e4">
+                    <propertyInstance
+                      Id="80180f67-a052-4741-a2cb-16f1811953cb"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="12e9e044-f9ee-4e53-ada2-870e5131d38e">
+                    <propertyInstance
+                      Id="99faf676-b7bb-4d59-a037-3de9099690da"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8179d6fc-a436-431a-9755-a54a8bcfc709">
+                    <propertyInstance
+                      Id="d9499681-9ca3-4469-a63d-bfa4b6d3c730"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2fb69e88-6ecf-4430-862a-da5cb2bdde91"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="cab683a0-14c6-4850-9a1a-7ca25d63a38c"
+                      LastKnownName="Object"
+                      LastKnownLocation="Package2_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ef5071d2-b27a-456d-a864-6aabe502a87a"
+                  name="instance"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="5eb081e6-53d2-4069-bdd3-7ba4a1703831"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dinstance"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="842cd8de-ba83-437b-8c3b-f4d34271a052"
+                      LastKnownName="T"
+                      LastKnownLocation="Package1_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5d8cb504-3038-4e9f-89c1-d92b20e08b20"
+                  name="mi"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="d7960e3a-b072-482b-9882-6b2605cf4b0f"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3Dmi"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1c2f598f-91fa-43d1-bd3b-2069698b1246"
+                      LastKnownName="MemberInfo"
+                      LastKnownLocation="Package3_1447.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="2cdd4ba9-6b89-47ce-8d91-bd8199196d56"
+            name="BindProperties"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="6cc9e2f6-20e9-46b1-9e1c-2432d0c3e7e9"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DBindProperties Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5a67e647-7fae-4962-b2b4-bcf6bd1bfd58"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d8d0e1ce-10cc-45e4-884c-52ced1340036">
+                    <propertyInstance
+                      Id="0fc05c2a-e9df-4ae5-9196-c317da29dd69"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d0081925-8803-475d-b88c-fa72c56fbc85">
+                    <propertyInstance
+                      Id="d70eb962-8b11-4c7d-bc1c-9d815bb52b25"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7a708a6a-fce2-46d6-9cec-29c5fd64ffb5">
+                    <propertyInstance
+                      Id="d67c9694-5622-4041-a0f0-d8f114bd64de"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e80085a9-5ed9-4126-80a6-1751258ff5b4">
+                    <propertyInstance
+                      Id="eb8aab84-6491-4cda-8bb8-732769acdafb"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="eee37c6f-724e-429f-81f2-9c5a1f75e0c9">
+                    <propertyInstance
+                      Id="0c26ccb8-29a6-4fcb-835b-7ae5a9195c62"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0e1c560e-2d81-410d-b02c-e4e21d991b27">
+                    <propertyInstance
+                      Id="1b561601-e5a1-489c-bc4e-a0450748f0f2"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="842cd8de-ba83-437b-8c3b-f4d34271a052"
+        name="T">
+        <referencesInternal>
+          <reference
+            Id="6dc96bd7-76a6-4fa9-8a31-4c2b581b1c7b"
+            handle="viewcode://./CodeSchema_GenericParameter?Assembly%3D&quot;file:%2F%2F%2FD:%2FISEL%2F13_14SVer%2FAVE%2FTrabalho Final%2FSqlMapper%2FSqlMapperFw%2FSqlMapperFw%2Fbin%2FDebug%2FSqlMapperFw.dll&quot; Namespace%3DSqlMapperFw.Binder Type%3DAbstractBindMember Member%3D(Name%3DGetValue GenericParameterCount%3D1 OverloadingParameters%3D[(ParameterIdentifier%3D0)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem.Reflection Type%3DMemberInfo)]) ParameterIdentifier%3D0"
+            tag="ViewCode" />
+        </referencesInternal>
+      </undefinedType>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

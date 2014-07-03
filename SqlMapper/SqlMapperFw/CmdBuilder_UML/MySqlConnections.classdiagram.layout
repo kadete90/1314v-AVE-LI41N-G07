@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 9.5" name="MySqlConnections">
+  <logicalClassDesignerModelMoniker Id="a1548912-0967-49b4-b7da-3ff79b127e50" />
+  <nestedChildShapes>
+    <classShape Id="b063d92d-f497-4d68-ace0-68ce25db6f5f" absoluteBounds="0.5, 7.375, 3.5, 1.8284605995814012" hideQualifiedName="false" increaseHeight="0.18800345897674561" customColor="181, 193, 223">
+      <classMoniker Id="3a415a47-0397-4ef7-a01e-493e30519584" LastKnownName="MultiSqlConnection" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="52cd4c20-c028-4ad4-84da-53350e1abca1" absoluteBounds="0.515, 7.89033563931783, 3.4699999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="3e27d23f-ca77-4977-ba7d-a84f3ec66ec0" absoluteBounds="0.515, 8.10150750686725, 3.4699999999999998, 1.0019530927141509" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0a7b760d-ae1b-4839-b67e-c61fa865587c" absoluteBounds="4.25, 7.375, 3.625, 1.8284605995814012" hideQualifiedName="false" increaseHeight="0.18800345897674561" customColor="181, 193, 223">
+      <classMoniker Id="6a49100d-956a-4f81-a821-8fc61fd89417" LastKnownName="SingleSqlConnection" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="96d1dfe7-af5d-4973-92fd-761290c938cb" absoluteBounds="4.265, 7.8903356393178292, 3.5949999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="e2c921b4-64b5-44bf-ad9a-c5582e476ee9" absoluteBounds="4.265, 8.10150750686725, 3.5949999999999998, 1.0019530927141509" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="080b42ed-7b37-4f46-beb2-c894d56634a8" absoluteBounds="2.5, 4.125, 3.25, 2.7893980697790779" hideQualifiedName="false" increaseHeight="0.18800345897674561" customColor="181, 193, 223">
+      <classMoniker Id="f2c0bdd2-a5be-4dfa-872e-339fa1d99894" LastKnownName="AbstractSqlConnection" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="bcf39dbc-95d7-4963-b099-a55786885f8d" absoluteBounds="2.515, 4.64033563931783, 3.2199999999999998, 0.52148435761531176" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="22bab1a9-5012-4cd8-9124-8f85f5ea902d" absoluteBounds="2.515, 5.1718199969331424, 3.2199999999999998, 1.642578072845936" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <generalizationConnector edgePoints="[(2.25 : 7.375); (2.25 : 7.15439806977908); (4.125 : 7.15439806977908); (4.125 : 6.91439806977908)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110">
+      <generalizationMoniker Id="1929e50e-2d4a-443f-9312-3ffce5c3fe24" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="b063d92d-f497-4d68-ace0-68ce25db6f5f" />
+        <classShapeMoniker Id="080b42ed-7b37-4f46-beb2-c894d56634a8" />
+      </nodes>
+    </generalizationConnector>
+    <generalizationConnector edgePoints="[(6.0625 : 7.375); (6.0625 : 7.15439806977908); (4.125 : 7.15439806977908); (4.125 : 6.91439806977908)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110">
+      <generalizationMoniker Id="8e907e13-a6a7-433d-bdf2-ee3ac7221334" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="0a7b760d-ae1b-4839-b67e-c61fa865587c" />
+        <classShapeMoniker Id="080b42ed-7b37-4f46-beb2-c894d56634a8" />
+      </nodes>
+    </generalizationConnector>
+    <interfaceShape Id="204b6e12-4fc6-4121-b6e9-43915e252859" absoluteBounds="2.625, 2, 3, 1.7309721742073698" hideQualifiedName="false" increaseHeight="0.18800345897674564" customColor="207, 223, 191">
+      <interfaceMoniker Id="55cfa7fd-21b8-43da-8aeb-83eabafe2a69" LastKnownName="IMySqlConnection" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="48879038-3370-4a3e-8c59-011c29d9de63" absoluteBounds="2.64, 2.5780034589767458, 2.9699999999999998, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="a7213b9f-1b37-4a68-bbf6-049e450af9f8" absoluteBounds="2.64, 2.789175326526165, 2.9699999999999998, 0.84179684768120444" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <realizationConnector edgePoints="[(4.125 : 4.125); (4.125 : 3.73097217420737)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" showAsLollipop="false">
+      <interfaceRealizationMoniker Id="d44ff932-ce6a-4a9f-8f3e-3b73663b9a87" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="080b42ed-7b37-4f46-beb2-c894d56634a8" />
+        <interfaceShapeMoniker Id="204b6e12-4fc6-4121-b6e9-43915e252859" />
+      </nodes>
+    </realizationConnector>
+  </nestedChildShapes>
+</logicalClassDesignerDiagram>

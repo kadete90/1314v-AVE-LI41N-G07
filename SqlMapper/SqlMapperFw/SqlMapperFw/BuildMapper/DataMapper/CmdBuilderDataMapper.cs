@@ -10,7 +10,7 @@ using SqlMapperFw.Utils;
 
 namespace SqlMapperFw.BuildMapper.DataMapper
 {
-    public class CmdBuilderDataMapper<T> : IDataMapper, ICmdBuilder
+    public class CmdBuilderDataMapper<T> : IDataMapper<T>, ICmdBuilder
     {
         readonly SqlConnection _connection;
         readonly AbstractSqlConnection _mySqlConnection;
@@ -78,13 +78,13 @@ namespace SqlMapperFw.BuildMapper.DataMapper
                     case "GetById":
                         return GetById(elem);
                     case "Delete":
-                        Delete((T)elem);
+                        Delete(elem);
                         break;
                     case "Insert":
-                        Insert((T)elem);
+                        Insert(elem);
                         break;
                     case "Update":
-                        Update((T)elem);
+                        Update(elem);
                         break;
                     default:
                         throw new Exception("This command doesn't exist");
@@ -113,6 +113,21 @@ namespace SqlMapperFw.BuildMapper.DataMapper
         SqlEnumerable IDataMapper.GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        void IDataMapper<T>.Insert(T val)
+        {
+            Insert(val);
+        }
+
+        void IDataMapper<T>.Update(T val)
+        {
+            Update(val);
+        }
+
+        void IDataMapper<T>.Delete(T val)
+        {
+            Delete(val);
         }
 
         public T GetById(object id)
